@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "243833862805",
+    "firebase_url": "https://wesal-d446e.firebaseio.com",
+    "project_id": "wesal-d446e",
+    "storage_bucket": "wesal-d446e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243833862805:android:a1933ebc8d3999fe",
+        "android_client_info": {
+          "package_name": "com.shaden.wesal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243833862805-mv1ktq4iterlhv42hnraqjf67nmkmi8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaden.wesal",
+            "certificate_hash": "336cfeb1afd4e2b23a1792b2a67588b1762add3b"
+          }
+        },
+        {
+          "client_id": "243833862805-nkkuua8b3k3svgntfi21jfgnn77pr6f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHq8MFk7P9PHj54ngBrBa5ltZX0I4Jx9Q"
+        },
+        {
+          "current_key": "AIzaSyBHq8MFk7P9PHj54ngBrBa5ltZX0I4Jx9Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243833862805-nkkuua8b3k3svgntfi21jfgnn77pr6f0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
