@@ -23,14 +23,19 @@
           }
         },
         {
+          "client_id": "243833862805-bjin8d1v1v13uk54j9js37rr4e71elcl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaden.wesal",
+            "certificate_hash": "799375d7dfd729be5c148bf871916b1abd23c122"
+          }
+        },
+        {
           "client_id": "243833862805-nkkuua8b3k3svgntfi21jfgnn77pr6f0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
-        {
-          "current_key": "AIzaSyBHq8MFk7P9PHj54ngBrBa5ltZX0I4Jx9Q"
-        },
         {
           "current_key": "AIzaSyBHq8MFk7P9PHj54ngBrBa5ltZX0I4Jx9Q"
         }
