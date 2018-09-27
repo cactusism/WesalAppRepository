@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MotherHomePage"></activity>
+        <activity android:name=".MotherHomePage" />
+        <activity android:name=".StaffHomePage" />
+        <activity android:name=".AdminHomePage" />
+        <activity android:name=".SignUpMother" />
+        <activity android:name=".SignUpStaff" />
+        <activity android:name=".SignUpDialog"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +15,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+    // Write a message to the database
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
+
+
+
     EditText editTextEmail, editTextPassword;
 
     @Override
@@ -24,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
@@ -42,17 +54,17 @@ public class MainActivity extends AppCompatActivity {
         String password= editTextPassword.getText().toString().trim();
 
         if(email.isEmpty()){
-            editTextEmail.setError("Email is required");
+            editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
             editTextEmail.requestFocus();
             return;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Please enter a valid email");
+            editTextEmail.setError("تأكدي أن البريد المدخل صحيح الصياغة");
             editTextEmail.requestFocus();
             return;
         }
         if(password.isEmpty()){
-            editTextPassword.setError("Password is required");
+            editTextPassword.setError("حقل كلمة المرور مطلوب");
             editTextPassword.requestFocus();
             return;
         }
@@ -61,10 +73,49 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    FirebaseUser user =  mAuth.getCurrentUser();
+                    final String userId = user.getUid();
+                    final DatabaseReference mRef=  database.getReference().child("roles");
+                  //mRef.child(userId).setValue("admin");
 
-                    Intent intent = new Intent (MainActivity.this, MotherHomePage.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    // Read from the database
+
+                   mRef.child(userId).addValueEventListener(new ValueEventListener() {
+
+                        Intent intentMother = new Intent (MainActivity.this, MotherHomePage.class);
+                        Intent intentStaff = new Intent (MainActivity.this, StaffHomePage.class);
+                        Intent intentAdmin = new Intent (MainActivity.this, AdminHomePage.class);
+                       @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            String value = dataSnapshot.getValue(String.class);
+                            if(value.equals("mother")){
+                            intentMother.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            System.out.print(mAuth.getCurrentUser().getUid());
+                            startActivity(intentMother); }
+                            else if (value.equals("staff")){
+                               intentStaff.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                               System.out.print(mAuth.getCurrentUser().getUid());
+                               startActivity(intentStaff);
+                            }
+                            else if (value.equals("admin")){
+                                intentAdmin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                System.out.print(mAuth.getCurrentUser().getUid());
+                                startActivity(intentAdmin);
+                            }
+                            else
+                                editTextEmail.setError("حسابك يجري إصلاحه, راجعي المسؤولة");
+                                editTextEmail.requestFocus();                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            mRef.child("logged").setValue("NOT");
+                        }
+                    });
+
+
 
                 } else{
                     Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
@@ -78,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         //updateUI(currentUser);
     }
 

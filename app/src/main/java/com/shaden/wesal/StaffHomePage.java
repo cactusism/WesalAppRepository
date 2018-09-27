@@ -9,19 +9,17 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-
-public class MotherHomePage extends AppCompatActivity {
+public class StaffHomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mother_home_page);
+        setContentView(R.layout.activity_staff_home_page);
     }
 
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -35,11 +33,12 @@ public class MotherHomePage extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuLogout:
-            FirebaseAuth.getInstance().signOut();
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
         }
 
         return true;
     }
+
 }

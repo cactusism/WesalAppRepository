@@ -4,6 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MotherHomePage">
+    tools:context=".MotherHomePage"
+    android:background="@drawable/background">
+
+   <!-- <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="452dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="456dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/colorPrimary"
+        />
+          app:layout_constraintTop_toBottomOf="@+id/toolbar"
+          -->
+
+  <TextView
+      android:id="@+id/textView3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="416dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:text="مرحبًا بالأم"
+      android:textAlignment="center"
+      android:textSize="24sp"
+
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.501"
+      app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
