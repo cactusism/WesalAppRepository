@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "243833862805",
-    "firebase_url": "https://wesal-d446e.firebaseio.com",
-    "project_id": "wesal-d446e",
-    "storage_bucket": "wesal-d446e.appspot.com"
+    "project_number": "340091850470",
+    "firebase_url": "https://wesalapp-a1894.firebaseio.com",
+    "project_id": "wesalapp-a1894",
+    "storage_bucket": "wesalapp-a1894.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:243833862805:android:a1933ebc8d3999fe",
+        "mobilesdk_app_id": "1:340091850470:android:a1933ebc8d3999fe",
         "android_client_info": {
           "package_name": "com.shaden.wesal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "243833862805-mv1ktq4iterlhv42hnraqjf67nmkmi8f.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.shaden.wesal",
-            "certificate_hash": "336cfeb1afd4e2b23a1792b2a67588b1762add3b"
-          }
-        },
-        {
-          "client_id": "243833862805-bjin8d1v1v13uk54j9js37rr4e71elcl.apps.googleusercontent.com",
+          "client_id": "340091850470-u9k9tdatkff91ca413vid965a8ktlec3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.shaden.wesal",
@@ -31,13 +23,13 @@
           }
         },
         {
-          "client_id": "243833862805-nkkuua8b3k3svgntfi21jfgnn77pr6f0.apps.googleusercontent.com",
+          "client_id": "340091850470-9fnq7vjg8m9as7ak4q8csg6f7hfnlu5t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHq8MFk7P9PHj54ngBrBa5ltZX0I4Jx9Q"
+          "current_key": "AIzaSyAZ8l2yF4GwyX0mgN-4OxzlUsEXdgyyKlA"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "243833862805-nkkuua8b3k3svgntfi21jfgnn77pr6f0.apps.googleusercontent.com",
+              "client_id": "340091850470-9fnq7vjg8m9as7ak4q8csg6f7hfnlu5t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
