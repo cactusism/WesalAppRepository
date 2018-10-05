@@ -118,7 +118,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else{
-                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                    String error=task.getException().getMessage();
+                    if(error.equals("There is no user record corresponding to this identifier. The user may have been deleted."))
+                   error="لا يوجد مستخدم بهذه البيانات, المستخدم قد يكون تمّ حذفه";
+                 else if(task.getException().getMessage().equals("The password is invalid or the user does not have a password."))
+                     error="كلمة المرور المدخلة غير صحيحة, الرجاء إعادة المحاولة";
+                    Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
                 }
             }
         });

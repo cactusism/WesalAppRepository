@@ -92,7 +92,10 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
                     openDialog();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    String error=task.getException().getMessage();
+                    if(error.equals("The email address is already in use by another account."))
+                        error="البريد الإلكتروني المُدخل مسجّل مسبقًا";
+                    Toast.makeText(getApplicationContext(),error,Toast.LENGTH_LONG).show();
 
                 }
             }

@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">wesal</string>
+    <string name="app_name">وصال</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_class">الفصول</string>
+    <string name="nav_notifications">التنبيهات</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_students"> الطلّاب </string>
 </resources>
