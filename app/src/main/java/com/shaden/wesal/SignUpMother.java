@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,20 +17,30 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class SignUpMother extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
+    DatabaseReference ref;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     EditText emailEditText, passwordEditText, repeatPasswordEditText;
-
+    ArrayList<String> list;
+    ArrayAdapter <String> adapter;
+    students student;
+    Spinner StudentSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_mother);
 
+        student = new students();
         mAuth = FirebaseAuth.getInstance();
         emailEditText = (EditText) findViewById(R.id.editTextEmail);
         passwordEditText = (EditText) findViewById(R.id.passwordTextbox);
@@ -39,6 +52,27 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent (SignUpMother.this, AdminHomePage.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        });
+        StudentSpinner = (Spinner) findViewById(R.id.StudentsSpinner);
+        ref = database.getReference("students");
+        list = new ArrayList<>();
+        //adapter = new ArrayAdapter<String>(this, R.layout.activity_sign_up_mother,R.id.StudentsSpinner, list);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                  student = ds.getValue(students.class);
+                  list.add(student.getName().toString());
+                }
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                StudentSpinner.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -102,6 +136,8 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
         dialog.setEmailAndPassword(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
         dialog.show(getSupportFragmentManager(), "SignUp Dialog");
     }
+
+
 
 
 }
