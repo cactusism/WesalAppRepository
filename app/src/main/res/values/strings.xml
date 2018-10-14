@@ -4,9 +4,13 @@
     <string name="nav_class">الفصول</string>
     <string name="nav_notifications">التنبيهات</string>
 
-
-    <string name="nav_students"> الطلّاب </string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_students"> الطلّاب </string>
+    <string-array name="blood_types">
+        <item>A</item>
+        <item>B</item>
+        <item>O</item>
+        <item>AB</item>
+    </string-array>
 </resources>
