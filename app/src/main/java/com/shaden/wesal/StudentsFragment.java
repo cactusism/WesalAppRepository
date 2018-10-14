@@ -1,5 +1,6 @@
 package com.shaden.wesal;
 
+import android.content.Intent;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -17,7 +24,15 @@ import android.view.ViewGroup;
  * Use the {@link StudentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentsFragment extends Fragment {
+public class StudentsFragment extends Fragment implements View.OnClickListener {
+
+    EditText firstName, middleName, lastName , nationalId, height, weight, bloodType;
+    Button add, cancel;
+
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    students student;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,15 +73,38 @@ public class StudentsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_students, container, false);
-    }
+        View v = inflater.inflate(R.layout.fragment_add_student, container, false);
 
+        firstName= (EditText) v.findViewById(R.id.editTextFirstName);
+        middleName= (EditText) v.findViewById(R.id.editTextMiddleName);
+        lastName= (EditText) v.findViewById(R.id.editTextLastName);
+        nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
+        height = (EditText) v.findViewById(R.id.editTextHight);
+        weight = (EditText) v.findViewById(R.id.editTextWieght);
+        bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
+
+        Button add_student_btn = (Button) v.findViewById(R.id.addStudentButton);
+        add_student_btn.setOnClickListener(this);
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("students");
+        student = new students();
+
+        // Inflate the layout for this fragment
+        return v;
+    }
+//@Override
+//public void onClick(View view) {
+   // Intent intent = new Intent (getActivity().getContext(), addStudent.class);
+   // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    //startActivity(intent);
+     //   }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -87,8 +125,76 @@ public class StudentsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    public void getValues() {
+        student.setFirstname(firstName.getText().toString());
+        student.setMiddleName(middleName.getText().toString());
+        student.setLastname(lastName.getText().toString());
+        student.setNationalId(nationalId.getText().toString());
+        student.setHeight(height.getText().toString());
+        student.setWeight(weight.getText().toString());
+        student.setBloodType(bloodType.getText().toString());
+    }
+    @Override
+    public void onClick(View v) {
+        String firstNameVer = firstName.getText().toString();
+        String middleNameVer = middleName.getText().toString();
+        String lastNameVer = lastName.getText().toString();
+        String nationalIdVer = nationalId.getText().toString();
+        String heightVer = height.getText().toString();
+        String weightVer = weight.getText().toString();
+        String bloodTypeVer = bloodType.getText().toString();
 
-    /**
+
+        if(firstNameVer.isEmpty()){
+            firstName.setError("حقل اسم الطالب ممطلوب");
+            firstName.requestFocus();
+            return;
+        }
+        if(middleNameVer.isEmpty()){
+            middleName.setError("حقل اسم الأب مطلوب");
+            middleName.requestFocus();
+            return;
+        }
+        if(lastNameVer.isEmpty()){
+            lastName.setError("حقل اسم العائلة مطلوب");
+            lastName.requestFocus();
+            return;
+        }
+        if(nationalIdVer.isEmpty()){
+            nationalId.setError("حقل السجل المدني مطلوب");
+            nationalId.requestFocus();
+            return;
+        }
+        if(heightVer.isEmpty()){
+            height.setError("حقل الطول مطلوب");
+            height.requestFocus();
+            return;
+        }
+        if(weightVer.isEmpty()){
+            weight.setError("حقل الوزن مطلوب");
+            weight.requestFocus();
+        }
+        if(bloodTypeVer.isEmpty()){
+            bloodType.setError("حقل فصيلة الدم مطلوب");
+            bloodType.requestFocus();
+        }
+
+        getValues();
+        ref.child("student03").setValue(student);
+        Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+/*
+    @Override
+    public void onClick(View view) {
+
+    }*/
+
+
+/**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

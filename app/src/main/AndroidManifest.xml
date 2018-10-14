@@ -21,7 +21,7 @@
         <activity android:name=".AdminHomePage" />
         <activity android:name=".SignUpMother" />
         <activity android:name=".SignUpStaff" />
-        <activity android:name=".SignUpDialog"></activity>
+        <activity android:name=".SignUpDialog" />
     </application>
 
 </manifest>
