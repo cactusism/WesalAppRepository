@@ -51,7 +51,7 @@ public class StaffHomePage extends AppCompatActivity {
 
                     case R.id.nav_classes :
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
-                        setFragment(classesFragment);
+                        setFragment(addClassFragment);
                         return true;
 
 

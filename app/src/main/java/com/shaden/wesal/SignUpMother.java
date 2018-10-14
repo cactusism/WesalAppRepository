@@ -65,7 +65,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                   student = ds.getValue(students.class);
-                  list.add(student.getName().toString());
+                  list.add(student.getFirstname().toString()+" "+student.getMiddleName().toString()+" "+student.getLastname().toString());
                 }
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 StudentSpinner.setAdapter(adapter);
