@@ -22,6 +22,7 @@ public class StaffHomePage extends AppCompatActivity {
     private ClassesFragment classesFragment;
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
+    private AddClassFragment addClassFragment;
 
 
 
@@ -37,6 +38,8 @@ public class StaffHomePage extends AppCompatActivity {
         classesFragment = new ClassesFragment();
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
+        addClassFragment = new AddClassFragment();
+
 
         setFragment(notificationsFragment);
 
