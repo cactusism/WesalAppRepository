@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class StudentsFragment extends Fragment implements View.OnClickListener {
 
-    EditText firstName, middleName, lastName , nationalId, height, weight, bloodType;
+    EditText firstName, middleName, lastName , nationalId, height, weight, bloodType,day,month,year;
     Button add, cancel;
 
     FirebaseDatabase database;
@@ -88,7 +89,24 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
         height = (EditText) v.findViewById(R.id.editTextHight);
         weight = (EditText) v.findViewById(R.id.editTextWieght);
-        bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
+       // bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
+
+        Spinner bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
+        Spinner daySpinner = (Spinner) v.findViewById(R.id.day);
+        Spinner monthSpinner = (Spinner) v.findViewById(R.id.month);
+        Spinner yearSpinner = (Spinner) v.findViewById(R.id.year);
+
+        String bloodType = bloodTypeSpinner.getSelectedItem().toString();
+        String day = daySpinner.getSelectedItem().toString();
+        String month = monthSpinner.getSelectedItem().toString();
+        String year = yearSpinner.getSelectedItem().toString();
+
+        //student.setBloodType("A");
+        //student.setDay(day);
+        //student.setMonth(month);
+        //student.setYear(year);
+
+
 
         Button add_student_btn = (Button) v.findViewById(R.id.addStudentButton);
         add_student_btn.setOnClickListener(this);
@@ -132,7 +150,8 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         student.setNationalId(nationalId.getText().toString());
         student.setHeight(height.getText().toString());
         student.setWeight(weight.getText().toString());
-        student.setBloodType(bloodType.getText().toString());
+
+
     }
     @Override
     public void onClick(View v) {
@@ -142,7 +161,6 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         String nationalIdVer = nationalId.getText().toString();
         String heightVer = height.getText().toString();
         String weightVer = weight.getText().toString();
-        String bloodTypeVer = bloodType.getText().toString();
 
 
         if(firstNameVer.isEmpty()){
@@ -150,6 +168,7 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
             firstName.requestFocus();
             return;
         }
+
         if(middleNameVer.isEmpty()){
             middleName.setError("حقل اسم الأب مطلوب");
             middleName.requestFocus();
@@ -165,8 +184,18 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
             nationalId.requestFocus();
             return;
         }
+        if(nationalIdVer.length() <10 || nationalIdVer.length() > 10 || !(nationalIdVer.matches("[0-9]+"))){
+            nationalId.setError("يجب أن يحتوي السجل المدني على ١٠ أرقام فقط");
+            nationalId.requestFocus();
+            return;
+        }
         if(heightVer.isEmpty()){
             height.setError("حقل الطول مطلوب");
+            height.requestFocus();
+            return;
+        }
+        if(!(heightVer.matches("[0-9]+"))) {
+            height.setError(" يجب أن يتكون الطول من أرقام فقط");
             height.requestFocus();
             return;
         }
@@ -174,10 +203,12 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
             weight.setError("حقل الوزن مطلوب");
             weight.requestFocus();
         }
-        if(bloodTypeVer.isEmpty()){
-            bloodType.setError("حقل فصيلة الدم مطلوب");
-            bloodType.requestFocus();
+        if(!(weightVer.matches("[0-9]+"))){
+            weight.setError(" يجب أن يتكون الوزن من أرقام فقط");
+            weight.requestFocus();
+            return;
         }
+
 
         getValues();
         ref.child("student03").setValue(student);

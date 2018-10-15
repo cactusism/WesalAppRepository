@@ -84,7 +84,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
         height = (EditText) v.findViewById(R.id.editTextHight);
         weight = (EditText) v.findViewById(R.id.editTextWieght);
-        bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
+       // bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
 
         Button add_student_btn = (Button) v.findViewById(R.id.addStudentButton);
         add_student_btn.setOnClickListener(this);

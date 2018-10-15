@@ -9,10 +9,14 @@ public class students {
         private String height;
         private String  weight;
         private String bloodType;
-        public students() {
-        }
+        private String day;
+        private String month;
+        private String year;
 
-        public students(String firstname, String middleName, String lastname,String nationalId, String height, String weight, String bloodType) {
+    public students() {
+    }
+
+    public students(String firstname, String middleName, String lastname, String nationalId, String height, String weight, String bloodType, String day, String month, String year) {
             this.firstname = firstname;
             this.middleName = middleName;
             this.lastname = lastname;
@@ -20,6 +24,9 @@ public class students {
             this.height = height;
             this.weight = weight;
             this.bloodType = bloodType;
+            this.day = day;
+            this.month = month;
+            this.year = year;
         }
 
         public String getFirstname() {
@@ -77,4 +84,19 @@ public class students {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
+
+    public String getDay() { return day; }
+
+    public void setDay(String day) { this.day = day; }
+
+    public String getMonth() { return month; }
+
+    public void setMonth(String month) { this.month = month; }
+
+    public String getYear() { return year; }
+
+    public void setYear(String year) { this.year = year; }
+
+
+
 }
