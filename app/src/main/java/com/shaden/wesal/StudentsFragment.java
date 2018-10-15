@@ -27,7 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class StudentsFragment extends Fragment implements View.OnClickListener {
 
-    EditText firstName, middleName, lastName , nationalId, height, weight, bloodType,day,month,year;
+    EditText firstName, middleName, lastName , nationalId, height, weight;
+    Spinner bloodTypeSpinner,daySpinner, monthSpinner,yearSpinner;
+    String bloodType,day,month,year;
     Button add, cancel;
 
     FirebaseDatabase database;
@@ -91,20 +93,17 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         weight = (EditText) v.findViewById(R.id.editTextWieght);
        // bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
 
-        Spinner bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
-        Spinner daySpinner = (Spinner) v.findViewById(R.id.day);
-        Spinner monthSpinner = (Spinner) v.findViewById(R.id.month);
-        Spinner yearSpinner = (Spinner) v.findViewById(R.id.year);
+        bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
+        daySpinner = (Spinner) v.findViewById(R.id.day);
+        monthSpinner = (Spinner) v.findViewById(R.id.month);
+        yearSpinner = (Spinner) v.findViewById(R.id.year);
 
-        String bloodType = bloodTypeSpinner.getSelectedItem().toString();
-        String day = daySpinner.getSelectedItem().toString();
-        String month = monthSpinner.getSelectedItem().toString();
-        String year = yearSpinner.getSelectedItem().toString();
+        bloodType = bloodTypeSpinner.getSelectedItem().toString();
+        day = daySpinner.getSelectedItem().toString();
+        month = monthSpinner.getSelectedItem().toString();
+        year = yearSpinner.getSelectedItem().toString();
 
-        //student.setBloodType("A");
-        //student.setDay(day);
-        //student.setMonth(month);
-        //student.setYear(year);
+
 
 
 
@@ -150,6 +149,10 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         student.setNationalId(nationalId.getText().toString());
         student.setHeight(height.getText().toString());
         student.setWeight(weight.getText().toString());
+        student.setBloodType(bloodType);
+        student.setDay(day);
+        student.setMonth(month);
+        student.setYear(year);
 
 
     }
