@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     EditText name, teacher, assistant;
-
+    static int classNum;
     FirebaseDatabase database;
     DatabaseReference ref;
     Classes classes;
@@ -150,7 +150,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         }
 
                 getValues();
-                ref.child("child01").setValue(classes);
+                ref.child("child0"+classNum).setValue(classes);
                 Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
 
 

@@ -31,6 +31,7 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
     Spinner bloodTypeSpinner,daySpinner, monthSpinner,yearSpinner;
     String bloodType,day,month,year;
     Button add, cancel;
+    static int stNum;
 
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -214,7 +215,7 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
 
 
         getValues();
-        ref.child("student03").setValue(student);
+        ref.child("student0"+stNum++).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
 
 

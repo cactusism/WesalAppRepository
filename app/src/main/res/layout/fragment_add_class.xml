@@ -7,7 +7,9 @@
     tools:context=".AddClassFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="380dp"
         android:layout_height="71dp"
         android:layout_marginBottom="8dp"
@@ -81,6 +83,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="إضافة"
+        android:background="@drawable/buttons_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.728"
@@ -97,6 +100,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="إلغاء"
+        android:background="@drawable/buttons_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.275"
