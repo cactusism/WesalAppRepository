@@ -25,9 +25,10 @@ import java.util.ArrayList;
  */
 public class ClassesFragment extends Fragment {
 
-    ListView listView;
+
     FirebaseDatabase database;
     DatabaseReference ref;
+    ListView listView;
     ArrayList<String> list;
     ArrayAdapter <String> adapter;
     Classes classes;

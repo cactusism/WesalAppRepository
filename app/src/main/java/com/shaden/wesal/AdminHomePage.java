@@ -12,13 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminHomePage extends AppCompatActivity {
 
-    //hello this is felwah from gitHub !
-    //hello from Felwah !
-//Hi fofo i am shaden.
-// hi how are you shaden ?
-    //hi  i am reema
 
-    //reeeeemaaa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

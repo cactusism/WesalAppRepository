@@ -3,10 +3,25 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -17,20 +32,37 @@ import android.view.ViewGroup;
  * Use the {@link NotificationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotificationsFragment extends Fragment {
+public class NotificationsFragment extends Fragment implements NotificationDialog.NotificationDialogListener {
+
+    ListView listView;
+    ArrayList<String> list;
+    ArrayAdapter<String> adapter;
+    private AddNotFragment addNotFragment;
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    notifications not;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+
+    @Override
+    public void applyTexts(String subject, String notification) {
+
+    }
+
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ImageView addBTN;
+
 
     private OnFragmentInteractionListener mListener;
 
     public NotificationsFragment() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -63,8 +95,49 @@ public class NotificationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        database = FirebaseDatabase.getInstance();
+        ref=  database.getReference().child("notifications");
+        View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+        addNotFragment = new AddNotFragment();
+        not = new notifications();
+        listView = (ListView) v.findViewById(R.id.notsList);
+        list = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.not_info,R.id.notInfo,list);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot ds:dataSnapshot.getChildren())
+                {
+                    not = ds.getValue(notifications.class);
+                    list.add(0,"Title: "+not.getSubject().toString()+" \nBody: "+not.getBody().toString());
+                }
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        addBTN = (ImageView) v.findViewById(R.id.addNotificationBTN);
+        addBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+                //FragmentManager fragmentManager = getFragmentManager();
+                //fragmentManager.beginTransaction().replace(R.id.main_frame, addNotFragment ).commit();
+            }
+
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notifications, container, false);
+
+        return v;
+    }
+
+    public void openDialog(){
+        NotificationDialog ND = new NotificationDialog();
+        ND.show(getFragmentManager(), "ND");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -87,6 +160,8 @@ public class NotificationsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

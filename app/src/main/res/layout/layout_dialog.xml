@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/notEditText"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="78dp"
+        android:text="ما هو جديد المدرسة ؟"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/notEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="165dp"
+        android:ems="10"
+        android:hint="محتوى التنبيه"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/notSubEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/notEditText"
+        android:layout_alignEnd="@+id/textView9"
+        android:layout_marginBottom="-165dp"
+        android:ems="10"
+        android:hint="عنوان التنبيه"
+        android:inputType="textPersonName" />
+
+</RelativeLayout>

@@ -11,24 +11,41 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class StaffHomePage extends AppCompatActivity {
+public class StaffHomePage extends AppCompatActivity implements  NotificationDialog.NotificationDialogListener{
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
-
+    private notifications not;
     private ClassesFragment classesFragment;
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
     private AddClassFragment addClassFragment;
-
-
+    FirebaseDatabase database;
+    DatabaseReference ref;
 
 
     @Override
+    public void applyTexts(String subject, String notification) {
+        not = new notifications();
+        not.setSubject(subject);
+        not.setBody(notification);
+        ref.push().setValue(not);
+        Toast.makeText(this,"تم نشر التنبيه",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        database = FirebaseDatabase.getInstance();
+        ref=  database.getReference().child("notifications");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_home_page);
 

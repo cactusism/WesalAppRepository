@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "340091850470-b4ctbri886kqugvt37k25apk045nuo2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaden.wesal",
+            "certificate_hash": "801d1843337cacff04f2b4cc9ce4a92378afe37a"
+          }
+        },
+        {
+          "client_id": "340091850470-0gpk4gvjo3ck4i4svho3oa79b2c5cb6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaden.wesal",
+            "certificate_hash": "336cfeb1afd4e2b23a1792b2a67588b1762add3b"
+          }
+        },
+        {
           "client_id": "340091850470-9fnq7vjg8m9as7ak4q8csg6f7hfnlu5t.apps.googleusercontent.com",
           "client_type": 3
         }

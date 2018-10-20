@@ -30,10 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     EditText name, teacher, assistant;
-    static int classNum;
     FirebaseDatabase database;
     DatabaseReference ref;
     Classes classes;
+    private long classCounter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,6 +93,17 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         add_class_btn.setOnClickListener(this);
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                classCounter = dataSnapshot.getChildrenCount()+1;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         classes = new Classes();
 
         // Inflate the layout for this fragment
@@ -150,7 +161,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         }
 
                 getValues();
-                ref.child("child0"+classNum).setValue(classes);
+                ref.child("child"+classCounter).setValue(classes);
                 Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
 
 

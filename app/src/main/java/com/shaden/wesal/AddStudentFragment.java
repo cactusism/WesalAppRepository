@@ -3,6 +3,7 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -26,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AddStudentFragment extends Fragment implements View.OnClickListener {
     EditText firstName, middleName, lastName , nationalId, height, weight, bloodType;
     Button add, cancel;
+    private long studentCounter;
 
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -90,6 +95,18 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         add_student_btn.setOnClickListener(this);
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("students");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                studentCounter = dataSnapshot.getChildrenCount()+1;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         student = new students();
 
         // Inflate the layout for this fragment
@@ -175,7 +192,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
 
         getValues();
-        ref.child("student10").setValue(student);
+        ref.child("student"+studentCounter).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
 
 
