@@ -22,7 +22,6 @@ public class StaffHomePage extends AppCompatActivity {
     private ClassesFragment classesFragment;
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
-    private AddClassFragment addClassFragment;
 
 
 
@@ -38,7 +37,6 @@ public class StaffHomePage extends AppCompatActivity {
         classesFragment = new ClassesFragment();
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
-        addClassFragment = new AddClassFragment();
 
 
         setFragment(notificationsFragment);
@@ -51,7 +49,7 @@ public class StaffHomePage extends AppCompatActivity {
 
                     case R.id.nav_classes :
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
-                        setFragment(addClassFragment);
+                        setFragment(classesFragment);
                         return true;
 
 
