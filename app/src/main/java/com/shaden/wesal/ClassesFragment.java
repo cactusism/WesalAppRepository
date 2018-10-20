@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +33,8 @@ public class ClassesFragment extends Fragment {
     ArrayList<String> list;
     ArrayAdapter <String> adapter;
     Classes classes;
-
+    Button addBtn;
+    AddClassFragment addClassFragment;
     public ClassesFragment() {
         // Required empty public constructor
     }
@@ -43,6 +46,16 @@ public class ClassesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_classes, container, false);
         classes = new Classes();
+        addClassFragment = new AddClassFragment();
+        addBtn = (Button)v.findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, addClassFragment).commit();
+            }
+        });
+
         listView = (ListView) v.findViewById(R.id.classesList);
     database = FirebaseDatabase.getInstance();
     ref = database.getReference("classes");
