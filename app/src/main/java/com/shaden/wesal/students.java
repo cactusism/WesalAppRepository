@@ -6,17 +6,19 @@ public class students {
         private String middleName;
         private String lastname;
         private String nationalId;
-        private String height;
-        private String  weight;
+        private double height;
+        private double  weight;
         private String bloodType;
         private String day;
         private String month;
         private String year;
+        private String gender;
+
 
     public students() {
     }
 
-    public students(String firstname, String middleName, String lastname, String nationalId, String height, String weight, String bloodType, String day, String month, String year) {
+    public students(String firstname, String middleName, String lastname, String nationalId, double height, double weight, String bloodType, String day, String month, String year, String gender) {
             this.firstname = firstname;
             this.middleName = middleName;
             this.lastname = lastname;
@@ -27,6 +29,7 @@ public class students {
             this.day = day;
             this.month = month;
             this.year = year;
+            this.gender = gender;
         }
 
         public String getFirstname() {
@@ -61,19 +64,19 @@ public class students {
         this.nationalId = nationalId;
     }
 
-    public String getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -97,6 +100,8 @@ public class students {
 
     public void setYear(String year) { this.year = year; }
 
+    public String getGender() { return gender; }
 
+    public void setGender(String gender) { this.gender = gender; }
 
 }

@@ -28,6 +28,8 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     private ClassesFragment classesFragment;
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
+
+
     private AddClassFragment addClassFragment;
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -55,7 +57,6 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
         classesFragment = new ClassesFragment();
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
-        addClassFragment = new AddClassFragment();
 
 
         setFragment(notificationsFragment);
@@ -68,7 +69,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
                     case R.id.nav_classes :
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
-                        setFragment(addClassFragment);
+                        setFragment(classesFragment);
                         return true;
 
 
