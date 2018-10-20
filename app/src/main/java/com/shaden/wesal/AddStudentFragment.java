@@ -1,14 +1,15 @@
 package com.shaden.wesal;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -24,12 +25,17 @@ import com.google.firebase.database.FirebaseDatabase;
  * create an instance of this fragment.
  */
 public class AddStudentFragment extends Fragment implements View.OnClickListener {
-    EditText firstName, middleName, lastName , nationalId, height, weight, bloodType;
+    EditText firstName, middleName, lastName , nationalId, heightText, weightText;
+    Spinner bloodTypeSpinner,daySpinner, monthSpinner,yearSpinner, genderSpinner;
+    String bloodType,day,month,year,gender;
+    double height,weight;
     Button add, cancel;
+    static int stNum;
 
     FirebaseDatabase database;
     DatabaseReference ref;
     students student;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,12 +88,30 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         middleName= (EditText) v.findViewById(R.id.editTextMiddleName);
         lastName= (EditText) v.findViewById(R.id.editTextLastName);
         nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
-        height = (EditText) v.findViewById(R.id.editTextHight);
-        weight = (EditText) v.findViewById(R.id.editTextWieght);
-       // bloodType = (EditText) v.findViewById(R.id.editTextBloodType);
+        heightText = (EditText) v.findViewById(R.id.editTextHight);
+        weightText = (EditText) v.findViewById(R.id.editTextWieght);
 
-        Button add_student_btn = (Button) v.findViewById(R.id.addStudentButton);
+        bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
+        daySpinner = (Spinner) v.findViewById(R.id.day);
+        monthSpinner = (Spinner) v.findViewById(R.id.month);
+        yearSpinner = (Spinner) v.findViewById(R.id.year);
+        genderSpinner = (Spinner) v.findViewById(R.id.gender);
+
+
+
+        Button add_student_btn = (Button) v.findViewById(R.id.listStudentButton);
         add_student_btn.setOnClickListener(this);
+
+        Button btnFragment = (Button) v.findViewById(R.id.cancelButton);
+        btnFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.main_frame, new StudentsFragment());
+                ft.commit();
+            }
+        });
+
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("students");
         student = new students();
@@ -103,8 +127,8 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
+   // @Override
+   /* public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -112,7 +136,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {
@@ -125,10 +149,13 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setMiddleName(middleName.getText().toString());
         student.setLastname(lastName.getText().toString());
         student.setNationalId(nationalId.getText().toString());
-        student.setHeight(height.getText().toString());
-        student.setWeight(weight.getText().toString());
-        student.setBloodType(bloodType.getText().toString());
-
+        student.setHeight(height);
+        student.setWeight(weight);
+        student.setBloodType(bloodType);
+        student.setDay(day);
+        student.setMonth(month);
+        student.setYear(year);
+        student.setGender(gender);
     }
     //@Override
     public void onClick(View v) {
@@ -136,15 +163,27 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         String middleNameVer = middleName.getText().toString();
         String lastNameVer = lastName.getText().toString();
         String nationalIdVer = nationalId.getText().toString();
-        String heightVer = height.getText().toString();
-        String weightVer = weight.getText().toString();
-        String bloodTypeVer = bloodType.getText().toString();
+        String heightVer = heightText.getText().toString();
+        String weightVer = weightText.getText().toString();
+
+        bloodType = bloodTypeSpinner.getSelectedItem().toString();
+        day = daySpinner.getSelectedItem().toString();
+        month = monthSpinner.getSelectedItem().toString();
+        year = yearSpinner.getSelectedItem().toString();
+        gender = genderSpinner.getSelectedItem().toString();
+
+        if (gender == "ولد")
+            gender = "boy";
+        else
+            gender = "girl";
+
 
         if(firstNameVer.isEmpty()){
             firstName.setError("حقل اسم الطالب ممطلوب");
             firstName.requestFocus();
             return;
         }
+
         if(middleNameVer.isEmpty()){
             middleName.setError("حقل اسم الأب مطلوب");
             middleName.requestFocus();
@@ -160,22 +199,38 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
             nationalId.requestFocus();
             return;
         }
-        if(heightVer.isEmpty()){
-            height.setError("حقل الطول مطلوب");
-            height.requestFocus();
+        if(nationalIdVer.length() <10 || nationalIdVer.length() > 10 || !(nationalIdVer.matches("[0-9]+"))){
+            nationalId.setError("يجب أن يحتوي السجل المدني على ١٠ أرقام فقط");
+            nationalId.requestFocus();
             return;
         }
-        if(weightVer.isEmpty()){
-            weight.setError("حقل الوزن مطلوب");
-            weight.requestFocus();
+        if(heightVer.isEmpty()){
+            heightText.setError("حقل الطول مطلوب");
+            heightText.requestFocus();
+            return;
         }
-        if(bloodTypeVer.isEmpty()){
-            bloodType.setError("حقل فصيلة الدم مطلوب");
-            bloodType.requestFocus();
+
+        if(weightVer.isEmpty()){
+            weightText.setError("حقل الوزن مطلوب");
+            weightText.requestFocus();
+            return;
+        }
+
+        try {
+            height = Double.parseDouble(heightVer);
+        } catch (Exception e){
+            heightText.setError(" يجب أن يتكون الطول من أرقام فقط");
+            heightText.requestFocus();
+        }
+        try {
+            weight = Double.parseDouble(weightVer);
+        } catch (Exception e){
+            weightText.setError(" يجب أن يتكون الوزن من أرقام فقط");
+            weightText.requestFocus();
         }
 
         getValues();
-        ref.child("student10").setValue(student);
+        ref.child("student0"+stNum++).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
 
 

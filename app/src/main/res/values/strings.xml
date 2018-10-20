@@ -72,4 +72,9 @@
         <item>2016</item>
         <item>2017</item>
     </string-array>
+
+    <string-array name="gender_type">
+        <item>ولد</item>
+        <item>بنت</item>
+    </string-array>
 </resources>

@@ -13,9 +13,8 @@
         android:layout_width="101dp"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/editTextFirstName"
         android:layout_marginBottom="116dp"
-        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="الوزن"
         android:inputType="textPersonName"
@@ -44,10 +43,12 @@
 
     <EditText
         android:id="@+id/editTextLastName"
-        android:layout_width="101dp"
+        android:layout_width="112dp"
         android:layout_height="45dp"
-        android:layout_alignStart="@+id/editTextNationalId"
-        android:layout_alignTop="@+id/editTextMiddleName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="113dp"
         android:ems="10"
         android:hint="العائلة"
         android:inputType="textPersonName"
@@ -60,9 +61,9 @@
 
     <EditText
         android:id="@+id/editTextMiddleName"
-        android:layout_width="101dp"
+        android:layout_width="102dp"
         android:layout_height="45dp"
-        android:layout_alignTop="@+id/editTextFirstName"
+        android:layout_alignTop="@+id/editTextLastName"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="اسم الأب"
@@ -76,11 +77,11 @@
 
     <EditText
         android:id="@+id/editTextFirstName"
-        android:layout_width="101dp"
+        android:layout_width="100dp"
         android:layout_height="45dp"
-        android:layout_alignEnd="@+id/editTextNationalId"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="124dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/editTextLastName"
+        android:layout_marginEnd="33dp"
         android:ems="10"
         android:hint="الاسم الأول"
         android:inputType="textPersonName"
@@ -95,8 +96,8 @@
         android:id="@+id/textView4"
         android:layout_width="143dp"
         android:layout_height="30dp"
+        android:layout_above="@+id/editTextWieght"
         android:layout_alignEnd="@+id/editTextWieght"
-        android:layout_below="@+id/day"
         android:text="المعلومات الصحية"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,7 +111,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_alignEnd="@+id/editTextFirstName"
+        android:layout_alignEnd="@+id/editTextWieght"
         android:layout_centerVertical="true"
         android:text="تاريخ الميلاد"
         android:textSize="14sp"
@@ -125,9 +126,9 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editTextFirstName"
-        android:layout_marginTop="81dp"
+        android:layout_above="@+id/editTextLastName"
+        android:layout_alignStart="@+id/editTextWieght"
+        android:layout_marginBottom="-116dp"
         android:text="المعلومات الشخصية"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -157,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/addStudentButton"
+        android:layout_alignTop="@+id/listStudentButton"
         android:layout_marginStart="104dp"
         android:text="إلغاء"
         android:background="@drawable/buttons_shape"
@@ -169,7 +170,7 @@
         app:layout_constraintVertical_bias="0.948" />
 
     <Button
-        android:id="@+id/addStudentButton"
+        android:id="@+id/listStudentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -188,11 +189,11 @@
 
     <EditText
         android:id="@+id/editTextNationalId"
-        android:layout_width="330dp"
-        android:layout_height="41dp"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editTextWieght"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="187dp"
         android:ems="10"
         android:hint="السجل المدني"
         android:inputType="textPersonName"
@@ -206,22 +207,22 @@
         android:id="@+id/bloodType"
         android:layout_width="110dp"
         android:layout_height="45dp"
-        android:layout_alignEnd="@+id/editTextLastName"
+        android:layout_alignStart="@+id/editTextLastName"
         android:layout_alignTop="@+id/editTextWieght"
         android:entries="@array/blood_types"></Spinner>
 
 
     <Spinner
         android:id="@+id/day"
-        android:layout_width="110dp"
+        android:layout_width="101dp"
         android:layout_height="45dp"
-        android:layout_alignEnd="@+id/editTextWieght"
+        android:layout_alignStart="@+id/editTextFirstName"
         android:layout_below="@+id/textView7"
         android:entries="@array/days"></Spinner>
 
     <Spinner
         android:id="@+id/month"
-        android:layout_width="110dp"
+        android:layout_width="104dp"
         android:layout_height="45dp"
         android:layout_below="@+id/textView7"
         android:layout_centerHorizontal="true"
@@ -229,10 +230,18 @@
 
     <Spinner
         android:id="@+id/year"
-        android:layout_width="110dp"
+        android:layout_width="109dp"
         android:layout_height="45dp"
-        android:layout_alignEnd="@+id/editTextLastName"
+        android:layout_alignStart="@+id/editTextLastName"
         android:layout_below="@+id/textView7"
         android:entries="@array/years"></Spinner>
+
+    <Spinner
+        android:id="@+id/gender"
+        android:layout_width="178dp"
+        android:layout_height="47dp"
+        android:layout_alignStart="@+id/editTextLastName"
+        android:layout_alignTop="@+id/editTextNationalId"
+        android:entries="@array/gender_type"></Spinner>
 
 </RelativeLayout>
