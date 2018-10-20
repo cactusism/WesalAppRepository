@@ -12,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,10 +40,16 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     @Override
     public void applyTexts(String subject, String notification) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
         not = new notifications();
         not.setSubject(subject);
         not.setBody(notification);
-        ref.push().setValue(not);
+        not.setTime(dateFormat.format(cal.getTime()));
+        //ref.push().setValue(not);
+        String id = ref.push().getKey();
+        not.setNotId(id);
+        ref.child(id).setValue(not);
         Toast.makeText(this,"تم نشر التنبيه",Toast.LENGTH_LONG).show();
     }
 

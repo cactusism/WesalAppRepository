@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,23 +8,45 @@
     android:orientation="horizontal"
     android:weightSum="100">
 
+
     <TextView
-        android:id="@+id/notInfo"
-        android:layout_width="303dp"
-        android:layout_height="55dp"
-        android:layout_weight="40"
-        android:text="التنبيه"
-        android:textSize="15sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:id="@+id/notSubject"
+        android:layout_width="214dp"
+        android:layout_height="33dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="subject"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/notBody"
+        android:layout_width="281dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/notSubject"
+        android:singleLine="false"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/notDate"
+        android:layout_width="194dp"
+        android:layout_height="33dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="54dp"
-        android:layout_height="50dp"
-        android:layout_weight="60"
-        android:background="@null"
+        android:id="@+id/notDeleteBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/notBody"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
         app:srcCompat="@drawable/x_button" />
 
-
-</LinearLayout>
+</RelativeLayout>

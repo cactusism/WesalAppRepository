@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -35,9 +36,10 @@ import java.util.Collection;
 public class NotificationsFragment extends Fragment implements NotificationDialog.NotificationDialogListener {
 
     ListView listView;
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
-    private AddNotFragment addNotFragment;
+    //ArrayList<String> list;
+    List<notifications> notsList;
+    //ArrayAdapter<String> adapter;
+    NotificationListAdapter adapter;
     FirebaseDatabase database;
     DatabaseReference ref;
     notifications not;
@@ -98,20 +100,20 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("notifications");
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
-        addNotFragment = new AddNotFragment();
         not = new notifications();
         listView = (ListView) v.findViewById(R.id.notsList);
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.not_info,R.id.notInfo,list);
+        notsList = new ArrayList<>();
+        //adapter = new ArrayAdapter<String>(getContext(), R.layout.not_info,R.id.notInfo,list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
+                notsList.clear();
                 for (DataSnapshot ds:dataSnapshot.getChildren())
                 {
-                    not = ds.getValue(notifications.class);
-                    list.add(0,"Title: "+not.getSubject().toString()+" \nBody: "+not.getBody().toString());
+                        not = ds.getValue(notifications.class);
+                        notsList.add(0, not);
                 }
+                adapter = new NotificationListAdapter(getContext(), R.layout.not_info,notsList);
                 listView.setAdapter(adapter);
             }
 
