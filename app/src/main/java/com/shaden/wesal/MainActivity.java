@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password= editTextPassword.getText().toString().trim();
 
+        if(email.isEmpty() && password.isEmpty()){
+            editTextPassword.setError("حقل البريد الإلكتروني و كلمة المرور مطلوب");
+            editTextEmail.requestFocus();
+            editTextPassword.requestFocus();
+            return;
+        }
+
         if(email.isEmpty()){
             editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
             editTextEmail.requestFocus();

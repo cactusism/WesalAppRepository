@@ -3,6 +3,7 @@ package com.shaden.wesal;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     double height,weight;
     Button add, cancel;
     static int stNum;
+    StudentsFragment studentsFragment;
 
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -90,6 +92,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
         heightText = (EditText) v.findViewById(R.id.editTextHight);
         weightText = (EditText) v.findViewById(R.id.editTextWieght);
+        studentsFragment = new StudentsFragment();
 
         bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
         daySpinner = (Spinner) v.findViewById(R.id.day);
@@ -235,6 +238,8 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setStId(id);
         ref.child(id).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_frame, studentsFragment).commit();
 
 
     }
