@@ -45,40 +45,10 @@ public class NotificationListAdapter extends ArrayAdapter<notifications>{
 
         notSubject.setText(not.getSubject());
         notBody.setText(not.getBody());
-        notDate.setText(not.getTime());
+        notDate.setText("وقت النشر:"+ not.getTime());
 
-
-        view.findViewById(R.id.notDeleteBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem(position);
-            }
-        });
         return view;
     }
 
-    private void removeItem (int i){
-        index = i;
-        AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
-        builder.setTitle("هل أنت متأكد من حذف التنبيه؟");
-        builder.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("notifications").child(notificationsList.get(index).getNotId());
-                ref.removeValue();
-                notifyDataSetChanged();
-                Toast.makeText(mCtx,"تم حذف التنبيه بنجاح",Toast.LENGTH_LONG).show();
-
-            }
-        });
-        builder.setNegativeButton("لا", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }

@@ -1,6 +1,10 @@
 package com.shaden.wesal;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +17,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +44,7 @@ import java.util.List;
  */
 public class NotificationsFragment extends Fragment implements NotificationDialog.NotificationDialogListener {
 
-    ListView listView;
+    SwipeMenuListView listView;
     //ArrayList<String> list;
     List<notifications> notsList;
     //ArrayAdapter<String> adapter;
@@ -101,7 +110,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
         ref=  database.getReference().child("notifications");
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
         not = new notifications();
-        listView = (ListView) v.findViewById(R.id.notsList);
+        listView = (SwipeMenuListView) v.findViewById(R.id.notsList);
         notsList = new ArrayList<>();
         //adapter = new ArrayAdapter<String>(getContext(), R.layout.not_info,R.id.notInfo,list);
         ref.addValueEventListener(new ValueEventListener() {
@@ -115,6 +124,57 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
                 }
                 adapter = new NotificationListAdapter(getContext(), R.layout.not_info,notsList);
                 listView.setAdapter(adapter);
+
+                SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+                    @Override
+                    public void create(SwipeMenu menu) {
+                        // create "delete" item
+                        SwipeMenuItem deleteItem = new SwipeMenuItem(
+                                getContext());
+                        // set item background
+                        deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF,
+                                0x00, 0x00)));
+                        // set item width
+                        deleteItem.setWidth(230);
+                        // set a icon
+                        deleteItem.setIcon(R.drawable.rubbish);
+                        // add to menu
+                        menu.addMenuItem(deleteItem);
+                    }
+                };
+                listView.setMenuCreator(creator);
+
+                listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("هل أنت متأكد من حذف التنبيه؟");
+                        builder.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("notifications").child(notsList.get(position).getNotId());
+                                ref.removeValue();
+                                //notifyDataSetChanged();
+                                Toast.makeText(getContext(),"تم حذف التنبيه بنجاح",Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        builder.setNegativeButton("لا", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        // false : close the menu; true : not close the menu
+                        return false;
+                    }
+                });
+
             }
 
             @Override

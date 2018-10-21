@@ -40,7 +40,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     @Override
     public void applyTexts(String subject, String notification) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
         Calendar cal = Calendar.getInstance();
         not = new notifications();
         not.setSubject(subject);
