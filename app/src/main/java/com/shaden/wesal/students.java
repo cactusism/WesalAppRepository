@@ -13,6 +13,8 @@ public class students {
         private String month;
         private String year;
         private String gender;
+        private String stId;
+        private String motherId;
 
 
     public students() {
@@ -30,6 +32,8 @@ public class students {
             this.month = month;
             this.year = year;
             this.gender = gender;
+            this.stId = "null";
+            this.motherId="null";
         }
 
         public String getFirstname() {
@@ -103,5 +107,14 @@ public class students {
     public String getGender() { return gender; }
 
     public void setGender(String gender) { this.gender = gender; }
+
+    public String getStId() { return stId; }
+
+    public void setStId(String stId) { this.stId = stId; }
+
+    public String getMotherId() { return motherId; }
+
+    public void setMotherId(String motherId) { this.motherId = motherId; }
+
 
 }

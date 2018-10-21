@@ -32,9 +32,12 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     EditText emailEditText, passwordEditText, repeatPasswordEditText;
     ArrayList<String> list;
+   // ArrayList<String> studentsList;
     ArrayAdapter <String> adapter;
     students student;
     Spinner StudentSpinner;
+    String selectedStudent;
+    //String fullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
         StudentSpinner = (Spinner) findViewById(R.id.StudentsSpinner);
         ref = database.getReference("students");
         list = new ArrayList<>();
+        //studentsList = new ArrayList<>();
         //adapter = new ArrayAdapter<String>(this, R.layout.activity_sign_up_mother,R.id.StudentsSpinner, list);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
 
@@ -65,7 +69,10 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                   student = ds.getValue(students.class);
-                  list.add(student.getFirstname().toString()+" "+student.getMiddleName().toString()+" "+student.getLastname().toString());
+                if(student.getMotherId().equals("null")) {
+                     //studentsList.add(student.getStId());
+                     list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString()+" ,"+student.getStId());
+                }
                 }
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 StudentSpinner.setAdapter(adapter);
@@ -113,6 +120,13 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
             repeatPasswordEditText.requestFocus();
             return;
         }
+        if(StudentSpinner.getSelectedItem() == null){
+            Toast.makeText(getApplicationContext(),"يجب اختيار اسم الطفل",Toast.LENGTH_LONG ).show();
+        }
+
+        //selectedStudent = getStudent(StudentSpinner.getSelectedItem().toString());
+        selectedStudent = StudentSpinner.getSelectedItem().toString();
+        selectedStudent = selectedStudent.substring(selectedStudent.indexOf(',')+1);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -122,6 +136,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
                     final String userId = user.getUid();
                     final DatabaseReference mRef=  database.getReference().child("roles");
                     mRef.child(userId).setValue("mother");
+                    ref.child(selectedStudent).child("motherId").setValue(userId);
                     openDialog();
                 }
                 else{
@@ -138,6 +153,36 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
+   /* public String getStudent (String childName){
+     DatabaseReference stRef ;
+        for (String currentStudent:studentsList){
+            stRef = ref.child(currentStudent);
+            stRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        students st = dataSnapshot.getValue(students.class);
+                        String firstName =st.getFirstname();
+                        String middleName = st.getMiddleName();
+                        String lastName = st.getLastname();
+                        fullName = firstName + " " + middleName + " " + lastName;
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            if(fullName.equals(childName)){
+                    return currentStudent;
+            }
+        }
+        return null;
+    }*/
 
 
 }

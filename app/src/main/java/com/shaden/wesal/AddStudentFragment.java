@@ -156,6 +156,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setMonth(month);
         student.setYear(year);
         student.setGender(gender);
+        student.setMotherId("null");
     }
     //@Override
     public void onClick(View v) {
@@ -230,7 +231,9 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
 
         getValues();
-        ref.child("student0"+stNum++).setValue(student);
+        String id = ref.push().getKey();
+        student.setStId(id);
+        ref.child(id).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
 
 
