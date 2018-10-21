@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+//import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     // Write a message to the database
+    //ProgressBar progressBar;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
 
@@ -36,10 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
+
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-
-
         //LogIn
         findViewById( R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password= editTextPassword.getText().toString().trim();
 
+        if(email.isEmpty()&&password.isEmpty()){
+            editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
+            editTextPassword.setError("حقل كلمة المرور والبريد الإلكتروني مطلوب");
+            editTextEmail.requestFocus();
+            editTextPassword.requestFocus();
+            return;
+        }
         if(email.isEmpty()){
             editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
             editTextEmail.requestFocus();
@@ -69,9 +77,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        //progressBar.setVisibility(View.VISIBLE);
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                //progressBar.setVisibility(View.GONE);
+
                 if(task.isSuccessful()){
                     FirebaseUser user =  mAuth.getCurrentUser();
                     final String userId = user.getUid();
@@ -120,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     String error=task.getException().getMessage();
                     if(error.equals("There is no user record corresponding to this identifier. The user may have been deleted."))
-                   error="لا يوجد مستخدم بهذه البيانات, المستخدم قد يكون تمّ حذفه";
+                   error="لا يوجد مستخدم بهذه البيانات";
                  else if(task.getException().getMessage().equals("The password is invalid or the user does not have a password."))
-                     error="كلمة المرور المدخلة غير صحيحة, الرجاء إعادة المحاولة";
+                     error="كلمة المرور المدخلة غير صحيحة، الرجاء إعادة المحاولة";
                     Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
                 }
             }
