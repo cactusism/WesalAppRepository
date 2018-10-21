@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
     DatabaseReference ref;
     Classes classes;
     private long classCounter;
+    Button addClassBtn, cancelClassBtn;
+    ClassesFragment classesFragment;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,8 +92,12 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         name= (EditText) v.findViewById(R.id.name_text);
         teacher= (EditText) v.findViewById(R.id.teacher_text);
         assistant= (EditText) v.findViewById(R.id.assistant_text);
-        Button add_class_btn = (Button) v.findViewById(R.id.add_class_btn);
-        add_class_btn.setOnClickListener(this);
+        addClassBtn = (Button) v.findViewById(R.id.add_class_btn);
+        cancelClassBtn = (Button) v.findViewById(R.id.cancelButton);
+        classesFragment = new ClassesFragment();
+
+        //Button add_class_btn = (Button) v.findViewById(R.id.add_class_btn);
+       // add_class_btn.setOnClickListener(this);
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
         ref.addValueEventListener(new ValueEventListener() {
@@ -105,6 +112,49 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
             }
         });
         classes = new Classes();
+
+        addClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nameVer = name.getText().toString();
+                String teacherVer = teacher.getText().toString();
+                String assistantVer = assistant.getText().toString();
+
+                if(nameVer.isEmpty()){
+                    name.setError("حقل اسم الفصل ممطلوب");
+                    name.requestFocus();
+                    return;
+                }
+                if(teacherVer.isEmpty()){
+                    teacher.setError("حقل اسم المعلمة مطلوب");
+                    teacher.requestFocus();
+                    return;
+                }
+                if(assistantVer.isEmpty()){
+                    assistant.setError("حقل اسم المساعدة مطلوب");
+                    assistant.requestFocus();
+                    return;
+                }
+
+                getValues();
+                ref.child("child"+classCounter).setValue(classes);
+                Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
+            }
+        });
+
+
+
+        cancelClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return v;
@@ -140,32 +190,9 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String nameVer = name.getText().toString();
-        String teacherVer = teacher.getText().toString();
-        String assistantVer = assistant.getText().toString();
 
-        if(nameVer.isEmpty()){
-            name.setError("حقل اسم الفصل ممطلوب");
-            name.requestFocus();
-            return;
-        }
-        if(teacherVer.isEmpty()){
-            teacher.setError("حقل اسم المعلمة مطلوب");
-            teacher.requestFocus();
-            return;
-        }
-        if(assistantVer.isEmpty()){
-            assistant.setError("حقل اسم المساعدة مطلوب");
-            assistant.requestFocus();
-            return;
-        }
+    }
 
-                getValues();
-                ref.child("child"+classCounter).setValue(classes);
-                Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
-
-
-            }
 
     /**
      * This interface must be implemented by activities that contain this

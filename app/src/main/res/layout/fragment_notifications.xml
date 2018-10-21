@@ -20,7 +20,6 @@
         tools:layout_editor_absoluteX="2dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp">
-
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <ImageButton

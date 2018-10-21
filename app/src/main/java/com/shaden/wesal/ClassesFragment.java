@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,7 @@ public class ClassesFragment extends Fragment {
     ArrayList<String> list;
     ArrayAdapter <String> adapter;
     Classes classes;
-    Button addBtn;
+    ImageButton addBtn;
     AddClassFragment addClassFragment;
     public ClassesFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class ClassesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_classes, container, false);
         classes = new Classes();
         addClassFragment = new AddClassFragment();
-        addBtn = (Button)v.findViewById(R.id.addBtn);
+        addBtn = (ImageButton)v.findViewById(R.id.addBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +69,7 @@ public class ClassesFragment extends Fragment {
             for (DataSnapshot ds:dataSnapshot.getChildren())
             {
                 classes = ds.getValue(Classes.class);
-                list.add(classes.getName().toString()+"  Teacher:"+classes.getTeacher().toString());
+                list.add("الفصل:   "+ classes.getName().toString()+"\n المعلمة:  "+classes.getTeacher().toString()+"\n المساعدة:  "+ classes.getAssistant().toString());
             }
             listView.setAdapter(adapter);
         }
