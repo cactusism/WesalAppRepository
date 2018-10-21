@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ClassesFragment">
 
+    <TextView
+        android:id="@+id/noClasses"
+        android:layout_width="380dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         android:id="@+id/classesList"
         android:layout_width="match_parent"

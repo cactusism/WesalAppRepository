@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
 >
 
+    <TextView
+        android:id="@+id/noNots"
+        android:layout_width="380dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/notsList"
         android:layout_width="381dp"
@@ -20,6 +33,7 @@
         tools:layout_editor_absoluteX="2dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp">
+
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <ImageButton

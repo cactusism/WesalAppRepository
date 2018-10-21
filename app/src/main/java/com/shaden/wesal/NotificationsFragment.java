@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -52,6 +53,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
     FirebaseDatabase database;
     DatabaseReference ref;
     notifications not;
+    TextView noNots;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -112,6 +114,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
         not = new notifications();
         listView = (SwipeMenuListView) v.findViewById(R.id.notsList);
         notsList = new ArrayList<>();
+        noNots = (TextView) v.findViewById(R.id.noNots);
         //adapter = new ArrayAdapter<String>(getContext(), R.layout.not_info,R.id.notInfo,list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,6 +127,10 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
                 }
                 adapter = new NotificationListAdapter(getContext(), R.layout.not_info,notsList);
                 listView.setAdapter(adapter);
+                if(notsList.isEmpty()){
+                    noNots.setText("لا يوجد تنبيهات حاليّا");
+                }
+
 
                 SwipeMenuCreator creator = new SwipeMenuCreator() {
 

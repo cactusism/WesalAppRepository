@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,7 @@ public class ClassesFragment extends Fragment {
     Classes classes;
     ImageButton addBtn;
     AddClassFragment addClassFragment;
+    TextView noClasses;
     public ClassesFragment() {
         // Required empty public constructor
     }
@@ -59,6 +61,7 @@ public class ClassesFragment extends Fragment {
         });
 
         listView = (ListView) v.findViewById(R.id.classesList);
+        noClasses = (TextView) v.findViewById(R.id.noClasses);
     database = FirebaseDatabase.getInstance();
     ref = database.getReference("classes");
     list = new ArrayList<>();
@@ -72,6 +75,9 @@ public class ClassesFragment extends Fragment {
                 list.add("الفصل:   "+ classes.getName().toString()+"\n المعلمة:  "+classes.getTeacher().toString()+"\n المساعدة:  "+ classes.getAssistant().toString());
             }
             listView.setAdapter(adapter);
+            if(list.isEmpty()){
+                noClasses.setText("لا يوجد فصول حاليّا");
+            }
         }
 
         @Override
