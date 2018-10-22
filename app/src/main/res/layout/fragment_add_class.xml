@@ -8,6 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="380dp"
@@ -21,6 +22,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/background"
+        android:layout_width="314dp"
+        android:layout_height="353dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#a7ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605" />
 
     <EditText
         android:id="@+id/name_text"
