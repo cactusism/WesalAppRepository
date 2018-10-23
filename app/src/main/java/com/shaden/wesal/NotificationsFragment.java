@@ -46,9 +46,7 @@ import java.util.List;
 public class NotificationsFragment extends Fragment implements NotificationDialog.NotificationDialogListener {
 
     SwipeMenuListView listView;
-    //ArrayList<String> list;
     List<notifications> notsList;
-    //ArrayAdapter<String> adapter;
     NotificationListAdapter adapter;
     FirebaseDatabase database;
     DatabaseReference ref;

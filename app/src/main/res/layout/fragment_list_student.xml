@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,24 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/noStudents"
+        android:layout_width="380dp"
+        android:layout_height="71dp"
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
-</FrameLayout>
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/studentsList"
+        android:layout_width="381dp"
+        android:layout_height="437dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="0dp">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+
+</android.support.constraint.ConstraintLayout>

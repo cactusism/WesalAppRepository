@@ -1,36 +1,23 @@
 package com.shaden.wesal;
 
-import android.content.Intent;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StudentsFragment.OnFragmentInteractionListener} interface
+ * {@link StudentInfoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StudentsFragment#newInstance} factory method to
+ * Use the {@link StudentInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentsFragment extends Fragment implements View.OnClickListener {
-
-    Intent intent;
-
-    FirebaseDatabase database;
-    DatabaseReference ref;
-    students student;
-
+public class StudentInfoFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,7 +29,7 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    public StudentsFragment() {
+    public StudentInfoFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +39,11 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentsFragment.
+     * @return A new instance of fragment StudentInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentsFragment newInstance(String param1, String param2) {
-        StudentsFragment fragment = new StudentsFragment();
+    public static StudentInfoFragment newInstance(String param1, String param2) {
+        StudentInfoFragment fragment = new StudentInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,46 +58,15 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_students, container, false);
-        Button btnFragment = (Button) v.findViewById(R.id.addStudentButton2);
-        btnFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new AddStudentFragment());
-                ft.commit();
-            }
-        });
-
-        Button listStudentButton = (Button) v.findViewById(R.id.listStudentButton);
-        listStudentButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new ListStudentFragment());
-                ft.commit();
-            }
-        });
-
-
-
-
         // Inflate the layout for this fragment
-        return v;
+        return inflater.inflate(R.layout.fragment_student_info, container, false);
     }
-//@Override
-//public void onClick(View view) {
-   // Intent intent = new Intent (getActivity().getContext(), addStudent.class);
-   // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    //startActivity(intent);
-     //   }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -131,26 +87,13 @@ public class StudentsFragment extends Fragment implements View.OnClickListener {
         super.onDetach();
         mListener = null;
     }
-    public void getValues() {
-
-
-    }
-    @Override
     public void onClick(View v) {
 
 
 
     }
 
-
-/*
-    @Override
-    public void onClick(View view) {
-
-    }*/
-
-
-/**
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

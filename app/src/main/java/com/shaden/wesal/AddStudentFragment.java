@@ -225,12 +225,14 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         } catch (Exception e){
             heightText.setError(" يجب أن يتكون الطول من أرقام فقط");
             heightText.requestFocus();
+            return;
         }
         try {
             weight = Double.parseDouble(weightVer);
         } catch (Exception e){
             weightText.setError(" يجب أن يتكون الوزن من أرقام فقط");
             weightText.requestFocus();
+            return;
         }
 
         getValues();

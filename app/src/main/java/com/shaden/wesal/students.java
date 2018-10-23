@@ -7,7 +7,7 @@ public class students {
         private String lastname;
         private String nationalId;
         private double height;
-        private double  weight;
+        private double weight;
         private String bloodType;
         private String day;
         private String month;
