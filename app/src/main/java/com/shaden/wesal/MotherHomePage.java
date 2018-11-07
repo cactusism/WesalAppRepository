@@ -44,9 +44,8 @@ public class MotherHomePage extends AppCompatActivity {
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
-    MotherNotificationsFragment motherNotificationsFragment;
-    ChildProfileFragment childProfileFragment;
-    ChildClassFragment childClassFragment;
+    childProfileFragment childProfileFragment;
+    childClassFragment childClassFragment;
 
 
     @Override
@@ -59,8 +58,8 @@ public class MotherHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_mother_home_page);
 
         motherNotificationsFragment = new MotherNotificationsFragment();
-        childClassFragment = new ChildClassFragment();
-        childProfileFragment = new ChildProfileFragment();
+        childClassFragment = new childClassFragment();
+        childProfileFragment = new childProfileFragment();
 
 
 
