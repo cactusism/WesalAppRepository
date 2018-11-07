@@ -39,6 +39,8 @@ public class ClassesFragment extends Fragment {
     ImageButton addBtn;
     AddClassFragment addClassFragment;
     TextView noClasses;
+    ArrayList<Classes> allClasses;
+
     public ClassesFragment() {
         // Required empty public constructor
     }
@@ -62,11 +64,11 @@ public class ClassesFragment extends Fragment {
 
         listView = (ListView) v.findViewById(R.id.classesList);
         noClasses = (TextView) v.findViewById(R.id.noClasses);
-    database = FirebaseDatabase.getInstance();
-    ref = database.getReference("classes");
-    list = new ArrayList<>();
-    adapter = new ArrayAdapter<String>(getContext(), R.layout.class_info,R.id.classInfo,list);
-    ref.addValueEventListener(new ValueEventListener() {
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("classes");
+        list = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.class_info,R.id.classInfo,list);
+        ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             for (DataSnapshot ds:dataSnapshot.getChildren())

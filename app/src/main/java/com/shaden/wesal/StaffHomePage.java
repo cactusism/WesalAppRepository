@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import java.text.DateFormat;
@@ -31,11 +32,16 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     private ClassesFragment classesFragment;
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
+    private AddStudentFragment addstudentFragment;
+
+    private static String studentId;
 
 
     private AddClassFragment addClassFragment;
     FirebaseDatabase database;
     DatabaseReference ref;
+
+
 
 
     @Override
@@ -57,26 +63,34 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     protected void onCreate(Bundle savedInstanceState) {
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("notifications");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_home_page);
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
 
+        View view = mMainNav.findViewById(R.id.nav_notifications);
+        view.performClick();
+        mMainNav.setItemBackgroundResource(R.color.colorPink);
+
         classesFragment = new ClassesFragment();
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
+        addstudentFragment = new AddStudentFragment();
 
 
+
+        init();
         setFragment(notificationsFragment);
 
-        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mMainNav.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()){
 
-                    case R.id.nav_classes :
+                    case R.id.nav_classes:
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
                         setFragment(classesFragment);
                         return true;
@@ -102,6 +116,16 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
             }
         });
 
+    }
+
+    private void init(){
+        ListStudentFragment fragment = new ListStudentFragment();
+        //doFragmentTransaction(fragment, getString(R.string.), false, "");
+    }
+
+    private void doFragmentTransaction(Fragment fragment, String tag, boolean addToBackStack, String message){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_frame, fragment, tag);
     }
 
     private void setFragment(Fragment fragment) {
@@ -134,5 +158,10 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
         return true;
     }
+
+    public static String getStudentId () {return studentId;}
+    public static void setStudentId(String id) { studentId=id;}
+
+
 
 }
