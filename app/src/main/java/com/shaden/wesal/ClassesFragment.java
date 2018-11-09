@@ -74,7 +74,7 @@ public class ClassesFragment extends Fragment {
             for (DataSnapshot ds:dataSnapshot.getChildren())
             {
                 classes = ds.getValue(Classes.class);
-                list.add("الفصل:   "+ classes.getName().toString()+"\n المعلمة:  "+classes.getTeacher().toString()+"\n المساعدة:  "+ classes.getAssistant().toString());
+                list.add("الفصل:   "+ classes.getName().toString()+"\n المعلمة:  "+classes.getTeacher().toString());
             }
             listView.setAdapter(adapter);
             if(list.isEmpty()){

@@ -9,12 +9,14 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,23 +29,27 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddClassFragment.OnFragmentInteractionListener} interface
+ * {@link ClassStudentsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AddClassFragment#newInstance} factory method to
+ * Use the {@link ClassStudentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddClassFragment extends Fragment implements View.OnClickListener {
+public class ClassStudentsFragment extends Fragment {
 
-    EditText name;
     FirebaseDatabase database;
-    DatabaseReference ref, staffRef;
-    Classes classes;
-    Button addClassBtn, cancelClassBtn;
-    ClassesFragment classesFragment;
-    Spinner teachersSpinner;
-    staff stf, selectedStf;
-    ArrayList<staff> staffList;
-    ArrayAdapter<staff> stfAdapter;
+    DatabaseReference ref, classRef;
+    ListView listView;
+    ArrayList<String> list;
+    ArrayAdapter<String> adapter;
+    students student;
+    StudentDetailsFragment studentDetails;
+    TextView noStudents;
+    ArrayList<students> allStudents;
+    FirebaseAuth mAuth;
+    Classes staffClass = null, classes;
+    String staffId;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,7 +62,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    public AddClassFragment() {
+    public ClassStudentsFragment() {
         // Required empty public constructor
     }
 
@@ -66,11 +72,11 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddClassFragment.
+     * @return A new instance of fragment ClassStudentsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddClassFragment newInstance(String param1, String param2) {
-        AddClassFragment fragment = new AddClassFragment();
+    public static ClassStudentsFragment newInstance(String param1, String param2) {
+        ClassStudentsFragment fragment = new ClassStudentsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,9 +86,6 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
-
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -93,80 +96,83 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_class_students, container, false);
+        student = new students();
+        studentDetails = new StudentDetailsFragment();
+        mAuth = FirebaseAuth.getInstance();
 
-        View v = inflater.inflate(R.layout.fragment_add_class, container, false);
 
-        name= (EditText) v.findViewById(R.id.name_text);
-        addClassBtn = (Button) v.findViewById(R.id.add_class_btn);
-        cancelClassBtn = (Button) v.findViewById(R.id.cancelButton);
-        teachersSpinner = (Spinner) v.findViewById(R.id.teachersSpinner);
-        classesFragment = new ClassesFragment();
-        staffList = new ArrayList<>();
-        stfAdapter = new ArrayAdapter<staff>(getContext(), android.R.layout.simple_spinner_item, staffList);
-        stf = new staff();
-
+        listView = (ListView) v.findViewById(R.id.studentsList);
+        noStudents = (TextView) v.findViewById(R.id.noStudents);
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("classes");
-        staffRef = database.getReference("staff");
+        ref = database.getReference("students");
+        classRef = database.getReference("classes");
+        list = new ArrayList<>();
+        allStudents = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.onestudent,R.id.studentInfo,list);
+        FirebaseUser user =  mAuth.getCurrentUser();
+        staffId = user.getUid();
 
-        classes = new Classes();
-
-        staffRef.addValueEventListener(new ValueEventListener() {
+        classRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    stf = ds.getValue(staff.class);
-                    staffList.add(stf);
+                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                    classes = ds.getValue(Classes.class);
+                    if(classes.getTeacherID().equals(staffId)){
+                        staffClass = classes;
+                    }
 
                 }
-                stfAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                teachersSpinner.setAdapter(stfAdapter);
-            }
 
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
+        if (staffClass == null){
+            noStudents.setText("عذرا لا يوجد لديك فصل");
+        }
+        else{
 
-        addClassBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedStf = (staff) teachersSpinner.getSelectedItem();
-                String nameVer = name.getText().toString();
-
-                if(nameVer.isEmpty()){
-                    name.setError("حقل اسم الفصل ممطلوب");
-                    name.requestFocus();
-                    return;
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds:dataSnapshot.getChildren())
+                    {
+                        student = ds.getValue(students.class);
+                        if(staffClass.getID().equals(student.getClassID())) {
+                            allStudents.add(student);
+                            list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString());
+                        }
+                    }
+                    listView.setAdapter(adapter);
+                    if(list.isEmpty()){
+                        noStudents.setText("لا يوجد طلاب حاليّا");
+                    }
                 }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.main_frame, studentDetails).commit();
+
+                }
+            });
+
+       }
 
 
-                getValues();
-                String id = ref.push().getKey();
-                classes.setID(id);
-                ref.child(id).setValue(classes);
-                Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
-            }
-        });
 
-
-
-        cancelClassBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
-            }
-        });
-
-
-        // Inflate the layout for this fragment
         return v;
     }
 
@@ -190,19 +196,6 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         super.onDetach();
         mListener = null;
     }
-
-    public void getValues()
-    {
-        classes.setName(name.getText().toString());
-        classes.setTeacherID(selectedStf.getId());
-        classes.setTeacher(selectedStf.getName());
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 
     /**
      * This interface must be implemented by activities that contain this

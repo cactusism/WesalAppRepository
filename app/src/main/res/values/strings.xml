@@ -9,6 +9,7 @@
     <string name="nav_students"> الطلّاب </string>
     <string name="nav_child_class">الفصل</string>
     <string name="nav_announce">الإعلانات</string>
+    <string name="nav_myClass">فصلي</string>
     <string-array name="blood_types">
         <item>A</item>
         <item>B</item>

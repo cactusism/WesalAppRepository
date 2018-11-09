@@ -4,15 +4,17 @@ public class Classes {
 
     private String name;
     private String teacher;
-    private String assistant;
+    private String teacherID;
+    private String ID;
 
-     Classes(){}
+    public Classes (){}
 
-     public Classes (String name, String age, String blood){
+     public Classes (String name, String teacher){
 
          this.name=name;
-         this.teacher=age;
-         this.assistant=blood;
+         this.teacher=teacher;
+         teacherID = "null";
+         ID = "null";
 
 
      }
@@ -33,11 +35,24 @@ public class Classes {
         this.teacher = teacher;
     }
 
-    public String getAssistant() {
-        return assistant;
+
+    public String getID() {
+        return ID;
     }
 
-    public void setAssistant(String assistant) {
-        this.assistant = assistant;
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getTeacherID() {
+        return teacherID;
+    }
+
+    public void setTeacherID(String teacherID) {
+        this.teacherID = teacherID;
+    }
+
+    public String toString(){
+         return "فصل"+name;
     }
 }

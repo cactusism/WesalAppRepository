@@ -6,18 +6,18 @@
         android:id="@+id/nav_child"
         android:icon="@drawable/girl"
         android:state_checked="false"
-        android:title="@string/nav_childprofile" />
+        android:title="الملف الشخصي" />
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/notification"
-        android:title="@string/nav_announce"
+        android:title="التنبيهات"
         android:state_checked="true"
         />
     <item
         android:id="@+id/nav_child_class"
         android:icon="@drawable/friendship"
         android:state_checked="false"
-        android:title="@string/nav_child_class" />
+        android:title="الفصل" />
 
     <!--
     <item

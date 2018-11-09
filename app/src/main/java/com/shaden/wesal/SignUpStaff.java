@@ -21,7 +21,8 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
 
     private FirebaseAuth mAuth;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    EditText emailEditText, passwordEditText, repeatPasswordEditText;
+    EditText staffName, emailEditText, passwordEditText, repeatPasswordEditText;
+    DatabaseReference ref;
 
 
     @Override
@@ -30,6 +31,8 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_sign_up_staff);
 
         mAuth = FirebaseAuth.getInstance();
+        ref = database.getReference("staff");
+        staffName = (EditText) findViewById(R.id.staffName);
         emailEditText = (EditText) findViewById(R.id.editTextEmail);
         passwordEditText = (EditText) findViewById(R.id.passwordTextbox);
         repeatPasswordEditText = (EditText) findViewById(R.id.repeatPasswordTextBox);
@@ -46,9 +49,16 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        final String name = staffName.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+
+        if(name.isEmpty()){
+            staffName.setError("حقل الاسم مطلوب");
+            staffName.requestFocus();
+            return;
+        }
 
         if(email.isEmpty()){
             emailEditText.setError("حقل البريد الإلكتروني مطلوب");
@@ -90,6 +100,13 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
                     final DatabaseReference mRef=  database.getReference().child("roles");
                     mRef.child(userId).setValue("staff");
                     openDialog();
+                    staff staff = new staff(name);
+                    staff.setId(userId);
+                    ref.child(userId).setValue(staff);
+                   // String id = ref.push().getKey();
+                    //staff.setId(id);
+                    //ref.child(id).setValue(staff);
+
                 }
                 else{
                     String error=task.getException().getMessage();

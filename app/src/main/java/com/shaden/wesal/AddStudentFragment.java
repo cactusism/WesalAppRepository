@@ -40,11 +40,9 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     double height,weight;
     Button add, cancel;
     StudentsFragment studentsFragment;
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
-    Classes classes;
-
-
+    ArrayList<Classes> list;
+    ArrayAdapter<Classes> adapter;
+    Classes classes, selectedClass;
     FirebaseDatabase database;
     DatabaseReference ref, classesRef;
     students student;
@@ -133,14 +131,14 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         ref = database.getReference("students");
         classesRef=database.getReference("classes");
         student = new students();
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
+        adapter = new ArrayAdapter<Classes>(getContext(), android.R.layout.simple_spinner_item, list);
 
         classesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     classes = ds.getValue(Classes.class);
-                        list.add("فصل "+classes.getName() );
+                        list.add(classes);
 
                 }
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -164,16 +162,6 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
     }
 
-   // @Override
-   /* public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
@@ -194,7 +182,8 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setYear(year);
         student.setGender(gender);
         student.setMotherId("null");
-        student.setClassName("null");
+        student.setClassID(selectedClass.getID());
+        student.setClassName(selectedClass.getName());
         student.setFullName();
 
     }
@@ -212,6 +201,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         month = monthSpinner.getSelectedItem().toString();
         year = yearSpinner.getSelectedItem().toString();
         gender = genderSpinner.getSelectedItem().toString();
+        selectedClass = (Classes) classesSpinner.getSelectedItem();
 
         if (gender == "ولد")
             gender = "boy";

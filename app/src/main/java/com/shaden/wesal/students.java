@@ -15,6 +15,7 @@ public class students {
         private String gender;
         private String stId;
         private String motherId;
+        private String classID;
         private String className;
         private String fullName;
 
@@ -38,7 +39,8 @@ public class students {
             this.gender = gender;
             this.stId = "null";
             this.motherId= "null";
-            this.className= "null";
+            this.classID= "null";
+            this.className = "null";
             this.fullName= firstname+" "+middleName+" "+lastname;
         }
 
@@ -126,13 +128,20 @@ public class students {
 
     public void setMotherId(String motherId) { this.motherId = motherId; }
 
-
     public String getClassName() {
         return className;
     }
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public void setClassID(String className) {
+        this.classID = className;
     }
 
 

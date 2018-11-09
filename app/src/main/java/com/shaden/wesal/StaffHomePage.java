@@ -33,8 +33,10 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     private NotificationsFragment notificationsFragment;
     private StudentsFragment studentsFragment;
     private AddStudentFragment addstudentFragment;
+    private MyClassFragment myClassFragment;
 
     private static String studentId;
+    private static String classStudentId;
 
 
     private AddClassFragment addClassFragment;
@@ -78,6 +80,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
         addstudentFragment = new AddStudentFragment();
+        myClassFragment = new MyClassFragment();
 
 
 
@@ -104,6 +107,11 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
                     case R.id.nav_students:
                         mMainNav.setItemBackgroundResource(R.color.colorBlue);
                         setFragment(studentsFragment);
+                        return true;
+
+                    case R.id.nav_myClass:
+                        mMainNav.setItemBackgroundResource(R.color.yellow);
+                        setFragment(myClassFragment);
                         return true;
 
                         default:
@@ -162,6 +170,9 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     public static String getStudentId () {return studentId;}
     public static void setStudentId(String id) { studentId=id;}
 
+
+    public static String getClassStudentId () {return classStudentId;}
+    public static void setClassStudentId(String id) { classStudentId=id;}
 
 
 }

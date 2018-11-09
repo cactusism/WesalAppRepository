@@ -52,12 +52,8 @@ public class MotherHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         motherNotificationsFragment = new MotherNotificationsFragment();
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mother_home_page);
-
-        motherNotificationsFragment = new MotherNotificationsFragment();
         childClassFragment = new childClassFragment();
         childProfileFragment = new childProfileFragment();
 
@@ -69,6 +65,8 @@ public class MotherHomePage extends AppCompatActivity {
         View view = mMainNav.findViewById(R.id.nav_notifications);
         view.performClick();
         mMainNav.setItemBackgroundResource(R.color.colorPink);
+
+        setFragment(motherNotificationsFragment);
 
         mMainNav.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -110,9 +108,6 @@ public class MotherHomePage extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mother_main_frame, fragment);
         fragmentTransaction.commit();
-
-        setFragment(motherNotificationsFragment);
-
     }
 
    @Override
@@ -160,12 +155,6 @@ public class MotherHomePage extends AppCompatActivity {
         return true;
     }
 
-    private void setFragment(Fragment fragment) {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mother_main_frame, fragment);
-        fragmentTransaction.commit();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
