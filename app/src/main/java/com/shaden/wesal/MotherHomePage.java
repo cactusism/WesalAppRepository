@@ -39,8 +39,15 @@ public class MotherHomePage extends AppCompatActivity {
     long numOfNotificationBefore =0;
     long numOfNotificationAfter = 0;
     String notificationTitle;
+    static String childId;
 
+    public static String getChildId() {
+        return childId;
+    }
 
+    public static void setChildId(String childId) {
+        MotherHomePage.childId = childId;
+    }
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;

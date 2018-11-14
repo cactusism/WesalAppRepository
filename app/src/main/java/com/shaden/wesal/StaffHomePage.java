@@ -37,6 +37,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     private static String studentId;
     private static String classStudentId;
+    private static String chatStudentId;
 
 
     private AddClassFragment addClassFragment;
@@ -170,9 +171,17 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     public static String getStudentId () {return studentId;}
     public static void setStudentId(String id) { studentId=id;}
 
-
     public static String getClassStudentId () {return classStudentId;}
     public static void setClassStudentId(String id) { classStudentId=id;}
+
+
+    public static String getChatStudentId() {
+        return chatStudentId;
+    }
+
+    public static void setChatStudentId(String chatStudentId) {
+        StaffHomePage.chatStudentId = chatStudentId;
+    }
 
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class ClassStudentsFragment extends Fragment {
     TextView noStudents;
     ArrayList<students> allStudents;
     FirebaseAuth mAuth;
-    Classes staffClass = null, classes;
+    Classes staffClass, classes;
     String staffId;
 
 
@@ -112,6 +113,7 @@ public class ClassStudentsFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getContext(), R.layout.onestudent,R.id.studentInfo,list);
         FirebaseUser user =  mAuth.getCurrentUser();
         staffId = user.getUid();
+        staffClass = new Classes();
 
         classRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,7 +121,10 @@ public class ClassStudentsFragment extends Fragment {
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                     classes = ds.getValue(Classes.class);
                     if(classes.getTeacherID().equals(staffId)){
-                        staffClass = classes;
+                        staffClass.setID(classes.getID());
+                        staffClass.setName(classes.getName());
+                        staffClass.setTeacher(classes.getTeacher());
+                        staffClass.setTeacherID(classes.getTeacherID());
                     }
 
                 }
@@ -163,9 +168,9 @@ public class ClassStudentsFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.main_frame, studentDetails).commit();
-
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.main_frame, studentDetails);
+                    fragmentTransaction.commit();
                 }
             });
 

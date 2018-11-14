@@ -1,12 +1,25 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -18,6 +31,19 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class childProfileFragment extends Fragment {
+
+    /*TextView studentName;
+    DatabaseReference ref, childrenRef;
+    FirebaseDatabase database;
+    ImageView profile,back, performance, chat;
+    ClassStudentsFragment classStudentsFragment;
+    StudentPersonalInformationFragment studentPersonalInformationFragment;
+    StaffChatFragment staffChatFragment;
+    StudentPerformanceFragment studentPerformanceFragment;
+    FirebaseUser fuser;
+    String motherId, childId;
+    students student;*/
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,8 +89,94 @@ public class childProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_child_profile, container, false);
+        /*database = FirebaseDatabase.getInstance();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        motherId = fuser.getUid();
+        childrenRef = database.getReference().child("students");
+
+        childrenRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    student = snapshot.getValue(students.class);
+                    if(student.getMotherId().equals(motherId))
+                        MotherHomePage.setChildId(student.getStId());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        ref = database.getReference().child("students").child(MotherHomePage.getChildId());
+        classStudentsFragment = new ClassStudentsFragment();
+        studentPerformanceFragment = new StudentPerformanceFragment();
+        staffChatFragment = new StaffChatFragment();
+        studentPersonalInformationFragment = new StudentPersonalInformationFragment();
+
+        studentName = (TextView) v.findViewById(R.id.studentName);
+        profile = (ImageView) v.findViewById(R.id.profile);
+        back = (ImageView) v.findViewById(R.id.backBtn);
+        performance = (ImageView) v.findViewById(R.id.performance);
+        chat = (ImageView) v.findViewById(R.id.chat);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, classStudentsFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, studentPersonalInformationFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        performance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, studentPerformanceFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
+                Intent i = new Intent(getActivity(), MessageActivity.class );
+                startActivity(i);
+                /*FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, staffChatFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                students std = dataSnapshot.getValue(students.class);
+                studentName.setText(std.getFirstname()+" "+std.getLastname());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        }); */
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_child_profile, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
