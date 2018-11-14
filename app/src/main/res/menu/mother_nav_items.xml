@@ -19,10 +19,4 @@
         android:state_checked="false"
         android:title="الفصل" />
 
-    <!--
-    <item
-        android:id="@+id/nav_academic"
-        android:icon="@drawable/medal"
-        android:title="@string/nav_academic" />
-         -->
 </menu>

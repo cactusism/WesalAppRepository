@@ -234,6 +234,13 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        String nameVer = name.getText().toString();
+
+        if (nameVer.isEmpty()) {
+            name.setError("حقل اسم الفصل ممطلوب");
+            name.requestFocus();
+            return;
+        }
 
     }
 

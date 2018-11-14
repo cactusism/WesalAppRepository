@@ -2,26 +2,19 @@ package com.shaden.wesal;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 
 /**
@@ -32,19 +25,17 @@ import java.util.ArrayList;
  * Use the {@link AddStudentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddStudentFragment extends Fragment implements View.OnClickListener {
-    Spinner classesSpinner;
+public class StudentInfoFragment extends Fragment implements View.OnClickListener {
     EditText firstName, middleName, lastName , nationalId, heightText, weightText;
     Spinner bloodTypeSpinner,daySpinner, monthSpinner,yearSpinner, genderSpinner;
     String bloodType,day,month,year,gender;
     double height,weight;
     Button add, cancel;
+    static int stNum;
     StudentsFragment studentsFragment;
-    ArrayList<Classes> list;
-    ArrayAdapter<Classes> adapter;
-    Classes classes, selectedClass;
+
     FirebaseDatabase database;
-    DatabaseReference ref, classesRef;
+    DatabaseReference ref;
     students student;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -58,7 +49,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
 
     private OnFragmentInteractionListener mListener;
 
-    public AddStudentFragment() {
+    public StudentInfoFragment() {
         // Required empty public constructor
     }
 
@@ -101,7 +92,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
         heightText = (EditText) v.findViewById(R.id.editTextHight);
         weightText = (EditText) v.findViewById(R.id.editTextWieght);
-
+        studentsFragment = new StudentsFragment();
 
         bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
         daySpinner = (Spinner) v.findViewById(R.id.day);
@@ -109,10 +100,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         yearSpinner = (Spinner) v.findViewById(R.id.year);
         genderSpinner = (Spinner) v.findViewById(R.id.gender);
 
-        classes = new Classes();
-        list = new ArrayList<>();
-        classesSpinner = (Spinner) v.findViewById(R.id.classesSpinner);
-        studentsFragment = new StudentsFragment();
+
 
         Button add_student_btn = (Button) v.findViewById(R.id.editBtn);
         add_student_btn.setOnClickListener(this);
@@ -129,27 +117,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("students");
-        classesRef=database.getReference("classes");
         student = new students();
-        adapter = new ArrayAdapter<Classes>(getContext(), android.R.layout.simple_spinner_item, list);
-
-        classesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    classes = ds.getValue(Classes.class);
-                        list.add(classes);
-
-                }
-                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                classesSpinner.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         // Inflate the layout for this fragment
         return v;
@@ -162,6 +130,16 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    // @Override
+   /* public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }*/
 
     @Override
     public void onDetach() {
@@ -182,10 +160,6 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setYear(year);
         student.setGender(gender);
         student.setMotherId("null");
-        student.setClassID(selectedClass.getID());
-        student.setClassName(selectedClass.getName());
-        student.setFullName();
-
     }
     //@Override
     public void onClick(View v) {
@@ -201,7 +175,6 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         month = monthSpinner.getSelectedItem().toString();
         year = yearSpinner.getSelectedItem().toString();
         gender = genderSpinner.getSelectedItem().toString();
-        selectedClass = (Classes) classesSpinner.getSelectedItem();
 
         if (gender == "ولد")
             gender = "boy";
