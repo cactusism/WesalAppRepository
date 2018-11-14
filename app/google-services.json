@@ -39,6 +39,14 @@
           }
         },
         {
+          "client_id": "340091850470-hq3amlk5nh3iscrpb3v0r3uv2tg89jlg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaden.wesal",
+            "certificate_hash": "60e464aec92ebc9bd82981a1501aa8a2284b4165"
+          }
+        },
+        {
           "client_id": "340091850470-9fnq7vjg8m9as7ak4q8csg6f7hfnlu5t.apps.googleusercontent.com",
           "client_type": 3
         }

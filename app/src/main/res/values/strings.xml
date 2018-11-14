@@ -7,6 +7,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_students"> الطلّاب </string>
+    <string name="nav_child_class">الفصل</string>
+    <string name="nav_announce">الإعلانات</string>
+    <string name="nav_myClass">فصلي</string>
     <string-array name="blood_types">
         <item>A</item>
         <item>B</item>
@@ -77,4 +80,7 @@
         <item>ولد</item>
         <item>بنت</item>
     </string-array>
+    <string name="nav_child">الملف الشخصي</string>
+    <string name="nav_academic">الأداء الأكاديمي</string>
+    <string name="nav_childprofile">ملف الطفل</string>
 </resources>
