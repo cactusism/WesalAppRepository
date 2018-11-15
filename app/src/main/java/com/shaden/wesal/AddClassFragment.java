@@ -36,8 +36,9 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     EditText name;
     FirebaseDatabase database;
-    DatabaseReference ref, staffRef;
+    DatabaseReference ref, staffRef, schRef;
     Classes classes;
+    schedule schedule;
     Button addClassBtn, cancelClassBtn;
     ClassesFragment classesFragment;
     Spinner teachersSpinner;
@@ -104,11 +105,12 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         staffList = new ArrayList<>();
         stfAdapter = new ArrayAdapter<staff>(getContext(), android.R.layout.simple_spinner_item, staffList);
         stf = new staff();
+        schedule = new schedule();
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
         staffRef = database.getReference("staff");
-
+        schRef = database.getReference("schedules");
         classes = new Classes();
 
         staffRef.addValueEventListener(new ValueEventListener() {
@@ -144,13 +146,45 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
 
 
+
                 getValues();
                 String id = ref.push().getKey();
                 classes.setID(id);
                 ref.child(id).setValue(classes);
+
+
+                String schID = schRef.push().getKey();
+                schedule.setID(schID);
+                schedule.setClassId(classes.getID());
+                schedule.setDay01("null");
+                schedule.setDay02("null");
+                schedule.setDay03("null");
+                schedule.setDay04("null");
+                schedule.setDay05("null");
+                schedule.setDay06("null");
+                schedule.setDay07("null");
+                schedule.setDay08("null");
+                schedule.setDay09("null");
+                schedule.setDay10("null");
+                schedule.setDay11("null");
+                schedule.setDay12("null");
+                schedule.setDay13("null");
+                schedule.setDay14("null");
+                schedule.setDay15("null");
+                schedule.setDay16("null");
+                schedule.setDay17("null");
+                schedule.setDay18("null");
+                schedule.setDay19("null");
+                schedule.setDay20("null");
+                schRef.child(schID).setValue(schedule);
+
+
                 Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
+
+
+
             }
         });
 
@@ -200,6 +234,13 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        String nameVer = name.getText().toString();
+
+        if (nameVer.isEmpty()) {
+            name.setError("حقل اسم الفصل ممطلوب");
+            name.requestFocus();
+            return;
+        }
 
     }
 
