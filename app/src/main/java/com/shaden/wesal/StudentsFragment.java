@@ -151,7 +151,7 @@ public class StudentsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 StaffHomePage.setStudentId(allStudents.get(position).getStId());
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, new StudentDetailsFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, new StudentProfile()).commit();
 
             }
         });

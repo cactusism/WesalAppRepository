@@ -38,6 +38,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     private static String studentId;
     private static String classStudentId;
     private static String classId;
+    public static String getChatStudentId(){return "uo";}
 
     private AddClassFragment addClassFragment;
     FirebaseDatabase database;
