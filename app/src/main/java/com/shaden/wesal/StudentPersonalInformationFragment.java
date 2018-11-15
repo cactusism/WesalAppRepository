@@ -3,10 +3,20 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -18,6 +28,16 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class StudentPersonalInformationFragment extends Fragment {
+
+    TextView name, date, height, weight, blood;
+    Button edit, cancel;
+
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    students student;
+    StudentsFragment studentsFragment;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,8 +83,66 @@ public class StudentPersonalInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_student_personal_information, container, false);
+
+        name = (TextView) v.findViewById(R.id.NameTxt);
+        date = (TextView) v.findViewById(R.id.DateTxt);
+        weight =(TextView) v.findViewById(R.id.WeightTxt);
+        height =(TextView) v.findViewById(R.id.HeightTxt);
+        blood=(TextView) v.findViewById(R.id.BloodTxt);
+
+
+        database = FirebaseDatabase.getInstance();
+
+        ref = database.getReference().child("students").child(StaffHomePage.getClassStudentId());
+        student = new students();
+        studentsFragment = new StudentsFragment();
+
+        edit = (Button) v.findViewById(R.id.editButton);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.main_frame, new EditStudentPersonalInfoFragment());
+                ft.commit();
+            }
+        });
+
+
+        cancel = (Button) v.findViewById(R.id.cancleProfileBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.main_frame, new studentPAM());
+                ft.commit();
+            }
+        });
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                students std = dataSnapshot.getValue(students.class);
+                if(std.getGender().equals("boy"))
+                    name.setText("الطالب: "+std.getFirstname()+" "+ std.getLastname());
+                else
+                    name.setText("الطالبة: "+std.getFirstname()+" "+ std.getLastname());
+                date.setText(std.getDay()+"/"+std.getMonth()+"/"+std.getYear());
+                weight.setText(String.valueOf(std.getWeight()));
+                height.setText(String.valueOf(std.getHeight()));
+                blood.setText(std.getBloodType());
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_personal_information, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link EditStudentDetailFragment.OnFragmentInteractionListener} interface
+ * {@link EditStudentPersonalInfoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EditStudentDetailFragment#newInstance} factory method to
+ * Use the {@link EditStudentPersonalInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditStudentDetailFragment extends Fragment implements View.OnClickListener {
+public class EditStudentPersonalInfoFragment extends Fragment implements View.OnClickListener{
 
     TextView std,title;
     EditText name;
@@ -39,10 +39,8 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     DatabaseReference ref;
     students student;
     Button cancel, add;
-    StudentsFragment studentsFragment;
+    StudentPersonalInformationFragment studentPersonalInformationFragment;
     String motherId, className;
-
-
 
     EditText firstName, middleName, lastName , heightText, weightText; //nationalId,
     Spinner bloodTypeSpinner,daySpinner, monthSpinner,yearSpinner;//genderSpinner;
@@ -58,9 +56,9 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     private String mParam1;
     private String mParam2;
 
-    private StudentProfile.OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
-    public EditStudentDetailFragment() {
+    public EditStudentPersonalInfoFragment() {
         // Required empty public constructor
     }
 
@@ -70,11 +68,11 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentProfile.
+     * @return A new instance of fragment EditStudentPersonalInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentProfile newInstance(String param1, String param2) {
-        StudentProfile fragment = new StudentProfile();
+    public static EditStudentPersonalInfoFragment newInstance(String param1, String param2) {
+        EditStudentPersonalInfoFragment fragment = new EditStudentPersonalInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,12 +92,11 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_edit_student_detail, container, false);
-
+        View v = inflater.inflate(R.layout.fragment_edit_student_personal_info, container, false);
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference().child("students").child(StaffHomePage.getStudentId());
+        ref = database.getReference().child("students").child(StaffHomePage.getClassStudentId());
         student = new students();
-        studentsFragment = new StudentsFragment();
+        studentPersonalInformationFragment = new StudentPersonalInformationFragment();
 
 
         cancel = (Button) v.findViewById(R.id.cancelButton);
@@ -107,7 +104,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new StudentsFragment());
+                ft.replace(R.id.main_frame, studentPersonalInformationFragment);
                 ft.commit();
             }
         });
@@ -119,7 +116,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         firstName= (EditText) v.findViewById(R.id.editTextFirstName);
         middleName= (EditText) v.findViewById(R.id.editTextMiddleName);
         lastName= (EditText) v.findViewById(R.id.editTextLastName);
-       // nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
+        // nationalId = (EditText) v.findViewById(R.id.editTextNationalId);
         heightText = (EditText) v.findViewById(R.id.editTextHight);
         weightText = (EditText) v.findViewById(R.id.editTextWieght);
 
@@ -128,7 +125,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         daySpinner = (Spinner) v.findViewById(R.id.day);
         monthSpinner = (Spinner) v.findViewById(R.id.month);
         yearSpinner = (Spinner) v.findViewById(R.id.year);
-       // genderSpinner = (Spinner) v.findViewById(R.id.gender);
+        // genderSpinner = (Spinner) v.findViewById(R.id.gender);
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -138,7 +135,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
                 firstName.setText(std.getFirstname());
                 middleName.setText(std.getMiddleName());
                 lastName.setText(std.getLastname());
-               //nationalId.setText(std.getNationalId());
+                //nationalId.setText(std.getNationalId());
                 nationalId = std.getNationalId();
                 gndr = std.getGender();
                 motherId = std.getMotherId();
@@ -179,7 +176,8 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
 
 
 
-        return v ;
+        // Inflate the layout for this fragment
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -192,8 +190,8 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof StudentProfile.OnFragmentInteractionListener) {
-            mListener = (StudentProfile.OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         }
     }
 
@@ -208,7 +206,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         student.setFirstname(firstName.getText().toString());
         student.setMiddleName(middleName.getText().toString());
         student.setLastname(lastName.getText().toString());
-       student.setNationalId(nationalId);
+        student.setNationalId(nationalId);
         student.setHeight(height);
         student.setWeight(weight);
         student.setBloodType(bloodType);
@@ -300,11 +298,11 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         }
 
         getValues();
-        student.setStId(StaffHomePage.getStudentId());
+        student.setStId(StaffHomePage.getClassStudentId());
         ref.setValue(student);
         Toast.makeText(getContext(),"تم تعديل بيانات الطالب",Toast.LENGTH_LONG).show();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_frame, studentsFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_frame, studentPersonalInformationFragment).commit();
 
 
 

@@ -1,16 +1,17 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,15 +29,15 @@ import com.google.firebase.database.ValueEventListener;
  * Use the {@link StudentDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentDetailsFragment extends Fragment {
-
-    TextView name, date, height, weight, blood;
-    Button edit, cancel;
-
-    FirebaseDatabase database;
+public class studentPAM extends Fragment {
+    TextView studentName;
     DatabaseReference ref;
-    students student;
-    StudentsFragment studentsFragment;
+    FirebaseDatabase database;
+    ImageView profile, performance, chat;
+    ClassStudentsFragment classStudentsFragment;
+    StudentPersonalInformationFragment studentPersonalInformationFragment;
+    StaffChatFragment staffChatFragment;
+    StudentPerformanceFragment studentPerformanceFragment;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -50,7 +51,7 @@ public class StudentDetailsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public StudentDetailsFragment() {
+    public studentPAM() {
         // Required empty public constructor
     }
 
@@ -63,8 +64,8 @@ public class StudentDetailsFragment extends Fragment {
      * @return A new instance of fragment StudentDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentDetailsFragment newInstance(String param1, String param2) {
-        StudentDetailsFragment fragment = new StudentDetailsFragment();
+    public static studentPAM newInstance(String param1, String param2) {
+        studentPAM fragment = new studentPAM();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,57 +85,53 @@ public class StudentDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_student_details, container, false);
-
-        name = (TextView) v.findViewById(R.id.NameTxt);
-        date = (TextView) v.findViewById(R.id.DateTxt);
-        weight =(TextView) v.findViewById(R.id.WeightTxt);
-        height =(TextView) v.findViewById(R.id.HeightTxt);
-        blood=(TextView) v.findViewById(R.id.BloodTxt);
-
-
+        View v = inflater.inflate(R.layout.fragment_student_pam, container, false);
         database = FirebaseDatabase.getInstance();
+        ref = database.getReference().child("students").child(StaffHomePage.getClassStudentId());
+        classStudentsFragment = new ClassStudentsFragment();
+        studentPerformanceFragment = new StudentPerformanceFragment();
+        staffChatFragment = new StaffChatFragment();
+        studentPersonalInformationFragment = new StudentPersonalInformationFragment();
 
-        ref = database.getReference().child("students").child(StaffHomePage.getStudentId());
-        student = new students();
-        studentsFragment = new StudentsFragment();
+        studentName = (TextView) v.findViewById(R.id.studentName);
+        profile = (ImageView) v.findViewById(R.id.profile);
+        performance = (ImageView) v.findViewById(R.id.performance);
+        chat = (ImageView) v.findViewById(R.id.chat);
 
-        edit = (Button) v.findViewById(R.id.editButton);
-        edit.setOnClickListener(new View.OnClickListener() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new EditStudentDetailFragment());
-                ft.commit();
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, studentPersonalInformationFragment);
+                fragmentTransaction.commit();
             }
         });
 
-
-        cancel = (Button) v.findViewById(R.id.cancleProfileBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
+        performance.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new StudentsFragment());
-                ft.commit();
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, studentPerformanceFragment);
+                fragmentTransaction.commit();
             }
         });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
+                Intent i = new Intent(getActivity(), MessageActivity.class );
+                startActivity(i);
+
+            }
+        });
+
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
-                if(std.getGender().equals("boy"))
-               name.setText("الطالب: "+std.getFirstname()+" "+ std.getLastname());
-                else
-                    name.setText("الطالبة: "+std.getFirstname()+" "+ std.getLastname());
-               date.setText(std.getDay()+"/"+std.getMonth()+"/"+std.getYear());
-               weight.setText(String.valueOf(std.getWeight()));
-               height.setText(String.valueOf(std.getHeight()));
-               blood.setText(std.getBloodType());
-
-
-
+                studentName.setText(std.getFirstname()+" "+std.getLastname());
             }
 
             @Override
@@ -143,6 +140,8 @@ public class StudentDetailsFragment extends Fragment {
             }
         });
 
+
+        // Inflate the layout for this fragment
         return v;
     }
 

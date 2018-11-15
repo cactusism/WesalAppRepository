@@ -23,7 +23,7 @@
         <activity android:name=".SignUpMother" />
         <activity android:name=".SignUpStaff" />
         <activity android:name=".SignUpDialog" />
-        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".MessageActivity" />
     </application>
 
 </manifest>

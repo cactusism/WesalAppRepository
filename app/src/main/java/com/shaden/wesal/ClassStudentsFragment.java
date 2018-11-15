@@ -43,7 +43,7 @@ public class ClassStudentsFragment extends Fragment {
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
     students student;
-    StudentDetailsFragment studentDetails;
+    studentPAM studentPAM;
     TextView noStudents;
     ArrayList<students> allStudents;
     FirebaseAuth mAuth;
@@ -99,7 +99,7 @@ public class ClassStudentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_class_students, container, false);
         student = new students();
-        studentDetails = new StudentDetailsFragment();
+        studentPAM = new studentPAM();
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -169,7 +169,7 @@ public class ClassStudentsFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.main_frame, studentDetails);
+                    fragmentTransaction.replace(R.id.main_frame, studentPAM);
                     fragmentTransaction.commit();
                 }
             });
