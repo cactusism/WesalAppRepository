@@ -48,6 +48,7 @@ public class StudentsFragment extends Fragment {
     ImageButton addBtn;
     AddStudentFragment addStudentFragment;
     StudentProfile studentProfile;
+    StudentDetailsFragment studentDetailsFragment;
     TextView noStudents;
     ArrayList<students> allStudents;
 
@@ -103,6 +104,7 @@ public class StudentsFragment extends Fragment {
         student = new students();
         addStudentFragment = new AddStudentFragment();
         studentProfile = new StudentProfile();
+        studentDetailsFragment = new StudentDetailsFragment();
         addBtn = (ImageButton)v.findViewById(R.id.addstdBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,9 +130,10 @@ public class StudentsFragment extends Fragment {
                 for (DataSnapshot ds:dataSnapshot.getChildren())
                 {
                     student = ds.getValue(students.class);
+                    if (student.getClassID().equals(StaffHomePage.getClassId())) {
                     allStudents.add(student);
-                    list.add("الطالب:   "+ student.getFirstname().toString()+"\n الفصل:  "+student.getClassName().toString());
-                }
+                    list.add("الطالب:   " + student.getFirstname().toString() + "\n الفصل:  " + student.getClassName().toString());
+                }}
                 listView.setAdapter(adapter);
                 if(list.isEmpty()){
                     noStudents.setText("لا يوجد طلاب حاليّا");
@@ -148,7 +151,7 @@ public class StudentsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 StaffHomePage.setStudentId(allStudents.get(position).getStId());
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, studentProfile).commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, new StudentDetailsFragment()).commit();
 
             }
         });

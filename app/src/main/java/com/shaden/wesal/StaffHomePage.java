@@ -37,7 +37,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     private static String studentId;
     private static String classStudentId;
-
+    private static String classId;
 
     private AddClassFragment addClassFragment;
     FirebaseDatabase database;
@@ -104,10 +104,10 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
                         setFragment(notificationsFragment);
                         return true;
 
-                    case R.id.nav_students:
+                    /*case R.id.nav_students:
                         mMainNav.setItemBackgroundResource(R.color.colorBlue);
                         setFragment(studentsFragment);
-                        return true;
+                        return true; */
 
                     case R.id.nav_myClass:
                         mMainNav.setItemBackgroundResource(R.color.yellow);
@@ -174,5 +174,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     public static String getClassStudentId () {return classStudentId;}
     public static void setClassStudentId(String id) { classStudentId=id;}
 
+    public static String getClassId () {return classId;}
+    public static void setClassId(String id) { classId=id;}
 
 }

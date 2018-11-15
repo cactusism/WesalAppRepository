@@ -1,15 +1,19 @@
 package com.shaden.wesal;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.Base64Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,11 +29,15 @@ public class MainActivity extends AppCompatActivity {
     // Write a message to the database
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
+    Button login;
 
 
 
 
     EditText editTextEmail, editTextPassword;
+    TextView txt;
+    Typeface typeface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-
+        typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");
+        login = (Button)findViewById(R.id.loginBtn);
+        login.setTypeface(typeface);
+        editTextEmail.setTypeface(typeface);
+        editTextPassword.setTypeface(typeface);
         //LogIn
         findViewById( R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override

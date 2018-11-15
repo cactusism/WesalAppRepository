@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toStartOf="@+id/editTextMiddleName"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <EditText
         android:id="@+id/editTextMiddleName"
@@ -66,7 +66,7 @@
         android:hint="اسم الأب"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/editTextFirstName"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/titleText" />
 
     <EditText
         android:id="@+id/editTextFirstName"
@@ -122,10 +122,10 @@
         android:text="المعلومات الشخصية"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
         android:layout_alignParentTop="true"

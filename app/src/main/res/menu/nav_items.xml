@@ -11,10 +11,6 @@
         android:icon="@drawable/notification"
         android:title="@string/nav_notifications" />
     <item
-        android:id="@+id/nav_students"
-        android:icon="@drawable/friendship"
-        android:title="@string/nav_students" />
-    <item
         android:id="@+id/nav_myClass"
         android:icon="@drawable/myclass"
         android:title="@string/nav_myClass" />

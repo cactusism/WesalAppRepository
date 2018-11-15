@@ -9,43 +9,45 @@
     android:weightSum="100">
 
     <TextView
-        android:id="@+id/back"
+        android:id="@+id/ClassElement"
         android:layout_width="373dp"
         android:layout_height="102dp"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/background_light" />
+        android:background="@drawable/rounded_corner" />
 
     <TextView
         android:id="@+id/notSubject"
-        android:layout_width="166dp"
         android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/notDate"
-        android:layout_toEndOf="@+id/notDate"
+        android:layout_marginEnd="12dp"
         android:text="subject"
-        android:textAlignment="textEnd"
+        android:layout_width = "match_parent"
+        android:gravity="right"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/notBody"
-        android:layout_width="281dp"
+        android:layout_width="352dp"
         android:layout_height="54dp"
         android:layout_alignEnd="@+id/notSubject"
         android:layout_alignParentTop="true"
         android:layout_marginTop="45dp"
         android:singleLine="false"
         android:text="TextView"
-        android:textAlignment="textEnd"
+        android:textAlignment="viewEnd"
         android:textSize="16sp" />
 
     <TextView
         android:id="@+id/notDate"
         android:layout_width="190dp"
         android:layout_height="37dp"
+        android:layout_above="@+id/notBody"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="-45dp"
+        android:layout_marginStart="23dp"
         android:text="TextView"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp" />

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -40,6 +41,7 @@ public class ClassesFragment extends Fragment {
     AddClassFragment addClassFragment;
     TextView noClasses;
     ArrayList<Classes> allClasses;
+    StudentsFragment studentsFragment;
 
     public ClassesFragment() {
         // Required empty public constructor
@@ -52,7 +54,9 @@ public class ClassesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_classes, container, false);
         classes = new Classes();
+        allClasses= new ArrayList<>();
         addClassFragment = new AddClassFragment();
+        studentsFragment = new StudentsFragment();
         addBtn = (ImageButton)v.findViewById(R.id.addBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +78,7 @@ public class ClassesFragment extends Fragment {
             for (DataSnapshot ds:dataSnapshot.getChildren())
             {
                 classes = ds.getValue(Classes.class);
+                allClasses.add(classes);
                 list.add("الفصل:   "+ classes.getName().toString()+"\n المعلمة:  "+classes.getTeacher().toString());
             }
             listView.setAdapter(adapter);
@@ -87,7 +92,15 @@ public class ClassesFragment extends Fragment {
 
         }
     });
-        //gerg
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                StaffHomePage.setClassId(allClasses.get(position).getID());
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, studentsFragment ).commit();
+
+            }
+        });
 
         return v;
     }
