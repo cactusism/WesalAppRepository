@@ -1,16 +1,19 @@
 package com.shaden.wesal;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-//import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.Base64Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,13 +27,17 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     // Write a message to the database
-    //ProgressBar progressBar;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
+    Button login;
+
 
 
 
     EditText editTextEmail, editTextPassword;
+    TextView txt;
+    Typeface typeface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +45,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
-
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+
+        typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");
+        login = (Button)findViewById(R.id.loginBtn);
+        login.setTypeface(typeface);
+        editTextEmail.setTypeface(typeface);
+        editTextPassword.setTypeface(typeface);
         //LogIn
         findViewById( R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password= editTextPassword.getText().toString().trim();
 
-        if(email.isEmpty()&&password.isEmpty()){
-            editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
-            editTextPassword.setError("حقل كلمة المرور والبريد الإلكتروني مطلوب");
+        if(email.isEmpty() && password.isEmpty()){
+            editTextPassword.setError("حقل البريد الإلكتروني و كلمة المرور مطلوب");
             editTextEmail.requestFocus();
             editTextPassword.requestFocus();
             return;
         }
+
         if(email.isEmpty()){
             editTextEmail.setError("حقل البريد الإلكتروني مطلوب");
             editTextEmail.requestFocus();
@@ -77,13 +89,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        //progressBar.setVisibility(View.VISIBLE);
-
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                //progressBar.setVisibility(View.GONE);
-
                 if(task.isSuccessful()){
                     FirebaseUser user =  mAuth.getCurrentUser();
                     final String userId = user.getUid();
@@ -132,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     String error=task.getException().getMessage();
                     if(error.equals("There is no user record corresponding to this identifier. The user may have been deleted."))
-                   error="لا يوجد مستخدم بهذه البيانات";
+                   error="لا يوجد مستخدم بهذه البيانات, المستخدم قد يكون تمّ حذفه";
                  else if(task.getException().getMessage().equals("The password is invalid or the user does not have a password."))
-                     error="كلمة المرور المدخلة غير صحيحة، الرجاء إعادة المحاولة";
+                     error="كلمة المرور المدخلة غير صحيحة, الرجاء إعادة المحاولة";
                     Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
                 }
             }

@@ -10,6 +10,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NotificationDialog extends AppCompatDialogFragment {
     private EditText notification;
@@ -45,9 +46,21 @@ public class NotificationDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+
                         String notificationText = notification.getText().toString();
                         String notificationSubjectText = notificationSubject.getText().toString();
-                        listener.applyTexts(notificationSubjectText, notificationText);
+
+                        if(notificationSubjectText.isEmpty()){
+                            notification.setText("بدون عنوان");
+
+                        }
+
+                        if(notificationText.isEmpty()){
+                            Toast.makeText(getContext(),"لم يتم نشر التنبيه لأن حقل محتوى التنبيه مطلوب",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            listener.applyTexts(notificationSubjectText, notificationText);
+                        }
 
                     }
                 });

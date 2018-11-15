@@ -2,18 +2,26 @@ package com.shaden.wesal;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,10 +38,10 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     String bloodType,day,month,year,gender;
     double height,weight;
     Button add, cancel;
-    static int stNum;
-
+    StudentsFragment studentsFragment;
+    Classes selectedClass;
     FirebaseDatabase database;
-    DatabaseReference ref;
+    DatabaseReference ref, classesRef;
     students student;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -91,15 +99,16 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         heightText = (EditText) v.findViewById(R.id.editTextHight);
         weightText = (EditText) v.findViewById(R.id.editTextWieght);
 
+
         bloodTypeSpinner = (Spinner) v.findViewById(R.id.bloodType);
         daySpinner = (Spinner) v.findViewById(R.id.day);
         monthSpinner = (Spinner) v.findViewById(R.id.month);
         yearSpinner = (Spinner) v.findViewById(R.id.year);
         genderSpinner = (Spinner) v.findViewById(R.id.gender);
 
+        studentsFragment = new StudentsFragment();
 
-
-        Button add_student_btn = (Button) v.findViewById(R.id.listStudentButton);
+        Button add_student_btn = (Button) v.findViewById(R.id.editBtn);
         add_student_btn.setOnClickListener(this);
 
         Button btnFragment = (Button) v.findViewById(R.id.cancelButton);
@@ -114,7 +123,20 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("students");
+        classesRef=database.getReference("classes");
         student = new students();
+
+        classesRef.child(StaffHomePage.getClassId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               selectedClass = dataSnapshot.getValue(Classes.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // Inflate the layout for this fragment
         return v;
@@ -127,16 +149,6 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         }
     }
 
-   // @Override
-   /* public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
@@ -156,6 +168,11 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setMonth(month);
         student.setYear(year);
         student.setGender(gender);
+        student.setMotherId("null");
+        student.setClassID(selectedClass.getID());
+        student.setClassName(selectedClass.getName());
+        student.setFullName();
+
     }
     //@Override
     public void onClick(View v) {
@@ -200,7 +217,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
             return;
         }
         if(nationalIdVer.length() <10 || nationalIdVer.length() > 10 || !(nationalIdVer.matches("[0-9]+"))){
-            nationalId.setError("يجب أن يحتوي السجل المدني على ١٠ أرقام فقط");
+            nationalId.setError("يجب أن يتكون السجل المدني من ١٠ أرقام فقط");
             nationalId.requestFocus();
             return;
         }
@@ -221,17 +238,23 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         } catch (Exception e){
             heightText.setError(" يجب أن يتكون الطول من أرقام فقط");
             heightText.requestFocus();
+            return;
         }
         try {
             weight = Double.parseDouble(weightVer);
         } catch (Exception e){
             weightText.setError(" يجب أن يتكون الوزن من أرقام فقط");
             weightText.requestFocus();
+            return;
         }
 
         getValues();
-        ref.child("student0"+stNum++).setValue(student);
+        String id = ref.push().getKey();
+        student.setStId(id);
+        ref.child(id).setValue(student);
         Toast.makeText(getContext(),"تم إضافة الطالب",Toast.LENGTH_LONG).show();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_frame, studentsFragment).commit();
 
 
     }

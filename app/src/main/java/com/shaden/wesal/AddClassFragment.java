@@ -5,11 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -29,11 +34,17 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class AddClassFragment extends Fragment implements View.OnClickListener {
 
-    EditText name, teacher, assistant;
+    EditText name;
     FirebaseDatabase database;
-    DatabaseReference ref;
+    DatabaseReference ref, staffRef, schRef;
     Classes classes;
-    private long classCounter;
+    schedule schedule;
+    Button addClassBtn, cancelClassBtn;
+    ClassesFragment classesFragment;
+    Spinner teachersSpinner;
+    staff stf, selectedStf;
+    ArrayList<staff> staffList;
+    ArrayAdapter<staff> stfAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,16 +98,31 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_add_class, container, false);
 
         name= (EditText) v.findViewById(R.id.name_text);
-        teacher= (EditText) v.findViewById(R.id.teacher_text);
-        assistant= (EditText) v.findViewById(R.id.assistant_text);
-        Button add_class_btn = (Button) v.findViewById(R.id.add_class_btn);
-        add_class_btn.setOnClickListener(this);
+        addClassBtn = (Button) v.findViewById(R.id.add_class_btn);
+        cancelClassBtn = (Button) v.findViewById(R.id.cancelButton);
+        teachersSpinner = (Spinner) v.findViewById(R.id.teachersSpinner);
+        classesFragment = new ClassesFragment();
+        staffList = new ArrayList<>();
+        stfAdapter = new ArrayAdapter<staff>(getContext(), android.R.layout.simple_spinner_item, staffList);
+        stf = new staff();
+        schedule = new schedule();
+
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
-        ref.addValueEventListener(new ValueEventListener() {
+        staffRef = database.getReference("staff");
+        schRef = database.getReference("schedules");
+        classes = new Classes();
+
+        staffRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                classCounter = dataSnapshot.getChildrenCount()+1;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    stf = ds.getValue(staff.class);
+                    staffList.add(stf);
+
+                }
+                stfAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                teachersSpinner.setAdapter(stfAdapter);
             }
 
             @Override
@@ -104,7 +130,75 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-        classes = new Classes();
+
+
+        addClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStf = (staff) teachersSpinner.getSelectedItem();
+                String nameVer = name.getText().toString();
+
+                if(nameVer.isEmpty()){
+                    name.setError("حقل اسم الفصل ممطلوب");
+                    name.requestFocus();
+                    return;
+                }
+
+
+
+
+                getValues();
+                String id = ref.push().getKey();
+                classes.setID(id);
+                ref.child(id).setValue(classes);
+
+
+                String schID = schRef.push().getKey();
+                schedule.setID(schID);
+                schedule.setClassId(classes.getID());
+                schedule.setDay01("null");
+                schedule.setDay02("null");
+                schedule.setDay03("null");
+                schedule.setDay04("null");
+                schedule.setDay05("null");
+                schedule.setDay06("null");
+                schedule.setDay07("null");
+                schedule.setDay08("null");
+                schedule.setDay09("null");
+                schedule.setDay10("null");
+                schedule.setDay11("null");
+                schedule.setDay12("null");
+                schedule.setDay13("null");
+                schedule.setDay14("null");
+                schedule.setDay15("null");
+                schedule.setDay16("null");
+                schedule.setDay17("null");
+                schedule.setDay18("null");
+                schedule.setDay19("null");
+                schedule.setDay20("null");
+                schRef.child(schID).setValue(schedule);
+
+
+                Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
+
+
+
+            }
+        });
+
+
+
+        cancelClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, classesFragment).commit();
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return v;
@@ -134,38 +228,22 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
     public void getValues()
     {
         classes.setName(name.getText().toString());
-        classes.setTeacher(teacher.getText().toString());
-        classes.setAssistant(assistant.getText().toString());
+        classes.setTeacherID(selectedStf.getId());
+        classes.setTeacher(selectedStf.getName());
     }
 
     @Override
     public void onClick(View v) {
         String nameVer = name.getText().toString();
-        String teacherVer = teacher.getText().toString();
-        String assistantVer = assistant.getText().toString();
 
-        if(nameVer.isEmpty()){
+        if (nameVer.isEmpty()) {
             name.setError("حقل اسم الفصل ممطلوب");
             name.requestFocus();
             return;
         }
-        if(teacherVer.isEmpty()){
-            teacher.setError("حقل اسم المعلمة مطلوب");
-            teacher.requestFocus();
-            return;
-        }
-        if(assistantVer.isEmpty()){
-            assistant.setError("حقل اسم المساعدة مطلوب");
-            assistant.requestFocus();
-            return;
-        }
 
-                getValues();
-                ref.child("child"+classCounter).setValue(classes);
-                Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();
+    }
 
-
-            }
 
     /**
      * This interface must be implemented by activities that contain this

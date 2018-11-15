@@ -3,6 +3,7 @@
     package="com.shaden.wesal">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,6 +23,7 @@
         <activity android:name=".SignUpMother" />
         <activity android:name=".SignUpStaff" />
         <activity android:name=".SignUpDialog" />
+        <activity android:name=".MessageActivity"></activity>
     </application>
 
 </manifest>
