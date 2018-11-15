@@ -124,9 +124,9 @@ public class StudentPersonalInformationFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
                 if(std.getGender().equals("boy"))
-                    name.setText("الطالب: "+std.getFirstname()+" "+ std.getLastname());
+                    name.setText(std.getFirstname()+" "+ std.getMiddleName()+" "+std.getLastname());
                 else
-                    name.setText("الطالبة: "+std.getFirstname()+" "+ std.getLastname());
+                    name.setText(std.getFirstname()+" "+std.getMiddleName()+" "+std.getLastname());
                 date.setText(std.getDay()+"/"+std.getMonth()+"/"+std.getYear());
                 weight.setText(String.valueOf(std.getWeight()));
                 height.setText(String.valueOf(std.getHeight()));

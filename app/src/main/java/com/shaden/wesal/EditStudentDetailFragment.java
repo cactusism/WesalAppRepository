@@ -40,6 +40,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     students student;
     Button cancel, add;
     StudentsFragment studentsFragment;
+    StudentProfile studentProfile;
     String motherId, className;
 
 
@@ -100,7 +101,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         ref = database.getReference().child("students").child(StaffHomePage.getStudentId());
         student = new students();
         studentsFragment = new StudentsFragment();
-
+        studentProfile = new StudentProfile();
 
         cancel = (Button) v.findViewById(R.id.cancelButton);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -304,7 +305,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         ref.setValue(student);
         Toast.makeText(getContext(),"تم تعديل بيانات الطالب",Toast.LENGTH_LONG).show();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_frame, studentsFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_frame, studentProfile).commit();
 
 
 

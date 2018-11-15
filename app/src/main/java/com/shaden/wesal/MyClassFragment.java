@@ -78,6 +78,7 @@ public class MyClassFragment extends Fragment {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(new StaffChatFragment(), "المحادثات");
         viewPagerAdapter.addFragment(new ClassStudentsFragment(), "طلاب الفصل");
+        viewPagerAdapter.addFragment(new StaffVisitingMother(), "الأم الزائرة");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
