@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -93,7 +92,7 @@ public class studentPAM extends Fragment {
         staffChatFragment = new StaffChatFragment();
         studentPersonalInformationFragment = new StudentPersonalInformationFragment();
 
-        studentName = (TextView) v.findViewById(R.id.studentName);
+        studentName = (TextView) v.findViewById(R.id.studentName1);
         profile = (ImageView) v.findViewById(R.id.profile);
         performance = (ImageView) v.findViewById(R.id.performance);
         chat = (ImageView) v.findViewById(R.id.chat);

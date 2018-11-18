@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +42,15 @@ public class childProfileFragment extends Fragment {
     FirebaseUser fuser;
     String motherId, childId;
     students student;*/
+    FirebaseUser fuser;
+    FirebaseDatabase database;
+    String motherId, name;
+    DatabaseReference childrenRef;
+    students student;
+    TextView sName;
+    ImageView chat;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,6 +98,35 @@ public class childProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_child_profile, container, false);
+
+        database = FirebaseDatabase.getInstance();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        sName = (TextView) v.findViewById(R.id.studentName1);
+        motherId = fuser.getUid();
+        childrenRef = database.getReference().child("students");
+        childrenRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    student = snapshot.getValue(students.class);
+                    if(student.getMotherId().equals(motherId)){
+                        MotherHomePage.setChildId(student.getStId());
+                        name = student.getFirstname()+" "+student.getLastname();
+                        sName.setText(name);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        chat = (ImageView) v.findViewById(R.id.chat);
+
+
         /*database = FirebaseDatabase.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         motherId = fuser.getUid();
@@ -148,21 +185,20 @@ public class childProfileFragment extends Fragment {
                 fragmentTransaction.replace(R.id.main_frame, studentPerformanceFragment);
                 fragmentTransaction.commit();
             }
-        });
+        });*/
 
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
-                Intent i = new Intent(getActivity(), MessageActivity.class );
+                Intent i = new Intent(getActivity(), ChildMessageActivity.class );
                 startActivity(i);
                 /*FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame, staffChatFragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit(); */
             }
         });
 
-
+/*
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

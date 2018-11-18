@@ -31,7 +31,7 @@
         android:src="@drawable/profile"
         app:layout_constraintBottom_toTopOf="@+id/performance"
         app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/studentName"
+        app:layout_constraintTop_toBottomOf="@+id/studentName1"
         app:layout_constraintVertical_bias="0.066" />
 
     <ImageView
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="@+id/stdNameBox" />
 
     <TextView
-        android:id="@+id/studentName"
+        android:id="@+id/studentName1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toStartOf="@+id/profile"
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="@+id/stdNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/studentName" />
+        app:layout_constraintTop_toBottomOf="@+id/studentName1" />
 
     <TextView
         android:id="@+id/textView11"
