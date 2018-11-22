@@ -48,7 +48,7 @@ public class MotherHomePage extends AppCompatActivity {
 
 
 
-    public  String getChildId() {
+    public static String getChildId() {
         return childId;
     }
 
