@@ -110,7 +110,7 @@ public class childProfileFragment extends Fragment {
                 for( DataSnapshot snapshot: dataSnapshot.getChildren()){
                     student = snapshot.getValue(students.class);
                     if(student.getMotherId().equals(motherId)){
-                        MotherHomePage.setChildId(student.getStId());
+                        //MotherHomePage.setChildId(student.getStId());
                         name = student.getFirstname()+" "+student.getLastname();
                         sName.setText(name);
                     }

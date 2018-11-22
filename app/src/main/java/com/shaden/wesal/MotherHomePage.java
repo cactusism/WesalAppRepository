@@ -44,15 +44,38 @@ public class MotherHomePage extends AppCompatActivity {
     String notificationTitle;
     static String childId;
     FirebaseUser fUser;
+    students student;
 
 
-    public static String getChildId() {
+
+    public  String getChildId() {
         return childId;
     }
 
-    public static void setChildId(String childId) {
-        MotherHomePage.childId = childId;
-    }
+    public  void setChildId() {
+
+        FirebaseDatabase database;
+        DatabaseReference childrenRef;
+        database = FirebaseDatabase.getInstance();
+        childrenRef = database.getReference().child("students");
+        childrenRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    student = snapshot.getValue(students.class);
+                    if(student.getMotherId().equals(fUser.getUid())){
+                        childId = student.getStId();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        }
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
@@ -63,6 +86,7 @@ public class MotherHomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        setChildId();
         motherNotificationsFragment = new MotherNotificationsFragment();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mother_home_page);
