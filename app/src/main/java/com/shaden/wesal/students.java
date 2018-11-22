@@ -18,6 +18,7 @@ public class students {
         private String classID;
         private String className;
         private String fullName;
+        private String performance;
 
 
 
@@ -42,6 +43,7 @@ public class students {
             this.classID= "null";
             this.className = "null";
             this.fullName= firstname+" "+middleName+" "+lastname;
+            performance = "null";
         }
 
 

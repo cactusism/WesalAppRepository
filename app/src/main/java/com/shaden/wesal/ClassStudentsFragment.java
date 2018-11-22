@@ -136,6 +136,46 @@ public class ClassStudentsFragment extends Fragment {
 
                 }
 
+                if (!found){
+                    noStudents.setText("عذرا لا يوجد لديك فصل");
+                }
+                else{
+
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds:dataSnapshot.getChildren())
+                            {
+                                student = ds.getValue(students.class);
+                                if(staffClass.getID().equals(student.getClassID())) {
+                                    allStudents.add(student);
+                                    list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString());
+                                }
+                            }
+                            listView.setAdapter(adapter);
+                            if(list.isEmpty()){
+                                noStudents.setText("لا يوجد طلاب حاليّا");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.main_frame, studentPAM);
+                            fragmentTransaction.commit();
+                        }
+                    });
+
+                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -143,45 +183,6 @@ public class ClassStudentsFragment extends Fragment {
             }
         });
 
-        if (!found){
-            noStudents.setText("عذرا لا يوجد لديك فصل");
-        }
-        else{
-
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds:dataSnapshot.getChildren())
-                    {
-                        student = ds.getValue(students.class);
-                        if(staffClass.getID().equals(student.getClassID())) {
-                            allStudents.add(student);
-                            list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString());
-                        }
-                    }
-                    listView.setAdapter(adapter);
-                    if(list.isEmpty()){
-                        noStudents.setText("لا يوجد طلاب حاليّا");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.main_frame, studentPAM);
-                    fragmentTransaction.commit();
-                }
-            });
-
-       }
 
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
