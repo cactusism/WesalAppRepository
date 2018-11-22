@@ -23,11 +23,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.shaden.wesal.chatNotifications.Token;
 
 
 public class MotherHomePage extends AppCompatActivity {
@@ -40,6 +43,8 @@ public class MotherHomePage extends AppCompatActivity {
     long numOfNotificationAfter = 0;
     String notificationTitle;
     static String childId;
+    FirebaseUser fUser;
+
 
     public static String getChildId() {
         return childId;
@@ -63,6 +68,9 @@ public class MotherHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_mother_home_page);
         childClassFragment = new childClassFragment();
         childProfileFragment = new childProfileFragment();
+        fUser = FirebaseAuth.getInstance().getCurrentUser();
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
 
 
 
@@ -119,6 +127,7 @@ public class MotherHomePage extends AppCompatActivity {
 
    @Override
    public boolean onCreateOptionsMenu(Menu menu) {
+
        database = FirebaseDatabase.getInstance();
        ref=  database.getReference().child("notifications");
            ref.addValueEventListener(new ValueEventListener() {
@@ -173,5 +182,11 @@ public class MotherHomePage extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         }
         return true;
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(fUser.getUid()).setValue(token1);
     }
 }
