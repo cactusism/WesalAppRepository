@@ -120,6 +120,9 @@ public class studentPAM extends Fragment {
             public void onClick(View v) {
                 StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
                 Intent i = new Intent(getActivity(), MessageActivity.class );
+                Bundle bundle = new Bundle();
+                bundle.putString("userid", StaffHomePage.getClassStudentId());
+                i.putExtras(bundle);
                 startActivity(i);
 
             }

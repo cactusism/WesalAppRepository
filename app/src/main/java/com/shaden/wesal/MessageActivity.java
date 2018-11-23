@@ -51,6 +51,7 @@ public class MessageActivity extends AppCompatActivity {
     List<Chat> mChat;
     RecyclerView recyclerView;
     String motherID;
+    Intent intent;
 
 
 
@@ -78,10 +79,17 @@ public class MessageActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+
+
+
 
 
         username = findViewById(R.id.username);
-        id = StaffHomePage.getChatStudentId();
+        //id = StaffHomePage.getChatStudentId();
+        id = extras.getString("userid");
         reference = FirebaseDatabase.getInstance().getReference("students").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
