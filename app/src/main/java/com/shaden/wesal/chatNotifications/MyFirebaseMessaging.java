@@ -10,20 +10,48 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.shaden.wesal.ChildMessageActivity;
 import com.shaden.wesal.MessageActivity;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService {
+    FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference ref;
+    boolean isMother;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
+        ref = FirebaseDatabase.getInstance().getReference("roles").child(fUser.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                if(value.equals("mother")){
+                    isMother = true;
+                }
+                else{
+                    isMother = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         String sented = remoteMessage.getData().get("sented");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -45,7 +73,13 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, ChildMessageActivity.class);
+        //Intent intent = new Intent(this, ChildMessageActivity.class);
+        Intent intent;
+        if(isMother)
+            intent = new Intent(this, ChildMessageActivity.class);
+        else
+            intent = new Intent(this, MessageActivity.class);
+
         Bundle bundle = new Bundle();
         bundle.putString("userid", user);
         intent.putExtras(bundle);
