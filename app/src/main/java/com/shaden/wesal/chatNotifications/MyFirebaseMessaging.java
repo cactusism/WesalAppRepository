@@ -34,7 +34,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        /*ref = FirebaseDatabase.getInstance().getReference("roles").child(fUser.getUid());
+        ref = FirebaseDatabase.getInstance().getReference("roles").child(fUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -51,7 +51,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
+
         String sented = remoteMessage.getData().get("sented");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -77,13 +78,13 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, ChildMessageActivity.class);
-        //Intent intent;
-        /*if(isMother)
+        //Intent intent = new Intent(this, ChildMessageActivity.class);
+        Intent intent;
+        if(isMother)
             intent = new Intent(this, ChildMessageActivity.class);
         else
             intent = new Intent(this, MessageActivity.class);
-        */
+
         Bundle bundle = new Bundle();
         bundle.putString("userid", user);
         intent.putExtras(bundle);
