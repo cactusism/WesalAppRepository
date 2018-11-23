@@ -40,10 +40,10 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
                 if(value.equals("mother")){
-                    isMother = true;
+                    setIsMother(true);
                 }
                 else{
-                    isMother = false;
+                    setIsMother(false);
                 }
             }
 
@@ -63,6 +63,10 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 sendNotification(remoteMessage);
             }
         }
+    }
+
+    private void setIsMother(boolean b) {
+        isMother = b;
     }
 
     private void sendOreoNotification(RemoteMessage remoteMessage) {
