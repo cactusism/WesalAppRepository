@@ -37,6 +37,7 @@ public class studentPAM extends Fragment {
     StudentPersonalInformationFragment studentPersonalInformationFragment;
     StaffChatFragment staffChatFragment;
     StudentPerformanceFragment studentPerformanceFragment;
+    String motherId;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -119,9 +120,11 @@ public class studentPAM extends Fragment {
             @Override
             public void onClick(View v) {
                 StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
+
+
                 Intent i = new Intent(getActivity(), MessageActivity.class );
                 Bundle bundle = new Bundle();
-                bundle.putString("userid", StaffHomePage.getClassStudentId());
+                bundle.putString("userid", motherId);
                 i.putExtras(bundle);
                 startActivity(i);
 
@@ -134,6 +137,7 @@ public class studentPAM extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
                 studentName.setText(std.getFirstname()+" "+std.getLastname());
+                setMotherId(std.getMotherId());
             }
 
             @Override
@@ -145,6 +149,10 @@ public class studentPAM extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
+    }
+
+    private void setMotherId(String motherId) {
+        this.motherId = motherId;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -82,15 +82,10 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         Bundle extras = intent.getExtras();
 
-
-
-
-
-
         username = findViewById(R.id.username);
         //id = StaffHomePage.getChatStudentId();
-        id = extras.getString("userid");
-        reference = FirebaseDatabase.getInstance().getReference("students").child(id);
+        motherID = extras.getString("userid");
+        /*reference = FirebaseDatabase.getInstance().getReference("students").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -102,7 +97,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
