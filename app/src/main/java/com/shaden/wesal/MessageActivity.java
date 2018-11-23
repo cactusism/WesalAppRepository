@@ -80,10 +80,10 @@ public class MessageActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         intent = getIntent();
-        Bundle extras = intent.getExtras();
+
 
         username = findViewById(R.id.username);
-        id = extras.getString("userid");
+        id = intent.getStringExtra("userid");
         reference = FirebaseDatabase.getInstance().getReference("students").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
