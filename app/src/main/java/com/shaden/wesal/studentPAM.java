@@ -124,7 +124,7 @@ public class studentPAM extends Fragment {
 
                 Intent i = new Intent(getActivity(), MessageActivity.class );
                 Bundle bundle = new Bundle();
-                bundle.putString("userid", motherId);
+                bundle.putString("userid", StaffHomePage.getClassStudentId());
                 i.putExtras(bundle);
                 startActivity(i);
 

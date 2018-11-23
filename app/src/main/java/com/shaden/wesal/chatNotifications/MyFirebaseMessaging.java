@@ -24,11 +24,16 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.shaden.wesal.ChildMessageActivity;
 import com.shaden.wesal.MessageActivity;
+import com.shaden.wesal.students;
+
 
 public class MyFirebaseMessaging extends FirebaseMessagingService {
     FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference ref;
     boolean isMother;
+    students student;
+    String user;
+    String studentId;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -70,11 +75,33 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         isMother = b;
     }
 
+    private void setStudentId(String id){
+        studentId = id;
+    }
+
     private void sendOreoNotification(RemoteMessage remoteMessage) {
-        String user = remoteMessage.getData().get("user");
+         user = remoteMessage.getData().get("user");
         String icon = remoteMessage.getData().get("icon");
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("students");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                    student = ds.getValue(students.class);
+                    if(student.getMotherId().equals(user)){
+                        setStudentId(student.getStId());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
@@ -87,7 +114,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             intent = new Intent(this, MessageActivity.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("userid", user);
+        bundle.putString("userid", studentId);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -145,4 +172,5 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         }
         noti.notify(i,builder.build());
     }
+
 }
