@@ -83,8 +83,7 @@ public class MessageActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
 
         username = findViewById(R.id.username);
-        id = StaffHomePage.getChatStudentId();
-        //motherID = extras.getString("userid");
+        id = extras.getString("userid");
         reference = FirebaseDatabase.getInstance().getReference("students").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
