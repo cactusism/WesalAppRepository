@@ -22,19 +22,17 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StudentPerformanceFragment.OnFragmentInteractionListener} interface
+ * {@link PerformanceChildFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StudentPerformanceFragment#newInstance} factory method to
+ * Use the {@link PerformanceChildFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentPerformanceFragment extends Fragment {
+public class PerformanceChildFragment extends Fragment {
 
-    TextView name;
     TextView performance;
     DatabaseReference ref;
     students student;
-    Button editBtn, cancelBtn;
-
+    Button cancelBtn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,7 +45,7 @@ public class StudentPerformanceFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public StudentPerformanceFragment() {
+    public PerformanceChildFragment() {
         // Required empty public constructor
     }
 
@@ -57,12 +55,11 @@ public class StudentPerformanceFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentPerformanceFragment.
+     * @return A new instance of fragment PerformanceChildFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentPerformanceFragment newInstance(String param1, String param2) {
-
-        StudentPerformanceFragment fragment = new StudentPerformanceFragment();
+    public static PerformanceChildFragment newInstance(String param1, String param2) {
+        PerformanceChildFragment fragment = new PerformanceChildFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,27 +79,23 @@ public class StudentPerformanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_student_performance, container, false);
 
-        name = (TextView) v.findViewById(R.id.NameTxt);
+        View v = inflater.inflate(R.layout.fragment_performance_child, container, false);
+
         performance = (TextView) v.findViewById(R.id.performance);
-        editBtn = (Button)v.findViewById(R.id.editButton);
         cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
 
-        ref =  FirebaseDatabase.getInstance().getReference().child("students").child(StaffHomePage.getClassStudentId());
+        ref =  FirebaseDatabase.getInstance().getReference().child("students").child(MotherHomePage.getChildId());
         student = new students();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
-                name.setText(std.getFirstname()+" "+std.getMiddleName()+" "+std.getLastname());
                 if(std.getPerformance().equals("")){
-                    performance.setText("عذرا لا يوجد أداء أكاديمي لهذا الطالب");
-                    editBtn.setText("إضافة");
+                    performance.setText("عذرا لا يوجد أداء أكاديمي لطفلك حتى الآن");
                 }
                 else{
                     performance.setText(std.getPerformance());
-                    editBtn.setText("تعديل");
                 }
             }
 
@@ -111,20 +104,12 @@ public class StudentPerformanceFragment extends Fragment {
 
             }
         });
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new EditPerformanceFragment());
-                ft.commit();
-            }
-        });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new studentPAM());
+                ft.replace(R.id.mother_main_frame, new childProfileFragment());
                 ft.commit();
             }
         });

@@ -103,12 +103,12 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         studentsFragment = new StudentsFragment();
         studentProfile = new StudentProfile();
 
-        cancel = (Button) v.findViewById(R.id.cancelButton);
+        cancel = (Button) v.findViewById(R.id.cancelBtn);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new StudentsFragment());
+                ft.replace(R.id.main_frame, new StudentProfile());
                 ft.commit();
             }
         });
@@ -306,8 +306,6 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         Toast.makeText(getContext(),"تم تعديل بيانات الطالب",Toast.LENGTH_LONG).show();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_frame, studentProfile).commit();
-
-
 
     }
 

@@ -99,7 +99,7 @@ public class EditStudentPersonalInfoFragment extends Fragment implements View.On
         studentPersonalInformationFragment = new StudentPersonalInformationFragment();
 
 
-        cancel = (Button) v.findViewById(R.id.cancelButton);
+        cancel = (Button) v.findViewById(R.id.cancelBtn);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

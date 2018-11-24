@@ -26,6 +26,14 @@ public class students {
     public students() {
     }
 
+    public String getPerformance() {
+        return performance;
+    }
+
+    public void setPerformance(String performance) {
+        this.performance = performance;
+    }
+
     public students(String firstname, String middleName, String lastname, String nationalId, double height, double weight, String bloodType, String day, String month, String year, String gender) {
             this.firstname = firstname;
             this.middleName = middleName;
@@ -43,7 +51,7 @@ public class students {
             this.classID= "null";
             this.className = "null";
             this.fullName= firstname+" "+middleName+" "+lastname;
-            performance = "null";
+            performance = "";
         }
 
 

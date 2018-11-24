@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class childProfileFragment extends Fragment {
     DatabaseReference childrenRef;
     students student;
     TextView sName;
-    ImageView chat;
+    ImageView chat, performance;
 
 
 
@@ -125,6 +126,7 @@ public class childProfileFragment extends Fragment {
             }
         });
         chat = (ImageView) v.findViewById(R.id.chat);
+        performance = (ImageView) v.findViewById(R.id.performance);
 
 
         /*database = FirebaseDatabase.getInstance();
@@ -195,6 +197,15 @@ public class childProfileFragment extends Fragment {
                 /*FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame, staffChatFragment);
                 fragmentTransaction.commit(); */
+            }
+        });
+
+        performance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mother_main_frame, new PerformanceChildFragment());
+                fragmentTransaction.commit();
             }
         });
 

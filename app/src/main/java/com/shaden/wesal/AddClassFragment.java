@@ -99,7 +99,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
         name= (EditText) v.findViewById(R.id.name_text);
         addClassBtn = (Button) v.findViewById(R.id.add_class_btn);
-        cancelClassBtn = (Button) v.findViewById(R.id.cancelButton);
+        cancelClassBtn = (Button) v.findViewById(R.id.cancelBtn);
         teachersSpinner = (Spinner) v.findViewById(R.id.teachersSpinner);
         classesFragment = new ClassesFragment();
         staffList = new ArrayList<>();

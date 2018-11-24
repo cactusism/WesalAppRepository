@@ -108,22 +108,23 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
         //Intent intent = new Intent(this, ChildMessageActivity.class);
-        Intent intent;
+        /*Intent intent;
         if(isMother)
             intent = new Intent(this, ChildMessageActivity.class);
         else
-            intent = new Intent(this, MessageActivity.class);
+            intent = new Intent(this, MessageActivity.class);*/
 
-        Bundle bundle = new Bundle();
-        bundle.putString("userid", studentId);
-        intent.putExtras(bundle);
+        //Bundle bundle = new Bundle();
+        //bundle.putString("userid", studentId);
+        //intent.putExtras(bundle);
+        /*intent.putExtra("userid", studentId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);*/
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         OreoNotification oreoNotification = new OreoNotification(this);
-        Notification.Builder builder = oreoNotification.getOreoNotification(title, body, pendingIntent, defaultSound, icon);
+        Notification.Builder builder = oreoNotification.getOreoNotification(title, body, defaultSound, icon);
 
 
         int i = 0;
@@ -143,7 +144,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
         //Intent intent = new Intent(this, MessageActivity.class);
 
-        Intent intent;
+        /*Intent intent;
         if(isMother)
             intent = new Intent(this, ChildMessageActivity.class);
         else
@@ -154,7 +155,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         bundle.putString("userid", user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);*/
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -162,8 +163,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
-                .setSound(defaultSound)
-                .setContentIntent(pendingIntent);
+                .setSound(defaultSound);
+                //.setContentIntent(pendingIntent);
 
         NotificationManager noti = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 

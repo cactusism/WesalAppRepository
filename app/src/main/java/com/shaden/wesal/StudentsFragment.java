@@ -132,7 +132,7 @@ public class StudentsFragment extends Fragment {
                     student = ds.getValue(students.class);
                     if (student.getClassID().equals(StaffHomePage.getClassId())) {
                     allStudents.add(student);
-                    list.add("الطالب:   " + student.getFirstname().toString() + "\n الفصل:  " + student.getClassName().toString());
+                    list.add(student.getFirstname().toString()+ " "+ student.getMiddleName()+" "+ student.getLastname());
                 }}
                 listView.setAdapter(adapter);
                 if(list.isEmpty()){
