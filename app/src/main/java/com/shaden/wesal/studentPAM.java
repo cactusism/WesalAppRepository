@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +37,7 @@ public class studentPAM extends Fragment {
     StudentPersonalInformationFragment studentPersonalInformationFragment;
     StaffChatFragment staffChatFragment;
     StudentPerformanceFragment studentPerformanceFragment;
+    String motherId;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -93,7 +93,7 @@ public class studentPAM extends Fragment {
         staffChatFragment = new StaffChatFragment();
         studentPersonalInformationFragment = new StudentPersonalInformationFragment();
 
-        studentName = (TextView) v.findViewById(R.id.studentName);
+        studentName = (TextView) v.findViewById(R.id.studentName1);
         profile = (ImageView) v.findViewById(R.id.profile);
         performance = (ImageView) v.findViewById(R.id.performance);
         chat = (ImageView) v.findViewById(R.id.chat);
@@ -120,7 +120,12 @@ public class studentPAM extends Fragment {
             @Override
             public void onClick(View v) {
                 StaffHomePage.setChatStudentId(StaffHomePage.getClassStudentId());
+
+
                 Intent i = new Intent(getActivity(), MessageActivity.class );
+                Bundle bundle = new Bundle();
+                bundle.putString("userid", StaffHomePage.getClassStudentId());
+                i.putExtras(bundle);
                 startActivity(i);
 
             }
@@ -132,6 +137,7 @@ public class studentPAM extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
                 studentName.setText(std.getFirstname()+" "+std.getLastname());
+                setMotherId(std.getMotherId());
             }
 
             @Override
@@ -143,6 +149,10 @@ public class studentPAM extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
+    }
+
+    private void setMotherId(String motherId) {
+        this.motherId = motherId;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

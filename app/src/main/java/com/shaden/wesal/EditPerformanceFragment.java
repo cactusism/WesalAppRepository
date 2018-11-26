@@ -5,12 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,20 +25,17 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StudentPerformanceFragment.OnFragmentInteractionListener} interface
+ * {@link EditPerformanceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StudentPerformanceFragment#newInstance} factory method to
+ * Use the {@link EditPerformanceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentPerformanceFragment extends Fragment {
-
-    TextView name;
-    TextView performance;
+public class EditPerformanceFragment extends Fragment {
     DatabaseReference ref;
+    TextView name;
+    EditText performance;
+    Button edit,cancel;
     students student;
-    Button editBtn, cancelBtn;
-
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,7 +47,7 @@ public class StudentPerformanceFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public StudentPerformanceFragment() {
+    public EditPerformanceFragment() {
         // Required empty public constructor
     }
 
@@ -57,12 +57,11 @@ public class StudentPerformanceFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentPerformanceFragment.
+     * @return A new instance of fragment EditPerformanceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentPerformanceFragment newInstance(String param1, String param2) {
-
-        StudentPerformanceFragment fragment = new StudentPerformanceFragment();
+    public static EditPerformanceFragment newInstance(String param1, String param2) {
+        EditPerformanceFragment fragment = new EditPerformanceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,28 +81,57 @@ public class StudentPerformanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_student_performance, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit_performance, container, false);
+        name = (TextView)v.findViewById(R.id.name);
+        performance = (EditText)v.findViewById(R.id.performance);
+        cancel = (Button) v.findViewById(R.id.cancelBtn);
+        edit = (Button) v.findViewById(R.id.editBtn);
 
-        name = (TextView) v.findViewById(R.id.NameTxt);
-        performance = (TextView) v.findViewById(R.id.performance);
-        editBtn = (Button)v.findViewById(R.id.editButton);
-        cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
-
-        ref =  FirebaseDatabase.getInstance().getReference().child("students").child(StaffHomePage.getClassStudentId());
+        ref = FirebaseDatabase.getInstance().getReference().child("students").child(StaffHomePage.getClassStudentId());
         student = new students();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.main_frame, new StudentPerformanceFragment());
+                ft.commit();
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                student.setPerformance(performance.getText().toString());
+                ref.setValue(student);
+                Toast.makeText(getContext(),"تم تعديل بيانات الطالب",Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, new StudentPerformanceFragment()).commit();
+            }
+        });
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
-                name.setText(std.getFirstname()+" "+std.getMiddleName()+" "+std.getLastname());
-                if(std.getPerformance().equals("")){
-                    performance.setText("عذرا لا يوجد أداء أكاديمي لهذا الطالب");
-                    editBtn.setText("إضافة");
-                }
-                else{
+                name.setText(std.getFirstname()+" "+ std.getLastname());
+                student.setFirstname(std.getFirstname());
+                student.setMiddleName(std.getMiddleName());
+                student.setLastname(std.getLastname());
+                student.setNationalId(std.getNationalId());
+                student.setHeight(std.getHeight());
+                student.setWeight(std.getWeight());
+                student.setBloodType(std.getBloodType());
+                student.setDay(std.getDay());
+                student.setMonth(std.getMonth());
+                student.setYear(std.getYear());
+                student.setGender(std.getGender());
+                student.setStId(std.getStId());
+                student.setMotherId(std.getMotherId());
+                student.setClassID(std.getClassID());
+                student.setClassName(std.getClassName());
+                if(!std.getPerformance().equals(""))
                     performance.setText(std.getPerformance());
-                    editBtn.setText("تعديل");
-                }
             }
 
             @Override
@@ -111,25 +139,6 @@ public class StudentPerformanceFragment extends Fragment {
 
             }
         });
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new EditPerformanceFragment());
-                ft.commit();
-            }
-        });
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.main_frame, new studentPAM());
-                ft.commit();
-            }
-        });
-
-
 
 
         // Inflate the layout for this fragment

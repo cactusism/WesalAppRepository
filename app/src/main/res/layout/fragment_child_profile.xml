@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/stfNameBox"
+        android:id="@+id/stdNameBox"
         android:layout_width="314dp"
         android:layout_height="432dp"
         android:layout_centerInParent="true"
@@ -47,7 +47,7 @@
         android:layout_marginEnd="32dp"
         android:src="@drawable/performance"
         app:layout_constraintBottom_toTopOf="@+id/chat"
-        app:layout_constraintEnd_toEndOf="@+id/stfNameBox" />
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox" />
 
     <ImageView
         android:id="@+id/chat"
@@ -58,8 +58,8 @@
         android:layout_marginBottom="44dp"
         android:layout_marginEnd="36dp"
         android:src="@drawable/chat"
-        app:layout_constraintBottom_toBottomOf="@+id/stfNameBox"
-        app:layout_constraintEnd_toEndOf="@+id/stfNameBox" />
+        app:layout_constraintBottom_toBottomOf="@+id/stdNameBox"
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox" />
 
     <TextView
         android:id="@+id/studentName"
@@ -72,9 +72,9 @@
         android:layout_marginTop="24dp"
         android:text="TextView"
         android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="@+id/stfNameBox"
-        app:layout_constraintStart_toStartOf="@+id/stfNameBox"
-        app:layout_constraintTop_toTopOf="@+id/stfNameBox" />
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
+        app:layout_constraintStart_toStartOf="@+id/stdNameBox"
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
     <TextView
         android:id="@+id/textView10"
@@ -89,8 +89,8 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/profile"
         app:layout_constraintHorizontal_bias="0.823"
-        app:layout_constraintStart_toStartOf="@+id/stfNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/studentName" />
+        app:layout_constraintStart_toStartOf="@+id/stdNameBox"
+        app:layout_constraintTop_toBottomOf="@+id/studentName1" />
 
     <TextView
         android:id="@+id/textView11"
@@ -105,7 +105,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/performance"
         app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="@+id/stfNameBox"
+        app:layout_constraintStart_toStartOf="@+id/stdNameBox"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
@@ -120,29 +120,13 @@
         android:layout_marginTop="80dp"
         android:text="مراسلة المعلم"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/stfNameBox"
+        app:layout_constraintBottom_toBottomOf="@+id/stdNameBox"
         app:layout_constraintEnd_toStartOf="@+id/chat"
         app:layout_constraintHorizontal_bias="0.813"
-        app:layout_constraintStart_toStartOf="@+id/stfNameBox"
+        app:layout_constraintStart_toStartOf="@+id/stdNameBox"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/backBtn"
-        android:layout_width="21dp"
-        android:layout_height="23dp"
-        android:layout_above="@+id/stfNameBox"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_toStartOf="@+id/stfNameBox"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
-        app:layout_constraintEnd_toEndOf="@+id/stfNameBox"
-        app:layout_constraintHorizontal_bias="0.036"
-        app:layout_constraintStart_toStartOf="@+id/stfNameBox"
-        app:layout_constraintTop_toTopOf="@+id/stfNameBox"
-        app:layout_constraintVertical_bias="0.024" />
+
 
 </android.support.constraint.ConstraintLayout>

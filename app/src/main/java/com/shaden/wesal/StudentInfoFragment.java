@@ -105,7 +105,7 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         Button add_student_btn = (Button) v.findViewById(R.id.editBtn);
         add_student_btn.setOnClickListener(this);
 
-        Button btnFragment = (Button) v.findViewById(R.id.cancelButton);
+        Button btnFragment = (Button) v.findViewById(R.id.cancelBtn);
         btnFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,8 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 
 /**
@@ -111,7 +108,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         Button add_student_btn = (Button) v.findViewById(R.id.editBtn);
         add_student_btn.setOnClickListener(this);
 
-        Button btnFragment = (Button) v.findViewById(R.id.cancelButton);
+        Button btnFragment = (Button) v.findViewById(R.id.cancelBtn);
         btnFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +166,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         student.setYear(year);
         student.setGender(gender);
         student.setMotherId("null");
+        student.setPerformance("");
         student.setClassID(selectedClass.getID());
         student.setClassName(selectedClass.getName());
         student.setFullName();

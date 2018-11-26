@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="27dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/cancelButton"
+        android:layout_alignStart="@+id/cancelBtn"
         android:layout_marginTop="24dp"
         android:text="معلومات الطالب"
         android:textSize="24sp"
@@ -139,7 +139,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/cancelButton"
+        android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

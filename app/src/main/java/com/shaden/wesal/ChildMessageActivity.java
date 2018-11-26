@@ -1,17 +1,16 @@
 package com.shaden.wesal;
 
-import android.content.Intent;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,13 +35,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MessageActivity extends AppCompatActivity {
+public class ChildMessageActivity extends AppCompatActivity {
 
     APIService apiService;
-    boolean notify = false;
-
     FirebaseUser fUser;
-    DatabaseReference reference;
+    DatabaseReference reference, classesreference;
     TextView username;
     ImageButton btn_send;
     EditText text_send;
@@ -50,73 +47,84 @@ public class MessageActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     List<Chat> mChat;
     RecyclerView recyclerView;
-    String motherID;
-    Intent intent;
-
+    String classID, staffID, staffName;
+    boolean notify = false;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.activity_child_message);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
-        /*setSupportActionBar(toolbar);
-        /*getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
+
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        intent = getIntent();
-
 
         username = findViewById(R.id.username);
-        id = intent.getStringExtra("userid");
+        id = MotherHomePage.getChildId();
         reference = FirebaseDatabase.getInstance().getReference("students").child(id);
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students student = dataSnapshot.getValue(students.class);
-                motherID = student.getMotherId();
-            }
+                classID = student.getClassID();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                classesreference = FirebaseDatabase.getInstance().getReference("classes").child(classID);
+                classesreference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Classes cls = dataSnapshot.getValue(Classes.class);
+                        staffID= cls.getTeacherID();
+                        staffName = cls.getTeacher();
 
-            }
-        });
-        fUser = FirebaseAuth.getInstance().getCurrentUser();
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notify = true;
-                String msg = text_send.getText().toString();
-                if(!msg.equals("")){
-                    sendMessage(fUser.getUid(), motherID, msg);
-                }else{
-                    Toast.makeText(MessageActivity.this, "لا يمكن إرسال رسالة فارغة", Toast.LENGTH_LONG).show();
-                }
-                text_send.setText("");
-            }
-        });
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                students student = dataSnapshot.getValue(students.class);
-                username.setText("أم"+" "+student.getFirstname()+" "+student.getLastname());
-                readMessage(fUser.getUid(), motherID);
+                        fUser = FirebaseAuth.getInstance().getCurrentUser();
+                        btn_send.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                notify = true;
+                                String msg = text_send.getText().toString();
+                                if(!msg.equals("")){
+                                    sendMessage(fUser.getUid(), staffID, msg);
+                                }else{
+                                    Toast.makeText(ChildMessageActivity.this, "لا يمكن إرسال رسالة فارغة", Toast.LENGTH_LONG).show();
+                                }
+                                text_send.setText("");
+                            }
+                        });
+
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                students student = dataSnapshot.getValue(students.class);
+                                username.setText(staffName);
+                                readMessage(fUser.getUid(), staffID);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
             }
 
             @Override
@@ -126,7 +134,8 @@ public class MessageActivity extends AppCompatActivity {
         });
 
     }
-    private void sendMessage (String sender, final String receiver, final String message){
+
+    private void sendMessage (final String sender, final String receiver, final String message){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
@@ -135,14 +144,13 @@ public class MessageActivity extends AppCompatActivity {
         reference.child("chats").push().setValue(hashMap);
 
         final String msg = message;
-
-        reference = FirebaseDatabase.getInstance().getReference("staff").child(fUser.getUid());
+        reference = FirebaseDatabase.getInstance().getReference("students").child(MotherHomePage.getChildId());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                staff staff = dataSnapshot.getValue(staff.class);
+                students student = dataSnapshot.getValue(students.class);
                 if(notify) {
-                    sendNotification(receiver, staff.getName(), message);
+                    sendNotification(receiver, " أم: " + student.getFirstname()+" "+ student.getLastname(), message);
                 }
                 notify = false;
             }
@@ -154,6 +162,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+
     private void sendNotification (String receiver, final String username, final String message){
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(receiver);
@@ -162,7 +171,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data (fUser.getUid(), R.mipmap.ic_launcher,username+": "+message,"رسالة جديدة",motherID);
+                    Data data = new Data (fUser.getUid(), R.mipmap.ic_launcher,username+": "+message,"رسالة جديدة",staffID);
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
                             .enqueue(new Callback<MyResponse>() {
@@ -170,7 +179,7 @@ public class MessageActivity extends AppCompatActivity {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if(response.code() == 200){
                                         if(response.body().success != 1){
-                                            Toast.makeText(MessageActivity.this, "failed", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(ChildMessageActivity.this, "failed", Toast.LENGTH_LONG).show();
                                         }
                                     }
                                 }
@@ -190,6 +199,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+
     private void readMessage (final String myid, final String userid){
         mChat = new ArrayList<>();
 
@@ -204,7 +214,8 @@ public class MessageActivity extends AppCompatActivity {
                             chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
                         mChat.add(chat);
                     }
-                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat);
+
+                    messageAdapter = new MessageAdapter(ChildMessageActivity.this, mChat);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }

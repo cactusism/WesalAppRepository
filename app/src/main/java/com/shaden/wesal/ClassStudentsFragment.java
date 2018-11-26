@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.shaden.wesal.chatNotifications.Token;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,8 @@ public class ClassStudentsFragment extends Fragment {
     FirebaseAuth mAuth;
     Classes staffClass, classes;
     String staffId;
+    boolean found;
+    FirebaseUser fuser;
 
 
 
@@ -114,6 +118,8 @@ public class ClassStudentsFragment extends Fragment {
         FirebaseUser user =  mAuth.getCurrentUser();
         staffId = user.getUid();
         staffClass = new Classes();
+        found = false;
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         classRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -125,7 +131,48 @@ public class ClassStudentsFragment extends Fragment {
                         staffClass.setName(classes.getName());
                         staffClass.setTeacher(classes.getTeacher());
                         staffClass.setTeacherID(classes.getTeacherID());
+                        found = true;
                     }
+
+                }
+
+                if (!found){
+                    noStudents.setText("عذرا لا يوجد لديك فصل");
+                }
+                else{
+
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds:dataSnapshot.getChildren())
+                            {
+                                student = ds.getValue(students.class);
+                                if(staffClass.getID().equals(student.getClassID())) {
+                                    allStudents.add(student);
+                                    list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString());
+                                }
+                            }
+                            listView.setAdapter(adapter);
+                            if(list.isEmpty()){
+                                noStudents.setText("لا يوجد طلاب حاليّا");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.main_frame, studentPAM);
+                            fragmentTransaction.commit();
+                        }
+                    });
 
                 }
 
@@ -136,50 +183,12 @@ public class ClassStudentsFragment extends Fragment {
             }
         });
 
-        if (staffClass == null){
-            noStudents.setText("عذرا لا يوجد لديك فصل");
-        }
-        else{
-
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds:dataSnapshot.getChildren())
-                    {
-                        student = ds.getValue(students.class);
-                        if(staffClass.getID().equals(student.getClassID())) {
-                            allStudents.add(student);
-                            list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString());
-                        }
-                    }
-                    listView.setAdapter(adapter);
-                    if(list.isEmpty()){
-                        noStudents.setText("لا يوجد طلاب حاليّا");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    StaffHomePage.setClassStudentId(allStudents.get(position).getStId());
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.main_frame, studentPAM);
-                    fragmentTransaction.commit();
-                }
-            });
-
-       }
 
 
-
+        updateToken(FirebaseInstanceId.getInstance().getToken());
         return v;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -215,5 +224,10 @@ public class ClassStudentsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(fuser.getUid()).setValue(token1);
     }
 }
