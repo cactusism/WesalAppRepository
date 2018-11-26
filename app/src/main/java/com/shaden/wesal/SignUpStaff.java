@@ -1,12 +1,15 @@
 package com.shaden.wesal;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +26,9 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     EditText staffName, emailEditText, passwordEditText, repeatPasswordEditText;
     DatabaseReference ref;
+    TextView title;
+    Typeface typeface;
+    Button add, cancel;
 
 
     @Override
@@ -32,10 +38,24 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
 
         mAuth = FirebaseAuth.getInstance();
         ref = database.getReference("staff");
+        typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");
         staffName = (EditText) findViewById(R.id.staffName);
         emailEditText = (EditText) findViewById(R.id.editTextEmail);
         passwordEditText = (EditText) findViewById(R.id.passwordTextbox);
         repeatPasswordEditText = (EditText) findViewById(R.id.repeatPasswordTextBox);
+        title = (TextView) findViewById(R.id.titleSUStaff);
+
+        add = (Button) findViewById(R.id.signUpBtn);
+        cancel = (Button) findViewById(R.id.cancelBtn);
+
+        staffName.setTypeface(typeface);
+        emailEditText.setTypeface(typeface);
+        passwordEditText.setTypeface(typeface);
+        repeatPasswordEditText.setTypeface(typeface);
+        title.setTypeface(typeface);
+        add.setTypeface(typeface);
+        cancel.setTypeface(typeface);
+
         findViewById(R.id.signUpBtn).setOnClickListener(this);
         findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +122,7 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
                     openDialog();
                     staff staff = new staff(name);
                     staff.setId(userId);
+                    staff.setAssigned("null");
                     ref.child(userId).setValue(staff);
                    // String id = ref.push().getKey();
                     //staff.setId(id);

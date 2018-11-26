@@ -8,7 +8,7 @@
     android:background="@drawable/background">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleSUStaff"
         android:layout_width="302dp"
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
@@ -16,25 +16,27 @@
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="تسجيل موظفة جديدة"
+        android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/stdNameBox"
-        android:layout_width="314dp"
-        android:layout_height="353dp"
+        android:id="@+id/stfNameBox"
+        android:layout_width="312dp"
+        android:layout_height="290dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="#a7ffffff"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.605" />
+        app:layout_constraintTop_toBottomOf="@+id/titleSUStaff"
+        app:layout_constraintVertical_bias="0.174" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -57,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="إعادة كلمة المرور"
         android:inputType="textPassword"
@@ -72,30 +74,36 @@
         android:id="@+id/signUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="تسجيل"
         android:background="@drawable/buttons_shape"
+        android:text="تسجيل"
+        android:textAlignment="viewEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" />
+        app:layout_constraintHorizontal_bias="0.659"
+        app:layout_constraintStart_toEndOf="@+id/cancelBtn"
+        app:layout_constraintTop_toBottomOf="@+id/titleSUStaff"
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="إلغاء"
         android:background="@drawable/buttons_shape"
+        android:text="إلغاء"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/signUpBtn"
-        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/titleSUStaff"
+        app:layout_constraintVertical_bias="0.9" />
 
     <EditText
         android:id="@+id/passwordTextbox"
@@ -103,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="84dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="كلمة المرور"
         android:inputType="textPassword"
@@ -116,15 +124,16 @@
     <EditText
         android:id="@+id/staffName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="الاسم"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/stfNameBox" />
 
 </android.support.constraint.ConstraintLayout>

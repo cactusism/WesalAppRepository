@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
     DatabaseReference ref;
     notifications not;
     TextView noNots;
+    Typeface typeface;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -108,11 +110,14 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
                              Bundle savedInstanceState) {
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("notifications");
+
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         not = new notifications();
         listView = (SwipeMenuListView) v.findViewById(R.id.notsList);
         notsList = new ArrayList<>();
         noNots = (TextView) v.findViewById(R.id.noNots);
+        noNots.setTypeface(typeface);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

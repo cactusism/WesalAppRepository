@@ -21,7 +21,7 @@
         android:hint="الوزن"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/childTxt" />
 
     <EditText
         android:id="@+id/editTextHight"
@@ -35,7 +35,7 @@
         android:hint="الطول"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/editTextWieght"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/childTxt" />
 
     <EditText
         android:id="@+id/editTextLastName"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/std" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/childTxt"
         android:layout_width="143dp"
         android:layout_height="30dp"
         android:layout_above="@+id/editTextWieght"
@@ -186,7 +186,7 @@
         app:layout_constraintEnd_toStartOf="@+id/editTextHight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/childTxt"></Spinner>
 
 
     <Spinner

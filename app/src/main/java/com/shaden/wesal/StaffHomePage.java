@@ -97,7 +97,6 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
         init();
         setFragment(notificationsFragment);
-
         mMainNav.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

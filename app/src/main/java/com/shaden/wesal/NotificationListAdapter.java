@@ -45,7 +45,7 @@ public class NotificationListAdapter extends ArrayAdapter<notifications>{
 
         notSubject.setText(not.getSubject());
         notBody.setText(not.getBody());
-        notDate.setText("وقت النشر:"+ not.getTime());
+        notDate.setText(not.getTime());
 
         return view;
     }

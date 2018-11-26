@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +9,10 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +40,10 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
     students student;
     Spinner StudentSpinner;
     String selectedStudent;
+    Typeface typeface;
+    Button add, cancel;
+    TextView title, childTxt;
+
 
     //String fullName;
     @Override
@@ -46,9 +53,31 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
 
         student = new students();
         mAuth = FirebaseAuth.getInstance();
+        typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");
+
+
         emailEditText = (EditText) findViewById(R.id.editTextEmail);
         passwordEditText = (EditText) findViewById(R.id.passwordTextbox);
         repeatPasswordEditText = (EditText) findViewById(R.id.repeatPasswordTextBox);
+
+        title = (TextView) findViewById(R.id.titleTxt);
+        childTxt = (TextView) findViewById(R.id.childTxt);
+
+
+
+        emailEditText.setTypeface(typeface);
+        passwordEditText.setTypeface(typeface);
+        repeatPasswordEditText.setTypeface(typeface);
+
+        title.setTypeface(typeface);
+        childTxt.setTypeface(typeface);
+
+        add = (Button) findViewById(R.id.signUpBtn);
+        cancel = (Button) findViewById(R.id.cancelBtn);
+
+        add.setTypeface(typeface);
+        cancel.setTypeface(typeface);
+
         findViewById(R.id.signUpBtn).setOnClickListener(this);
         findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
             @Override

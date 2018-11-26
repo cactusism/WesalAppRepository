@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menuLogout"
-        android:title="Logout"
+        android:title="تسجيل الخروج"
         />
 
 

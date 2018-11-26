@@ -8,17 +8,15 @@
     android:background="@drawable/background">
 
 
-
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/titleTxt"
         android:layout_width="253dp"
         android:layout_height="39dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="تسجيل أم جديدة"
+        android:text="تسجيل أم"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,19 +25,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/stdNameBox"
-        android:layout_width="322dp"
-        android:layout_height="406dp"
+        android:id="@+id/stfNameBox"
+        android:layout_width="328dp"
+        android:layout_height="328dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="#a7ffffff"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.431" />
 
     <Button
         android:id="@+id/signUpBtn"
@@ -63,14 +61,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="البريد الألكتروني"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/stfNameBox" />
 
     <EditText
         android:id="@+id/passwordTextbox"
@@ -117,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/StudentsSpinner" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/childTxt"
         android:layout_width="80dp"
         android:layout_height="34dp"
         android:layout_marginBottom="8dp"
@@ -136,15 +134,12 @@
         android:id="@+id/StudentsSpinner"
         android:layout_width="209dp"
         android:layout_height="37dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" />
 
 </android.support.constraint.ConstraintLayout>

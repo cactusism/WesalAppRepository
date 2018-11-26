@@ -118,6 +118,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     stf = ds.getValue(staff.class);
+                   // if(stf.getAssigned().equals("null"))
                     staffList.add(stf);
 
                 }

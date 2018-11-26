@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/whatsnew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/notEditText"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/notEditText"
-        android:layout_alignEnd="@+id/textView9"
+        android:layout_alignEnd="@+id/whatsnew"
         android:layout_marginBottom="-165dp"
         android:ems="10"
         android:hint="عنوان التنبيه"

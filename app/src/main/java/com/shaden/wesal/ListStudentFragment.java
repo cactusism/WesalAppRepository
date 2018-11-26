@@ -102,7 +102,7 @@ public class ListStudentFragment extends Fragment {
         listView = (SwipeMenuListView) v.findViewById(R.id.studentsList);
         studentsList = new ArrayList<>();
         noStudents = (TextView) v.findViewById(R.id.noStudents);
-        stdId = v.findViewById(R.id.stdNameBox).toString();
+        stdId = v.findViewById(R.id.stfNameBox).toString();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
