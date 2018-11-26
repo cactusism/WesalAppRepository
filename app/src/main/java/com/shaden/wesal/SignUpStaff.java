@@ -36,6 +36,8 @@ public class SignUpStaff extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_staff);
 
+        setTitle("تسجيل موظف");
+
         mAuth = FirebaseAuth.getInstance();
         ref = database.getReference("staff");
         typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");

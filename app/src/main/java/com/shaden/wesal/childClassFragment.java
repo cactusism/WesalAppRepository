@@ -1,12 +1,23 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -18,6 +29,17 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class childClassFragment extends Fragment {
+
+    TextView className, txtAlbum, txtAllstd, txtStar;
+    DatabaseReference ref;
+    FirebaseDatabase database;
+    ImageView album, allStd, star;
+    Typeface typeface;
+    MotherStarOfWeekFragment motherStarOfWeekFragment;
+    MotherPhotoAlbumFragment motherPhotoAlbumFragment;
+    ChildClassmatesFragment childClassmatesFragment;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +52,7 @@ public class childClassFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public childClassFragment() {
+
         // Required empty public constructor
     }
 
@@ -64,7 +87,74 @@ public class childClassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_child_class, container, false);
+        View v = inflater.inflate(R.layout.fragment_child_class, container, false);
+
+
+        getActivity().setTitle("فصل الطالب");
+
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference().child("classes").child(MotherHomePage.childClass);
+        childClassmatesFragment = new ChildClassmatesFragment();
+        motherPhotoAlbumFragment= new MotherPhotoAlbumFragment();
+        motherStarOfWeekFragment= new MotherStarOfWeekFragment();
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+
+        txtAlbum = (TextView) v.findViewById(R.id.txtAlbum);
+        txtAllstd = (TextView) v.findViewById(R.id.txtAllstd);
+        txtStar = (TextView)v.findViewById(R.id.txtStar);
+        className = (TextView) v.findViewById(R.id.className);
+        album = (ImageView) v.findViewById(R.id.album);
+        allStd = (ImageView) v.findViewById(R.id.allstd);
+        star = (ImageView) v.findViewById(R.id.star);
+
+        txtAlbum.setTypeface(typeface);
+        txtAllstd.setTypeface(typeface);
+        txtStar.setTypeface(typeface);
+        className.setTypeface(typeface);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Classes classes = dataSnapshot.getValue(Classes.class);
+                className.setText(classes.getName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mother_main_frame, motherStarOfWeekFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        album.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mother_main_frame, motherPhotoAlbumFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        allStd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mother_main_frame, childClassmatesFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

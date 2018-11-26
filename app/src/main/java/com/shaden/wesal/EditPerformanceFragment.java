@@ -82,8 +82,11 @@ public class EditPerformanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_performance, container, false);
+
+        getActivity().setTitle("الأداء الأكاديمي");
+
         name = (TextView)v.findViewById(R.id.name);
-        performance = (EditText)v.findViewById(R.id.performance);
+        performance = (EditText)v.findViewById(R.id.allstd);
         cancel = (Button) v.findViewById(R.id.cancelBtn);
         edit = (Button) v.findViewById(R.id.editBtn);
 

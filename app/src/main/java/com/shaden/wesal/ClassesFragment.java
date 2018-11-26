@@ -53,6 +53,10 @@ public class ClassesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_classes, container, false);
+
+        getActivity().setTitle(" قائمة الفصول");
+
+
         classes = new Classes();
         allClasses= new ArrayList<>();
         addClassFragment = new AddClassFragment();

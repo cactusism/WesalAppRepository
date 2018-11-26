@@ -69,7 +69,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
         String id = ref.push().getKey();
         not.setNotId(id);
         ref.child(id).setValue(not);
-        Toast.makeText(this,"تم نشر التنبيه",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"تم نشر الإعلان",Toast.LENGTH_LONG).show();
     }
 
     @Override

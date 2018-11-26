@@ -2,6 +2,7 @@ package com.shaden.wesal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
  * create an instance of this fragment.
  */
 public class studentPAM extends Fragment {
-    TextView studentName;
+    TextView studentName, txtProfile, txtPerformance, txtMsg;
     DatabaseReference ref;
     FirebaseDatabase database;
     ImageView profile, performance, chat;
@@ -38,6 +39,7 @@ public class studentPAM extends Fragment {
     StaffChatFragment staffChatFragment;
     StudentPerformanceFragment studentPerformanceFragment;
     String motherId;
+    Typeface typeface;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -86,17 +88,29 @@ public class studentPAM extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_pam, container, false);
+
+        getActivity().setTitle("ملف الطالب");
+
         database = FirebaseDatabase.getInstance();
         ref = database.getReference().child("students").child(StaffHomePage.getClassStudentId());
         classStudentsFragment = new ClassStudentsFragment();
         studentPerformanceFragment = new StudentPerformanceFragment();
         staffChatFragment = new StaffChatFragment();
         studentPersonalInformationFragment = new StudentPersonalInformationFragment();
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
 
-        studentName = (TextView) v.findViewById(R.id.studentName1);
-        profile = (ImageView) v.findViewById(R.id.profile);
-        performance = (ImageView) v.findViewById(R.id.performance);
-        chat = (ImageView) v.findViewById(R.id.chat);
+        txtProfile = (TextView) v.findViewById(R.id.txtAlbum);
+        txtPerformance = (TextView) v.findViewById(R.id.txtAllstd);
+        txtMsg = (TextView)v.findViewById(R.id.txtMsg);
+        studentName = (TextView) v.findViewById(R.id.studentName2);
+        profile = (ImageView) v.findViewById(R.id.album);
+        performance = (ImageView) v.findViewById(R.id.allstd);
+        chat = (ImageView) v.findViewById(R.id.star);
+
+        studentName.setTypeface(typeface);
+        txtMsg.setTypeface(typeface);
+        txtProfile.setTypeface(typeface);
+        txtPerformance.setTypeface(typeface);
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override

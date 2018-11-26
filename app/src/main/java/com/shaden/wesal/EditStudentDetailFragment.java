@@ -97,6 +97,9 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_student_detail, container, false);
 
+        getActivity().setTitle("تعديل بيانات الطالب");
+
+
         database = FirebaseDatabase.getInstance();
         ref = database.getReference().child("students").child(StaffHomePage.getStudentId());
         student = new students();

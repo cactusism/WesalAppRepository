@@ -64,6 +64,7 @@
             android:layout_height="33dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:backgroundTint="@color/colorAccent"
             android:background="@drawable/send_button" />
     </RelativeLayout>
 

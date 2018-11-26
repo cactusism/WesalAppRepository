@@ -31,7 +31,8 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
@@ -73,13 +74,14 @@
 
     <TextView
         android:id="@+id/DateTxt"
-        android:layout_width="84dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="84dp"
+        android:layout_width="100dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="88dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:gravity="right"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
@@ -87,16 +89,16 @@
         android:id="@+id/HeightTxt"
         android:layout_width="82dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="144dp"
         android:text="TextView"
+        android:gravity="right"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView14"
+        app:layout_constraintEnd_toStartOf="@+id/HeightTitle"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/DateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -106,12 +108,12 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/DateTxt"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/HeightTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
@@ -124,7 +126,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textiew15"
+        android:id="@+id/WeightTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="216dp"
@@ -137,18 +139,18 @@
 
     <TextView
         android:id="@+id/WeightTxt"
-        android:layout_width="81dp"
+        android:layout_width="88dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="144dp"
+        android:gravity="right"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView15"
+        app:layout_constraintEnd_toStartOf="@+id/WeightTitle"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/BloodTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="108dp"
@@ -163,12 +165,13 @@
         android:id="@+id/BloodTxt"
         android:layout_width="101dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginTop="188dp"
         android:text="TextView"
+        android:gravity="right"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView15"
+        app:layout_constraintEnd_toStartOf="@+id/BloodTitle"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
 

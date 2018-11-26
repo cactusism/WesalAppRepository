@@ -6,7 +6,7 @@
         android:id="@+id/nav_child"
         android:icon="@drawable/girl"
         android:state_checked="false"
-        android:title="الملف الشخصي" />
+        android:title="الملف الشخصي لطفلي" />
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/notification"

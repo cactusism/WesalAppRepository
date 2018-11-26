@@ -43,6 +43,8 @@ public class MotherHomePage extends AppCompatActivity {
     long numOfNotificationAfter = 0;
     String notificationTitle;
     static String childId;
+    static String childName;
+    static String childClass;
     FirebaseUser fUser;
     students student;
 
@@ -65,6 +67,8 @@ public class MotherHomePage extends AppCompatActivity {
                     student = snapshot.getValue(students.class);
                     if(student.getMotherId().equals(fUser.getUid())){
                         childId = student.getStId();
+                        childName = student.getFirstname()+student.getLastname();
+                        childClass = student.getClassID();
                     }
                 }
             }
@@ -94,7 +98,6 @@ public class MotherHomePage extends AppCompatActivity {
         childProfileFragment = new childProfileFragment();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         updateToken(FirebaseInstanceId.getInstance().getToken());
-
 
 
 

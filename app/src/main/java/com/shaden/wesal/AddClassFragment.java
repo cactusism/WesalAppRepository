@@ -36,9 +36,8 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
     EditText name;
     FirebaseDatabase database;
-    DatabaseReference ref, staffRef, schRef;
+    DatabaseReference ref, staffRef;
     Classes classes;
-    schedule schedule;
     Button addClassBtn, cancelClassBtn;
     ClassesFragment classesFragment;
     Spinner teachersSpinner;
@@ -97,6 +96,9 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_add_class, container, false);
 
+        getActivity().setTitle("إضافة فصل");
+
+
         name= (EditText) v.findViewById(R.id.name_text);
         addClassBtn = (Button) v.findViewById(R.id.add_class_btn);
         cancelClassBtn = (Button) v.findViewById(R.id.cancelBtn);
@@ -105,12 +107,10 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
         staffList = new ArrayList<>();
         stfAdapter = new ArrayAdapter<staff>(getContext(), android.R.layout.simple_spinner_item, staffList);
         stf = new staff();
-        schedule = new schedule();
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
         staffRef = database.getReference("staff");
-        schRef = database.getReference("schedules");
         classes = new Classes();
 
         staffRef.addValueEventListener(new ValueEventListener() {
@@ -118,7 +118,7 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     stf = ds.getValue(staff.class);
-                   // if(stf.getAssigned().equals("null"))
+                   if(stf.getAssigned().equals("null"))
                     staffList.add(stf);
 
                 }
@@ -153,31 +153,6 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
                 classes.setID(id);
                 ref.child(id).setValue(classes);
 
-
-                String schID = schRef.push().getKey();
-                schedule.setID(schID);
-                schedule.setClassId(classes.getID());
-                schedule.setDay01("null");
-                schedule.setDay02("null");
-                schedule.setDay03("null");
-                schedule.setDay04("null");
-                schedule.setDay05("null");
-                schedule.setDay06("null");
-                schedule.setDay07("null");
-                schedule.setDay08("null");
-                schedule.setDay09("null");
-                schedule.setDay10("null");
-                schedule.setDay11("null");
-                schedule.setDay12("null");
-                schedule.setDay13("null");
-                schedule.setDay14("null");
-                schedule.setDay15("null");
-                schedule.setDay16("null");
-                schedule.setDay17("null");
-                schedule.setDay18("null");
-                schedule.setDay19("null");
-                schedule.setDay20("null");
-                schRef.child(schID).setValue(schedule);
 
 
                 Toast.makeText(getContext(),"تم إضافة الفصل",Toast.LENGTH_LONG).show();

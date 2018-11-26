@@ -98,6 +98,9 @@ public class ListStudentFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("students");
         View v = inflater.inflate(R.layout.fragment_list_student, container, false);
+
+        getActivity().setTitle("طلاب الفصل");
+
         student = new students();
         listView = (SwipeMenuListView) v.findViewById(R.id.studentsList);
         studentsList = new ArrayList<>();

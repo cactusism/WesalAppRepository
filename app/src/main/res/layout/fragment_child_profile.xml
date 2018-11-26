@@ -7,62 +7,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+
     <!-- TODO: Update blank fragment layout -->
-
-
     <TextView
         android:id="@+id/stdNameBox"
         android:layout_width="314dp"
         android:layout_height="432dp"
         android:layout_centerInParent="true"
-        android:background="#a7ffffff"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.708" />
+        app:layout_constraintVertical_bias="0.444" />
 
     <ImageView
-        android:id="@+id/profile"
+        android:id="@+id/album"
         android:layout_width="82dp"
         android:layout_height="80dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="92dp"
         android:src="@drawable/profile"
-        app:layout_constraintBottom_toTopOf="@+id/performance"
-        app:layout_constraintEnd_toEndOf="@+id/stfNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/studentName"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
     <ImageView
-        android:id="@+id/performance"
+        android:id="@+id/allstd"
         android:layout_width="82dp"
         android:layout_height="78dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/profile"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="32dp"
+        android:layout_alignStart="@+id/album"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="28dp"
         android:src="@drawable/performance"
-        app:layout_constraintBottom_toTopOf="@+id/chat"
-        app:layout_constraintEnd_toEndOf="@+id/stdNameBox" />
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
+        app:layout_constraintTop_toBottomOf="@+id/album" />
 
     <ImageView
-        android:id="@+id/chat"
+        android:id="@+id/star"
         android:layout_width="77dp"
         android:layout_height="76dp"
-        android:layout_alignEnd="@+id/profile"
+        android:layout_alignEnd="@+id/album"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="44dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/chat"
         app:layout_constraintBottom_toBottomOf="@+id/stdNameBox"
-        app:layout_constraintEnd_toEndOf="@+id/stdNameBox" />
+        app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
+        app:layout_constraintTop_toBottomOf="@+id/allstd"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/studentName"
+        android:id="@+id/studentNameM"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -71,29 +71,29 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="TextView"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/stdNameBox"
         app:layout_constraintStart_toStartOf="@+id/stdNameBox"
         app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/txtAlbum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView11"
+        android:layout_alignStart="@+id/txtAllstd"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="120dp"
         android:text="الملف الشخصي"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/profile"
-        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintEnd_toStartOf="@+id/album"
+        app:layout_constraintHorizontal_bias="0.638"
         app:layout_constraintStart_toStartOf="@+id/stdNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/studentName1" />
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/txtAllstd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -103,28 +103,28 @@
         android:layout_marginTop="72dp"
         android:text="الأداء الأكاديمي"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/performance"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintEnd_toStartOf="@+id/allstd"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="@+id/stdNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAlbum" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/txtMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView10"
+        android:layout_alignEnd="@+id/txtAlbum"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="80dp"
-        android:text="مراسلة المعلم"
+        android:text="مراسلة المعلمة"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/stdNameBox"
-        app:layout_constraintEnd_toStartOf="@+id/chat"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintEnd_toStartOf="@+id/star"
+        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="@+id/stdNameBox"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/txtAllstd"
         app:layout_constraintVertical_bias="0.0" />
 
 

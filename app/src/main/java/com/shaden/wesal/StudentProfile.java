@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,13 +34,14 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class StudentProfile extends Fragment {
 
-    TextView name, date, height, weight, blood;
+    TextView name, date, height, weight, blood, dTitle, bTitle, hTitle, wTitle;
     Button edit, cancel;
 
     FirebaseDatabase database;
     DatabaseReference ref;
     students student;
     StudentsFragment studentsFragment;
+    Typeface typeface;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -89,11 +91,27 @@ public class StudentProfile extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_profile, container, false);
 
+        getActivity().setTitle("بيانات الطالب");
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+
         name = (TextView) v.findViewById(R.id.NameTxt);
         date = (TextView) v.findViewById(R.id.DateTxt);
         weight =(TextView) v.findViewById(R.id.WeightTxt);
         height =(TextView) v.findViewById(R.id.HeightTxt);
         blood=(TextView) v.findViewById(R.id.BloodTxt);
+        dTitle=(TextView) v.findViewById(R.id.DateTitle);
+        bTitle=(TextView) v.findViewById(R.id.BloodTitle);
+        hTitle=(TextView) v.findViewById(R.id.HeightTitle);
+        wTitle=(TextView) v.findViewById(R.id.WeightTitle);
+
+
+       name.setTypeface(typeface);
+       blood.setTypeface(typeface);
+       dTitle.setTypeface(typeface);
+       bTitle.setTypeface(typeface);
+       hTitle.setTypeface(typeface);
+       wTitle.setTypeface(typeface);
+
 
 
         database = FirebaseDatabase.getInstance();

@@ -89,6 +89,9 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_add_student, container, false);
 
+        getActivity().setTitle("إضافة طالب");
+
+
         firstName= (EditText) v.findViewById(R.id.editTextFirstName);
         middleName= (EditText) v.findViewById(R.id.editTextMiddleName);
         lastName= (EditText) v.findViewById(R.id.editTextLastName);

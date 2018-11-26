@@ -40,7 +40,7 @@ public class NotificationDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_dialog, null);
         typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         builder.setView(view)
-                .setTitle("إضافة تنبيه")
+                .setTitle("إضافة إعلان")
                 .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -60,7 +60,7 @@ public class NotificationDialog extends AppCompatDialogFragment {
                         }
 
                         if(notificationText.isEmpty()){
-                            Toast.makeText(getContext(),"لم يتم نشر التنبيه لأن حقل محتوى التنبيه مطلوب",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),"لم يتم نشر الإعلان لأن حقل محتوى الإعلان مطلوب",Toast.LENGTH_LONG).show();
                         }
                         else {
                             listener.applyTexts(notificationSubjectText, notificationText);

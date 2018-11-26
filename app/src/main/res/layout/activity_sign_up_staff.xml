@@ -15,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="تسجيل موظفة جديدة"
+        android:text="تسجيل موظفة"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"

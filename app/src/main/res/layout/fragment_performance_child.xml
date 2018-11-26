@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/performance"
+        android:id="@+id/allstd"
         android:layout_width="271dp"
         android:layout_height="97dp"
         android:layout_marginBottom="8dp"

@@ -2,6 +2,7 @@ package com.shaden.wesal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,13 +44,16 @@ public class childProfileFragment extends Fragment {
     FirebaseUser fuser;
     String motherId, childId;
     students student;*/
+
+    TextView studentName, txtProfile, txtPerformance, txtMsg;
     FirebaseUser fuser;
     FirebaseDatabase database;
     String motherId, name;
     DatabaseReference childrenRef;
     students student;
     TextView sName;
-    ImageView chat, performance;
+    ImageView chat, performance,profile;
+    Typeface typeface;
 
 
 
@@ -100,9 +104,26 @@ public class childProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_child_profile, container, false);
 
+        getActivity().setTitle("ملف الطالب");
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+
         database = FirebaseDatabase.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        sName = (TextView) v.findViewById(R.id.studentName1);
+        sName = (TextView) v.findViewById(R.id.studentNameM);
+
+        txtProfile = (TextView) v.findViewById(R.id.txtAlbum);
+        txtPerformance = (TextView) v.findViewById(R.id.txtAllstd);
+        txtMsg = (TextView)v.findViewById(R.id.txtMsg);
+        profile = (ImageView) v.findViewById(R.id.album);
+        performance = (ImageView) v.findViewById(R.id.allstd);
+        chat = (ImageView) v.findViewById(R.id.star);
+
+        sName.setTypeface(typeface);
+        txtMsg.setTypeface(typeface);
+        txtProfile.setTypeface(typeface);
+        txtPerformance.setTypeface(typeface);
+
         motherId = fuser.getUid();
         childrenRef = database.getReference().child("students");
         childrenRef.addValueEventListener(new ValueEventListener() {
@@ -125,8 +146,8 @@ public class childProfileFragment extends Fragment {
 
             }
         });
-        chat = (ImageView) v.findViewById(R.id.chat);
-        performance = (ImageView) v.findViewById(R.id.performance);
+        chat = (ImageView) v.findViewById(R.id.star);
+        performance = (ImageView) v.findViewById(R.id.allstd);
 
 
         /*database = FirebaseDatabase.getInstance();
@@ -205,6 +226,15 @@ public class childProfileFragment extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.mother_main_frame, new PerformanceChildFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mother_main_frame, new ChildPersonalInfoFragment());
                 fragmentTransaction.commit();
             }
         });

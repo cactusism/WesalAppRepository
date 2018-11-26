@@ -84,8 +84,10 @@ public class StudentPerformanceFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_performance, container, false);
 
+        getActivity().setTitle("الأداء الأكاديمي");
+
         name = (TextView) v.findViewById(R.id.NameTxt);
-        performance = (TextView) v.findViewById(R.id.performance);
+        performance = (TextView) v.findViewById(R.id.allstd);
         editBtn = (Button)v.findViewById(R.id.editButton);
         cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
 

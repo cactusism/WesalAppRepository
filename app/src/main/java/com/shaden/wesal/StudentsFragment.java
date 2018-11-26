@@ -101,6 +101,10 @@ public class StudentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_students, container, false);
+
+        getActivity().setTitle("طلاب الفصل");
+
+
         student = new students();
         addStudentFragment = new AddStudentFragment();
         studentProfile = new StudentProfile();

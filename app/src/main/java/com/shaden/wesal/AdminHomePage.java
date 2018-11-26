@@ -22,6 +22,9 @@ public class AdminHomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home_page);
 
+        setTitle("صفحة الإدارة");
+
+
         mother = (Button) findViewById( R.id.newMotherBtn);
         staff = (Button)  findViewById( R.id.newStaffBtn);
         typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");

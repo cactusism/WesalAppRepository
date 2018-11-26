@@ -51,6 +51,9 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_mother);
 
+        setTitle("تسجيل أم");
+
+
         student = new students();
         mAuth = FirebaseAuth.getInstance();
         typeface = Typeface.createFromAsset(this.getAssets(),"fonts/GE_SS_Two_Light.otf");

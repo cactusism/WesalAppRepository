@@ -82,7 +82,9 @@ public class PerformanceChildFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_performance_child, container, false);
 
-        performance = (TextView) v.findViewById(R.id.performance);
+        getActivity().setTitle("الأداء الأكاديمي");
+
+        performance = (TextView) v.findViewById(R.id.allstd);
         cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
 
         ref =  FirebaseDatabase.getInstance().getReference().child("students").child(MotherHomePage.getChildId());

@@ -76,11 +76,14 @@ public class MyClassFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(new StaffChatFragment(), "المحادثات");
+        viewPagerAdapter.addFragment(new PhotoAlbumFragment(), "الألبوم");
         viewPagerAdapter.addFragment(new ClassStudentsFragment(), "طلاب الفصل");
-        viewPagerAdapter.addFragment(new StaffVisitingMother(), "الأم الزائرة");
+        viewPagerAdapter.addFragment(new StarOfWeekFragment(), "نجم الأسبوع");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        getActivity().setTitle("فصلي");
+
 
 
 

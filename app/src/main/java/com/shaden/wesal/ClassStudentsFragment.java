@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,7 +54,8 @@ public class ClassStudentsFragment extends Fragment {
     String staffId;
     boolean found;
     FirebaseUser fuser;
-
+    ImageButton addBtn;
+    AddStudentFragment addStudentFragment;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -106,7 +108,9 @@ public class ClassStudentsFragment extends Fragment {
         studentPAM = new studentPAM();
         mAuth = FirebaseAuth.getInstance();
 
+        getActivity().setTitle("طلاب الفصل");
 
+        addStudentFragment = new AddStudentFragment();
         listView = (ListView) v.findViewById(R.id.studentsList);
         noStudents = (TextView) v.findViewById(R.id.noStudents);
         database = FirebaseDatabase.getInstance();
@@ -121,6 +125,16 @@ public class ClassStudentsFragment extends Fragment {
         found = false;
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
+        /*addBtn = (ImageButton)v.findViewById(R.id.addstdBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, addStudentFragment).commit();
+            }
+        });  */
+
+
         classRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -131,6 +145,7 @@ public class ClassStudentsFragment extends Fragment {
                         staffClass.setName(classes.getName());
                         staffClass.setTeacher(classes.getTeacher());
                         staffClass.setTeacherID(classes.getTeacherID());
+                        StaffHomePage.setClassId(classes.getID());
                         found = true;
                     }
 

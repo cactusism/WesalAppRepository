@@ -108,10 +108,14 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("notifications");
 
-        View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+        getActivity().setTitle("إعلانات المدرسة");
+
         typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         not = new notifications();
         listView = (SwipeMenuListView) v.findViewById(R.id.notsList);
