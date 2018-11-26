@@ -88,7 +88,7 @@ public class StudentPerformanceFragment extends Fragment {
 
         name = (TextView) v.findViewById(R.id.NameTxt);
         performance = (TextView) v.findViewById(R.id.allstd);
-        editBtn = (Button)v.findViewById(R.id.editButton);
+        editBtn = (Button)v.findViewById(R.id.back);
         cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
 
         ref =  FirebaseDatabase.getInstance().getReference().child("students").child(StaffHomePage.getClassStudentId());

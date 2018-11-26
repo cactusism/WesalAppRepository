@@ -7,6 +7,25 @@ public class Classes {
     private String teacherID;
     private String ID;
 
+    public String getStarOfTheWeekId() {
+        return starOfTheWeekId;
+    }
+
+    public void setStarOfTheWeekId(String starOfTheWeekId) {
+        this.starOfTheWeekId = starOfTheWeekId;
+    }
+
+    public String getStarOfTheWeekName() {
+        return starOfTheWeekName;
+    }
+
+    public void setStarOfTheWeekName(String starOfTheWeekName) {
+        this.starOfTheWeekName = starOfTheWeekName;
+    }
+
+    private String starOfTheWeekId;
+    private String starOfTheWeekName;
+
     public Classes (){}
 
      public Classes (String name, String teacher){
@@ -15,6 +34,8 @@ public class Classes {
          this.teacher=teacher;
          teacherID = "null";
          ID = "null";
+         starOfTheWeekId = "";
+         starOfTheWeekName ="";
 
 
      }

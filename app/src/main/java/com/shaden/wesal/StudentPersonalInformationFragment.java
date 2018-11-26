@@ -98,7 +98,7 @@ public class StudentPersonalInformationFragment extends Fragment {
         student = new students();
         studentsFragment = new StudentsFragment();
 
-        edit = (Button) v.findViewById(R.id.editButton);
+        edit = (Button) v.findViewById(R.id.back);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

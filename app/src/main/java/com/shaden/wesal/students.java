@@ -154,5 +154,10 @@ public class students {
         this.classID = className;
     }
 
+    public String toString (){
+        return firstname +" "+ lastname;
+    }
+
+
 
 }

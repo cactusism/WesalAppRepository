@@ -6,16 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -119,7 +115,7 @@ public class StudentProfile extends Fragment {
         student = new students();
         studentsFragment = new StudentsFragment();
 
-        edit = (Button) v.findViewById(R.id.editButton);
+        edit = (Button) v.findViewById(R.id.back);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -107,7 +107,7 @@ public class EditPerformanceFragment extends Fragment {
             public void onClick(View v) {
                 student.setPerformance(performance.getText().toString());
                 ref.setValue(student);
-                Toast.makeText(getContext(),"تم تعديل بيانات الطالب",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"تم تعديل الأداء الأكاديمي للطالب",Toast.LENGTH_LONG).show();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, new StudentPerformanceFragment()).commit();
             }
