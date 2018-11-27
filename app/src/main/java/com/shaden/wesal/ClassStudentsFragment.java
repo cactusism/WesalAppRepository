@@ -125,14 +125,15 @@ public class ClassStudentsFragment extends Fragment {
         found = false;
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        /*addBtn = (ImageButton)v.findViewById(R.id.addstdBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn = (ImageButton)v.findViewById(R.id.addstdBtn);
+       addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, addStudentFragment).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, addStudentFragment);
+                fragmentTransaction.commit();
             }
-        });  */
+        });
 
 
         classRef.addValueEventListener(new ValueEventListener() {
@@ -152,7 +153,8 @@ public class ClassStudentsFragment extends Fragment {
                 }
 
                 if (!found){
-                    noStudents.setText("عذرا لا يوجد لديك فصل");
+                    noStudents.setText("عذرا لم يتم تعيينك لفصل");
+                    addBtn.setVisibility(View.INVISIBLE);
                 }
                 else{
 

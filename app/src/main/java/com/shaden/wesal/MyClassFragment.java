@@ -75,6 +75,7 @@ public class MyClassFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_class, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setId(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(new PhotoAlbumFragment(), "الألبوم");
         viewPagerAdapter.addFragment(new ClassStudentsFragment(), "طلاب الفصل");
