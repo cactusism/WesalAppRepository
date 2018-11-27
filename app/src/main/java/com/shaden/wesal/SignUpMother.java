@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -38,7 +39,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
     ArrayList<students> studentsList;
     ArrayAdapter<String> adapter;
     students student;
-    Spinner StudentSpinner;
+    AutoCompleteTextView StudentSpinner;
     String selectedStudent;
     Typeface typeface;
     Button add, cancel;
@@ -73,7 +74,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
         repeatPasswordEditText.setTypeface(typeface);
 
         title.setTypeface(typeface);
-        childTxt.setTypeface(typeface);
+        //childTxt.setTypeface(typeface);
 
         add = (Button) findViewById(R.id.signUpBtn);
         cancel = (Button) findViewById(R.id.cancelBtn);
@@ -90,12 +91,12 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-        StudentSpinner = (Spinner) findViewById(R.id.StudentsSpinner);
+        StudentSpinner = (AutoCompleteTextView) findViewById(R.id.StudentsSpinner);
         ref = database.getReference("students");
         list = new ArrayList<>();
         studentsList = new ArrayList<>();
         //adapter = new ArrayAdapter<String>(this, R.layout.activity_sign_up_mother,R.id.StudentsSpinner, list);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,7 +108,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
                         list.add(student.getFirstname().toString() + " " + student.getMiddleName().toString() + " " + student.getLastname().toString() );
                     }
                 }
-                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                //adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 StudentSpinner.setAdapter(adapter);
             }
 
@@ -154,11 +155,11 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
             repeatPasswordEditText.requestFocus();
             return;
         }
-        if (StudentSpinner.getSelectedItem() == null) {
+        if (StudentSpinner.getText() == null) {
             Toast.makeText(getApplicationContext(), "يجب اختيار اسم الطفل", Toast.LENGTH_LONG).show();
         }
 
-        selectedStudent = getStudent(StudentSpinner.getSelectedItem().toString());
+        selectedStudent = getStudent(StudentSpinner.getText().toString());
         //selectedStudent = StudentSpinner.getSelectedItem().toString();
         //selectedStudent = selectedStudent.substring(selectedStudent.indexOf(',')+1);
 
