@@ -151,6 +151,8 @@ public class AddClassFragment extends Fragment implements View.OnClickListener {
                 getValues();
                 String id = ref.push().getKey();
                 classes.setID(id);
+                classes.setStarOfTheWeekId("");
+                classes.setStarOfTheWeekName("");
                 ref.child(id).setValue(classes);
 
 

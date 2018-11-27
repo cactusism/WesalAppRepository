@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +34,14 @@ public class studentPAM extends Fragment {
     TextView studentName, txtProfile, txtPerformance, txtMsg;
     DatabaseReference ref;
     FirebaseDatabase database;
-    ImageView profile, performance, chat;
+    ImageView profile, performance, chat, backBtn;
     ClassStudentsFragment classStudentsFragment;
     StudentPersonalInformationFragment studentPersonalInformationFragment;
     StaffChatFragment staffChatFragment;
     StudentPerformanceFragment studentPerformanceFragment;
     String motherId;
     Typeface typeface;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -106,6 +108,17 @@ public class studentPAM extends Fragment {
         profile = (ImageView) v.findViewById(R.id.album);
         performance = (ImageView) v.findViewById(R.id.allstd);
         chat = (ImageView) v.findViewById(R.id.star);
+        backBtn = (ImageView) v.findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyClassFragment.isBackFromStar = false;
+                MyClassFragment.isBackFromList = true;
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, new MyClassFragment()).commit();
+            }
+        });
 
         studentName.setTypeface(typeface);
         txtMsg.setTypeface(typeface);

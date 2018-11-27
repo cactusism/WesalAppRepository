@@ -47,13 +47,14 @@
         android:layout_marginEnd="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="تسجيل"
         android:background="@drawable/buttons_shape"
+        android:text="تسجيل"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.887"
         app:layout_constraintStart_toEndOf="@+id/cancelBtn"
-        app:layout_constraintTop_toBottomOf="@+id/StudentsSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox"
+        app:layout_constraintVertical_bias="0.876" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -76,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="كلمة المرور"
         android:inputType="textPassword"
@@ -84,22 +85,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/StudentsSpinner" />
 
     <EditText
         android:id="@+id/repeatPasswordTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="إعادة كلمة المرور"
         android:inputType="textPassword"
         android:textAlignment="viewEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextbox" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextbox"
+        app:layout_constraintVertical_bias="0.012" />
 
     <Button
         android:id="@+id/cancelBtn"
@@ -108,38 +113,26 @@
         android:layout_marginBottom="28dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
-        android:text="إلغاء"
         android:background="@drawable/buttons_shape"
+        android:text="إلغاء"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StudentsSpinner" />
-
-    <TextView
-        android:id="@+id/childTxt"
-        android:layout_width="80dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="اسم الطفل"
-        app:layout_constraintBottom_toTopOf="@+id/StudentsSpinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.736"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox"
-        app:layout_constraintVertical_bias="1.0"
-        tools:textSize="20sp" />
+        app:layout_constraintVertical_bias="0.876" />
 
-    <Spinner
+    <AutoCompleteTextView
         android:id="@+id/StudentsSpinner"
         android:layout_width="209dp"
         android:layout_height="37dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="28dp"
+        android:completionThreshold="1"
+
+        android:hint="اسم الطالب..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
 </android.support.constraint.ConstraintLayout>

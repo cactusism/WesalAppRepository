@@ -3,10 +3,24 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,6 +32,23 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ChildClassmatesFragment extends Fragment {
+
+    FirebaseUser fuser;
+    String motherId;
+    DatabaseReference ref, classStdRef;
+    students student;
+    String classId;
+    TextView noStudents;
+
+
+    ListView listView;
+    ArrayList<String> list;
+    ArrayAdapter<String> adapter;
+
+
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,8 +94,59 @@ public class ChildClassmatesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_child_classmates, container, false);
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        motherId = fuser.getUid();
+        ref = FirebaseDatabase.getInstance().getReference("students");
+        classStdRef = FirebaseDatabase.getInstance().getReference("students");
+        noStudents = (TextView) v.findViewById(R.id.noStudents);
+        list = new ArrayList<>();
+        listView = (ListView) v.findViewById(R.id.studentsList);
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.onestudent,R.id.studentInfo,list);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    student = ds.getValue(students.class);
+                    if (student.getMotherId().equals(motherId)){
+                        classId = student.getClassID();
+                    }
+                }
+                classStdRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds:dataSnapshot.getChildren()){
+                            student = ds.getValue(students.class);
+                            if(student.getClassID().equals(classId) && !student.getMotherId().equals(motherId)){
+                                list.add(student.getFirstname()+" "+student.getLastname());
+                            }
+                        }
+                       listView.setAdapter(adapter);
+                       if(list.isEmpty()){
+                           noStudents.setText("لا يوجد طلاب حاليا");
+                       }
+
+                        }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_child_classmates, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

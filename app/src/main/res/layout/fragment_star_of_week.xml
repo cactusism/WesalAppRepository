@@ -7,16 +7,55 @@
     tools:context=".StarOfWeekFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
-        android:layout_width="278dp"
-        android:layout_height="396dp"
+        android:id="@+id/starOfWeek"
+        android:layout_width="155dp"
+        android:layout_height="97dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="180dp"
-        android:text="نجم الأسبوع"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
         android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/starImg"
+        app:layout_constraintEnd_toEndOf="@+id/starImg"
+        app:layout_constraintStart_toStartOf="@+id/starImg"
+        app:layout_constraintTop_toTopOf="@+id/starImg"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="91dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/buttons_shape"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/starImg"
+        android:layout_width="251dp"
+        android:layout_height="253dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/star"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

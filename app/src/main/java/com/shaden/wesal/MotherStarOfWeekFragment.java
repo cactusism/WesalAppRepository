@@ -3,10 +3,22 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -18,6 +30,14 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MotherStarOfWeekFragment extends Fragment {
+    FirebaseUser fuser;
+    String motherId, classId;
+    DatabaseReference stdRef, clsRef;
+    students student;
+    Classes classes;
+    TextView starOfWeekTxt;
+    Button back;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,8 +83,62 @@ public class MotherStarOfWeekFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_mother_star_of_week, container, false);
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        motherId = fuser.getUid();
+        starOfWeekTxt = (TextView) v.findViewById(R.id.starOfWeek);
+        stdRef = FirebaseDatabase.getInstance().getReference("students");
+        back = (Button) v.findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.mother_main_frame, new childClassFragment()).commit();
+            }
+        });
+
+        stdRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    student = ds.getValue(students.class);
+                    if(student.getMotherId().equals(motherId)){
+                        classId = student.getClassID();
+                    }
+
+                }
+                clsRef = FirebaseDatabase.getInstance().getReference("classes").child(classId);
+                clsRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        classes = dataSnapshot.getValue(Classes.class);
+                        if(classes.getStarOfTheWeekId().equals("")){
+                            starOfWeekTxt.setText("لا يوجد نجم حاليا");
+                        }
+                        else{
+                            starOfWeekTxt.setText(classes.getStarOfTheWeekName());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mother_star_of_week, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

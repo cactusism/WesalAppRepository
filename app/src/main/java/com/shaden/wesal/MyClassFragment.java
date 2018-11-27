@@ -26,6 +26,26 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class MyClassFragment extends Fragment {
+    public static boolean isIsBackFromStar() {
+        return isBackFromStar;
+    }
+
+    public static void setIsBackFromStar(boolean isBackFromStar) {
+        MyClassFragment.isBackFromStar = isBackFromStar;
+    }
+
+    static boolean isBackFromStar = false;
+
+    public static boolean isIsBackFromList() {
+        return isBackFromList;
+    }
+
+    public static void setIsBackFromList(boolean isBackFromList) {
+        MyClassFragment.isBackFromList = isBackFromList;
+    }
+
+    static boolean isBackFromList = false;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,16 +93,28 @@ public class MyClassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_class, container, false);
+
+
+
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setId(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(new PhotoAlbumFragment(), "الألبوم");
-        viewPagerAdapter.addFragment(new ClassStudentsFragment(), "طلاب الفصل");
         viewPagerAdapter.addFragment(new StarOfWeekFragment(), "نجم الأسبوع");
+        viewPagerAdapter.addFragment(new ClassStudentsFragment(), "طلاب الفصل");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        if(isBackFromStar){
+            tabLayout.getTabAt(1).select();
+            isBackFromStar = false;
+        }
+
+        if(isBackFromList){
+            tabLayout.getTabAt(2).select();
+            isBackFromStar = false;
+        }
         getActivity().setTitle("فصلي");
 
 
