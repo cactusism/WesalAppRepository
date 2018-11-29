@@ -32,13 +32,13 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/starImg"
         app:layout_constraintEnd_toEndOf="@+id/starImg"
         app:layout_constraintStart_toStartOf="@+id/starImg"
         app:layout_constraintTop_toTopOf="@+id/starImg"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.614" />
 
     <Button
         android:id="@+id/back"

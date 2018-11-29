@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +42,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
     ArrayList<students> studentsList;
     ArrayAdapter<String> adapter;
     students student;
-    AutoCompleteTextView StudentSpinner;
+    Spinner StudentSpinner;
     String selectedStudent;
     Typeface typeface;
     Button add, cancel;
@@ -91,7 +94,7 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-        StudentSpinner = (AutoCompleteTextView) findViewById(R.id.StudentsSpinner);
+        StudentSpinner = (Spinner) findViewById(R.id.StudentsSpinner);
         ref = database.getReference("students");
         list = new ArrayList<>();
         studentsList = new ArrayList<>();
@@ -155,11 +158,11 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
             repeatPasswordEditText.requestFocus();
             return;
         }
-        if (StudentSpinner.getText() == null) {
+        if (StudentSpinner.getSelectedItem() == null) {
             Toast.makeText(getApplicationContext(), "يجب اختيار اسم الطفل", Toast.LENGTH_LONG).show();
         }
 
-        selectedStudent = getStudent(StudentSpinner.getText().toString());
+        selectedStudent = getStudent(StudentSpinner.getSelectedItem().toString());
         //selectedStudent = StudentSpinner.getSelectedItem().toString();
         //selectedStudent = selectedStudent.substring(selectedStudent.indexOf(',')+1);
 
@@ -201,4 +204,29 @@ public class SignUpMother extends AppCompatActivity implements View.OnClickListe
         }
         return null;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menuLogout:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
+        }
+
+        return true;
+    }
+
+
 }
