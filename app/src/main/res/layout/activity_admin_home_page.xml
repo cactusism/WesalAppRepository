@@ -36,7 +36,7 @@
         android:layout_marginTop="260dp"
         android:background="@drawable/buttons_shape"
         android:text="تسجيل موظفة جديدة"
-        android:textAlignment="viewEnd"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
