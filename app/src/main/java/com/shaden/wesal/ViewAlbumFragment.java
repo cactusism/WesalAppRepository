@@ -85,6 +85,8 @@ public class ViewAlbumFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_view_album, container, false);
 
+        getActivity().setTitle("ألبوم الصور");
+
         recyclerView = v.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

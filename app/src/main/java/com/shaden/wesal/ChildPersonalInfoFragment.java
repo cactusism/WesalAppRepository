@@ -1,12 +1,23 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -18,6 +29,18 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ChildPersonalInfoFragment extends Fragment {
+
+
+    TextView name, date, height, weight, blood,dateTitle,heightTitle,weightTitle,bloodTitle;
+    Button cancel;
+
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    students student;
+    childProfileFragment profileFragment;
+    Typeface typeface;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +87,72 @@ public class ChildPersonalInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_child_personal_info, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_child_personal_info, container, false);
+
+        getActivity().setTitle(" قائمة الفصول");
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+        name = (TextView) v.findViewById(R.id.NameTxt);
+        date = (TextView) v.findViewById(R.id.DateTxt);
+        weight =(TextView) v.findViewById(R.id.WeightTxt);
+        height =(TextView) v.findViewById(R.id.HeightTxt);
+        blood=(TextView) v.findViewById(R.id.BloodTxt);
+        dateTitle=(TextView) v.findViewById(R.id.DateTitle);
+        heightTitle=(TextView) v.findViewById(R.id.HeightTitle);
+        weightTitle=(TextView) v.findViewById(R.id.WeightTitle);
+        bloodTitle=(TextView) v.findViewById(R.id.BloodTitle);
+
+        name.setTypeface(typeface);
+        dateTitle.setTypeface(typeface);
+        heightTitle.setTypeface(typeface);
+        weightTitle.setTypeface(typeface);
+        bloodTitle.setTypeface(typeface);
+
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference().child("students").child(MotherHomePage.getChildId());
+        student = new students();
+        profileFragment = new childProfileFragment();
+
+        cancel = (Button) v.findViewById(R.id.cancleProfileBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.mother_main_frame, profileFragment);
+                ft.commit();
+            }
+        });
+
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                students std = dataSnapshot.getValue(students.class);
+                if(std.getGender().equals("boy"))
+                    name.setText(std.getFirstname()+" "+ std.getMiddleName()+" "+std.getLastname());
+                else
+                    name.setText(std.getFirstname()+" "+std.getMiddleName()+" "+std.getLastname());
+                date.setText(std.getDay()+"/"+std.getMonth()+"/"+std.getYear());
+                weight.setText(String.valueOf(std.getWeight()));
+                height.setText(String.valueOf(std.getHeight()));
+                blood.setText(std.getBloodType());
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -96,7 +96,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/DateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/textiew15"
+        android:id="@+id/WeightDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="216dp"

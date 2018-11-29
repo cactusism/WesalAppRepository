@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
  * create an instance of this fragment.
  */
 public class StarOfWeekFragment extends Fragment {
-    TextView name;
+    TextView name,starTitle;
     Button edit;
     FirebaseUser fuser;
     String staffId, classId;
@@ -39,6 +40,7 @@ public class StarOfWeekFragment extends Fragment {
     Classes classes;
     boolean found = false;
     ImageView star;
+    Typeface typeface;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +89,8 @@ public class StarOfWeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_star_of_week, container, false);
 
+        getActivity().setTitle("نجم الأسبوع");
+
         edit = (Button) v.findViewById(R.id.back);
         name = (TextView) v.findViewById(R.id.starOfWeek);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -94,6 +98,11 @@ public class StarOfWeekFragment extends Fragment {
         staffId = fuser.getUid();
         star.setVisibility(View.INVISIBLE);
         edit.setVisibility(View.INVISIBLE);
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+        name.setTypeface(typeface);
+
+        edit.setTypeface(typeface);
 
         classesRef = FirebaseDatabase.getInstance().getReference("classes");
         classesRef.addValueEventListener(new ValueEventListener() {

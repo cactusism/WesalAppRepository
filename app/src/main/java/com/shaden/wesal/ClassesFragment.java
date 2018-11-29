@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,9 +40,10 @@ public class ClassesFragment extends Fragment {
     Classes classes;
     ImageButton addBtn;
     AddClassFragment addClassFragment;
-    TextView noClasses;
+    TextView noClasses, classInfo;
     ArrayList<Classes> allClasses;
     StudentsFragment studentsFragment;
+    Typeface typeface;
 
     public ClassesFragment() {
         // Required empty public constructor
@@ -72,8 +74,10 @@ public class ClassesFragment extends Fragment {
 
         listView = (ListView) v.findViewById(R.id.classesList);
         noClasses = (TextView) v.findViewById(R.id.noClasses);
+        classInfo = (TextView) v.findViewById(R.id.classInfo);
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("classes");
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         list = new ArrayList<>();
         adapter = new ArrayAdapter<String>(getContext(), R.layout.class_info,R.id.classInfo,list);
         ref.addValueEventListener(new ValueEventListener() {

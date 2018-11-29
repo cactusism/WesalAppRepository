@@ -3,10 +3,23 @@ package com.shaden.wesal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,6 +31,12 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MotherPhotoAlbumFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private ImageAdapter adapter;
+    private DatabaseReference databaseReference;
+    private List<Upload> uploads;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +83,39 @@ public class MotherPhotoAlbumFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mother_photo_album, container, false);
+        View v = inflater.inflate(R.layout.fragment_mother_photo_album, container, false);
+
+
+        getActivity().setTitle("ألبوم الصور");
+
+        recyclerView = v.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        uploads = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("images/" + MotherHomePage.childClass + "/");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    Upload upload = postSnapshot.getValue(Upload.class);
+                    uploads.add(upload);
+                }
+                adapter = new ImageAdapter(getContext(),uploads);
+
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(),"خطأ في التحميل"+databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

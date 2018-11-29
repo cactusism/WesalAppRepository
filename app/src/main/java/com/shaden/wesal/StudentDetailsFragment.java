@@ -85,6 +85,8 @@ public class StudentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_details, container, false);
 
+        getActivity().setTitle("بيانات الطالب");
+
         name = (TextView) v.findViewById(R.id.NameTxt);
         date = (TextView) v.findViewById(R.id.DateTxt);
         weight =(TextView) v.findViewById(R.id.WeightTxt);

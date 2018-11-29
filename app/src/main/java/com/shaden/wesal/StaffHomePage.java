@@ -34,6 +34,9 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     private StudentsFragment studentsFragment;
     private AddStudentFragment addstudentFragment;
     private MyClassFragment myClassFragment;
+    private String staffId;
+    FirebaseAuth mAuth;
+    Classes classes;
 
     private static String studentId;
     private static String classStudentId;
@@ -52,7 +55,7 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     private AddClassFragment addClassFragment;
     FirebaseDatabase database;
-    DatabaseReference ref;
+    DatabaseReference ref,classRef;
 
 
 
@@ -76,6 +79,10 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
     protected void onCreate(Bundle savedInstanceState) {
         database = FirebaseDatabase.getInstance();
         ref=  database.getReference().child("notifications");
+        classRef = database.getReference("classes");
+        mAuth = FirebaseAuth.getInstance();
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_home_page);
@@ -87,6 +94,8 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
         view.performClick();
         mMainNav.setItemBackgroundResource(R.color.colorPink);
 
+        staffId = mAuth.getCurrentUser().getUid();
+
         classesFragment = new ClassesFragment();
         notificationsFragment = new NotificationsFragment();
         studentsFragment = new StudentsFragment();
@@ -94,8 +103,23 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
         myClassFragment = new MyClassFragment();
 
 
+        classRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-        init();
+                    classes = ds.getValue(Classes.class);
+                    if (classes.getTeacherID().equals(staffId)) { ;
+                        setClassId(classes.getID());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         setFragment(notificationsFragment);
         mMainNav.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -136,10 +160,6 @@ public class StaffHomePage extends AppCompatActivity implements  NotificationDia
 
     }
 
-    private void init(){
-        ListStudentFragment fragment = new ListStudentFragment();
-        //doFragmentTransaction(fragment, getString(R.string.), false, "");
-    }
 
     private void doFragmentTransaction(Fragment fragment, String tag, boolean addToBackStack, String message){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,13 +30,14 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class StudentPersonalInformationFragment extends Fragment {
 
-    TextView name, date, height, weight, blood;
+    TextView name, date, height, weight, blood,dateTitle,heightTitle,weightTitle,bloodTitle;
     Button edit, cancel;
 
     FirebaseDatabase database;
     DatabaseReference ref;
     students student;
     StudentsFragment studentsFragment;
+    Typeface typeface;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,12 +87,28 @@ public class StudentPersonalInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_personal_information, container, false);
 
+        getActivity().setTitle("بيانات الطالب");
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         name = (TextView) v.findViewById(R.id.NameTxt);
         date = (TextView) v.findViewById(R.id.DateTxt);
         weight =(TextView) v.findViewById(R.id.WeightTxt);
         height =(TextView) v.findViewById(R.id.HeightTxt);
         blood=(TextView) v.findViewById(R.id.BloodTxt);
+        dateTitle=(TextView) v.findViewById(R.id.DateTitle);
+        heightTitle=(TextView) v.findViewById(R.id.HeightTitle);
+        weightTitle=(TextView) v.findViewById(R.id.WeightTitle);
+        bloodTitle=(TextView) v.findViewById(R.id.BloodTitle);
 
+        name.setTypeface(typeface);
+        date.setTypeface(typeface);
+        weight.setTypeface(typeface);
+        height.setTypeface(typeface);
+        blood.setTypeface(typeface);
+        dateTitle.setTypeface(typeface);
+        heightTitle.setTypeface(typeface);
+        weightTitle.setTypeface(typeface);
+        bloodTitle.setTypeface(typeface);
 
         database = FirebaseDatabase.getInstance();
 

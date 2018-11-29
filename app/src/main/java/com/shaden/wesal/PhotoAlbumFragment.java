@@ -126,6 +126,8 @@ public class PhotoAlbumFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_photo_album, container, false);
 
+        getActivity().setTitle("ألبوم الصور");
+
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         database = FirebaseDatabase.getInstance().getReference("images/"+StaffHomePage.getClassId());
@@ -162,6 +164,10 @@ public class PhotoAlbumFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot task) {
+                                        Task<Uri> urlTask = task.getStorage().getDownloadUrl();
+                                        while (!urlTask.isSuccessful());
+                                        Uri downloadUrl = urlTask.getResult();
+                                        final String sdownloadurl = String.valueOf(downloadUrl);
                                         Handler handler = new Handler();
                                         handler.postDelayed(new Runnable() {
                                             @Override
@@ -170,7 +176,7 @@ public class PhotoAlbumFragment extends Fragment {
                                             }
                                         }, 5000);
                                         Toast.makeText(getContext(), "تم رفع الصورة", Toast.LENGTH_LONG).show();
-                                        Upload upload = new Upload(txtImgTitle.getText().toString().trim(), storageRef.getDownloadUrl().toString());
+                                        Upload upload = new Upload(txtImgTitle.getText().toString().trim(), sdownloadurl);
                                         String uploadId = database.push().getKey();
                                         database.child(uploadId).setValue(upload);
                                     }

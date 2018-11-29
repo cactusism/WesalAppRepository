@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
     StudentsFragment studentsFragment;
     StudentProfile studentProfile;
     String motherId, className;
+    Typeface typeface;
 
 
 
@@ -105,6 +107,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         student = new students();
         studentsFragment = new StudentsFragment();
         studentProfile = new StudentProfile();
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
 
         cancel = (Button) v.findViewById(R.id.cancelBtn);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +122,7 @@ public class EditStudentDetailFragment extends Fragment implements View.OnClickL
         add.setOnClickListener(this);
 
         title = (TextView)v.findViewById(R.id.titleText);
+        title.setTypeface(typeface);
 
         firstName= (EditText) v.findViewById(R.id.editTextFirstName);
         middleName= (EditText) v.findViewById(R.id.editTextMiddleName);

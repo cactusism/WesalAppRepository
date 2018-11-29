@@ -108,7 +108,7 @@ public class ClassStudentsFragment extends Fragment {
         studentPAM = new studentPAM();
         mAuth = FirebaseAuth.getInstance();
 
-        getActivity().setTitle("طلاب الفصل");
+        getActivity().setTitle("الطلاب");
 
         addStudentFragment = new AddStudentFragment();
         listView = (ListView) v.findViewById(R.id.studentsList);

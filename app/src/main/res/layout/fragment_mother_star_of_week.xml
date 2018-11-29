@@ -7,6 +7,19 @@
     tools:context=".MotherStarOfWeekFragment">
 
 
+    <TextView
+        android:id="@+id/stdNameBox"
+        android:layout_width="314dp"
+        android:layout_height="432dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.497" />
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/starOfWeek"
@@ -30,34 +43,35 @@
         android:id="@+id/back"
         android:layout_width="91dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/buttons_shape"
         android:fontFamily="monospace"
         android:text="رجوع"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/stdNameBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox"
+        app:layout_constraintVertical_bias="0.975" />
 
 
     <ImageView
         android:id="@+id/starImg"
         android:layout_width="251dp"
         android:layout_height="253dp"
-        android:layout_marginBottom="44dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="88dp"
         android:src="@drawable/star"
-        app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/starTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -68,8 +82,9 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/starImg"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/stdNameBox" />
 
 
 </android.support.constraint.ConstraintLayout>

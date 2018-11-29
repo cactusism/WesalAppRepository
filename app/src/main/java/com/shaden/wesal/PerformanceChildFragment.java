@@ -1,11 +1,13 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +31,11 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class PerformanceChildFragment extends Fragment {
 
-    TextView performance;
+    TextView performance,title;
     DatabaseReference ref;
     students student;
     Button cancelBtn;
+    Typeface typeface;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,8 +87,14 @@ public class PerformanceChildFragment extends Fragment {
 
         getActivity().setTitle("الأداء الأكاديمي");
 
+        title = (TextView)v.findViewById(R.id.myChTitle);
         performance = (TextView) v.findViewById(R.id.allstd);
         cancelBtn = (Button)v.findViewById(R.id.cancelBtn);
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+        title.setTypeface(typeface);
+        performance.setTypeface(typeface);
+        cancelBtn.setTypeface(typeface);
+
 
         ref =  FirebaseDatabase.getInstance().getReference().child("students").child(MotherHomePage.getChildId());
         student = new students();

@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,8 +36,10 @@ public class MotherStarOfWeekFragment extends Fragment {
     DatabaseReference stdRef, clsRef;
     students student;
     Classes classes;
-    TextView starOfWeekTxt;
+    TextView starOfWeekTxt,starTitle;
     Button back;
+    Typeface typeface;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,11 +87,18 @@ public class MotherStarOfWeekFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mother_star_of_week, container, false);
+        getActivity().setTitle("نجم الأسبوع");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         motherId = fuser.getUid();
         starOfWeekTxt = (TextView) v.findViewById(R.id.starOfWeek);
+        starTitle = (TextView) v.findViewById(R.id.starTitle);
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
+        starTitle.setTypeface(typeface);
+        starOfWeekTxt.setTypeface(typeface);
+
         stdRef = FirebaseDatabase.getInstance().getReference("students");
         back = (Button) v.findViewById(R.id.back);
+        back.setTypeface(typeface);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

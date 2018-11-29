@@ -1,6 +1,7 @@
 package com.shaden.wesal;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ public class EditStarOfWeekFragment extends Fragment {
     Classes classes, newClass;
     students student;
     String staffId, classId, starOfWeek;
+    Typeface typeface;
 
 
 
@@ -95,8 +97,9 @@ public class EditStarOfWeekFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_edit_star_of_week, container, false);
-
+        getActivity().setTitle("نجم الأسبوع");
         studentsList = new ArrayList<>();
+        typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/GE_SS_Two_Light.otf");
         studentsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, studentsList);
         studentsSpinner = (Spinner) v.findViewById(R.id.studentsSpinner);
         edit = (Button) v.findViewById(R.id.editBtn);
@@ -106,6 +109,10 @@ public class EditStarOfWeekFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         staffId = fuser.getUid();
         newClass = new Classes();
+
+        edit.setTypeface(typeface);
+        cancel.setTypeface(typeface);
+
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

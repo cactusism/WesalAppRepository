@@ -95,6 +95,7 @@ public class ChildClassmatesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_child_classmates, container, false);
+        getActivity().setTitle("طلاب الفصل");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         motherId = fuser.getUid();
         ref = FirebaseDatabase.getInstance().getReference("students");

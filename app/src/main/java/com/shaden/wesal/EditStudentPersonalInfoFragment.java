@@ -93,6 +93,7 @@ public class EditStudentPersonalInfoFragment extends Fragment implements View.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_student_personal_info, container, false);
+        getActivity().setTitle("تعديل البيانات");
         database = FirebaseDatabase.getInstance();
         ref = database.getReference().child("students").child(StaffHomePage.getClassStudentId());
         student = new students();
