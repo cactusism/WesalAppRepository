@@ -97,7 +97,7 @@ public class StudentPersonalInformationFragment extends Fragment {
         blood=(TextView) v.findViewById(R.id.BloodTxt);
         dateTitle=(TextView) v.findViewById(R.id.DateTitle);
         heightTitle=(TextView) v.findViewById(R.id.HeightTitle);
-        weightTitle=(TextView) v.findViewById(R.id.WeightTitle);
+        weightTitle=(TextView) v.findViewById(R.id.WeightDate);
         bloodTitle=(TextView) v.findViewById(R.id.BloodTitle);
 
         name.setTypeface(typeface);

@@ -98,7 +98,7 @@ public class StudentPerformanceFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 students std = dataSnapshot.getValue(students.class);
                 name.setText(std.getFirstname()+" "+std.getMiddleName()+" "+std.getLastname());
-                if(std.getPerformance().equals("null")){
+                if(std.getPerformance().equals("")){
                     performance.setText("عذرا لا يوجد أداء أكاديمي لهذا الطالب");
                     editBtn.setText("إضافة");
                 }
